@@ -35,13 +35,18 @@ public class MainStoragePage extends StorageGUIPage {
     @Override
     public void setUp() {
         super.inventory.clear();
-        for(int slot : numberInventoryList) {
+
+        for(int slot = 0; slot < 270; slot++) {
             int slotPosition = slot - this.invStartPosition; //インベントリの参照範囲を動かす
             slotPosition += 9; //1行目は空ける
             if(slotPosition > 53 || slotPosition < 9){
                 continue;
             }
-            setItem(slotPosition,new ModularStorageItem(gui, storageData.storageInventry.get(String.valueOf(slot)), slot));
+            if(numberInventoryList.contains(slot)) {
+                setItem(slotPosition, new ModularStorageItem(gui, storageData.storageInventry.get(String.valueOf(slot)), slot));
+            }else {
+                setItem(slotPosition, new ModularStorageItem(gui, null ,slot));
+            }
         }
         setItem(0,new MainStorageAddStartItem(gui,this));
         setItem(1,new MainStorageSubtractStartItem(gui,this));
@@ -49,8 +54,8 @@ public class MainStoragePage extends StorageGUIPage {
 
     public void changeSlotStartPosition(int startPosition) {
         this.invStartPosition = startPosition;
-        if (this.invStartPosition > 269){
-            this.invStartPosition = 269;
+        if (this.invStartPosition > 225){//9スロット*5行*5ページ
+            this.invStartPosition = 225;
         } else if (this.invStartPosition < 0) {
             this.invStartPosition = 0;
         }
@@ -59,8 +64,8 @@ public class MainStoragePage extends StorageGUIPage {
 
     public void addSlotStartPosition(int plusPosition) {
         this.invStartPosition += plusPosition;
-        if (this.invStartPosition > 269){
-            this.invStartPosition = 269;
+        if (this.invStartPosition > 225){
+            this.invStartPosition = 225;
         }
         this.setUp();
     }

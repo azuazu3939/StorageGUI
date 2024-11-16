@@ -31,11 +31,16 @@ public class CommonListener implements Listener {
             playerPermission.put(e.getPlayer(), strings);
             GroupData groupData = new GroupData(String.valueOf(e.getPlayer().getUniqueId().hashCode()),playerlist, playerPermission);
             Map<Integer, ItemStack> invitem = new HashMap<>();
+            Map<Integer, ItemStack> invitem2 = new HashMap<>();
             invitem.put(1,new ItemStack(Material.DIAMOND));
+            for(int i = 0; i <= 26; i++){
+                invitem2.put(i,new ItemStack(Material.DIAMOND));
+            }
             InventoryData invData = new InventoryData(null, null, 6, perm, invitem);
+            InventoryData invData2 = new InventoryData(null, null, 6, perm, invitem2);
             Map<String,InventoryData> invmap = new HashMap<>();
             invmap.put(String.valueOf(0),invData);
-            invmap.put(String.valueOf(1),invData);
+            invmap.put(String.valueOf(1),invData2);
             invmap.put(String.valueOf(20),invData);
             invmap.put(String.valueOf(60),invData);
             invmap.put(String.valueOf(53),invData);
