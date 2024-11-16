@@ -73,13 +73,15 @@
         </dependency>
         <dependency>
             <groupId>dev.felnull</groupId>
-            <artifactId>bettergui</artifactId>
-            <version>1.0.3</version>
+            <artifactId>BetterGUI</artifactId>
+            <version>1.0.6-20241116.184856-4</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.felnull</groupId>
             <artifactId>BetterStorage</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.3</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

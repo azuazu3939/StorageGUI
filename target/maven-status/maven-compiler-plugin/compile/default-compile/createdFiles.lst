@@ -1,0 +1,9 @@
+dev\felnull\storagegui\StorageGUI.class
+dev\felnull\storagegui\Listener\CommonListener.class
+dev\felnull\storagegui\GUI\StorageGUIPage.class
+dev\felnull\storagegui\GUI\Item\ModularStorageItem.class
+dev\felnull\storagegui\GUI\Item\MainStorageSubtractStartItem.class
+dev\felnull\storagegui\GUI\Page\ModularStoragePage.class
+dev\felnull\storagegui\GUI\Page\MainStoragePage.class
+dev\felnull\storagegui\GUI\Item\MainStorageAddStartItem.class
+dev\felnull\storagegui\Utils\GUIUtils.class

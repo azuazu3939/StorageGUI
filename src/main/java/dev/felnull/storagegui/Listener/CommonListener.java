@@ -1,6 +1,7 @@
 package dev.felnull.storagegui.Listener;
 
 import dev.felnull.Data.GroupData;
+import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.GUI.Page.MainStoragePage;
@@ -9,8 +10,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class CommonListener implements Listener {
@@ -20,12 +24,26 @@ public class CommonListener implements Listener {
         if(e.getClickedBlock().getType() == Material.CHEST){
             Set<Player> playerlist = new HashSet<>();
             playerlist.add(e.getPlayer());
-            GroupData groupData = new GroupData(e.getPlayer().getUniqueId(),playerlist,"member");
+            Map<Player, String[]> playerPermission = new HashMap<>();
+            String[] strings = {"member"};
+            Set<String> perm = new HashSet<>();
+            perm.add("member");
+            playerPermission.put(e.getPlayer(), strings);
+            GroupData groupData = new GroupData(String.valueOf(e.getPlayer().getUniqueId().hashCode()),playerlist, playerPermission);
+            Map<Integer, ItemStack> invitem = new HashMap<>();
+            invitem.put(1,new ItemStack(Material.DIAMOND));
+            InventoryData invData = new InventoryData(null, null, 6, perm, invitem);
+            Map<String,InventoryData> invmap = new HashMap<>();
+            invmap.put(String.valueOf(0),invData);
+            invmap.put(String.valueOf(1),invData);
+            invmap.put(String.valueOf(20),invData);
+            invmap.put(String.valueOf(60),invData);
+            invmap.put(String.valueOf(53),invData);
 
-            StorageData storageData = new StorageData(g);
+            StorageData storageData = new StorageData(groupData.groupName, true, perm, invmap, 20);
 
             InventoryGUI inventoryGUI = new InventoryGUI(e.getPlayer());
-            inventoryGUI.openPage(new MainStoragePage(inventoryGUI, ));
+            inventoryGUI.openPage(new MainStoragePage(inventoryGUI, storageData));
         }
 
     }
