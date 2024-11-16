@@ -1,0 +1,4 @@
+name: StorageGUI
+version: '${project.version}'
+main: dev.felnull.storagegui.StorageGUI
+api-version: '1.16'
