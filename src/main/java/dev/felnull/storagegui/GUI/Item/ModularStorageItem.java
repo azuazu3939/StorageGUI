@@ -1,6 +1,7 @@
 package dev.felnull.storagegui.GUI.Item;
 
 import dev.felnull.Data.InventoryData;
+import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.GUIItem;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.GUI.Page.ModularStoragePage;
@@ -17,14 +18,16 @@ import java.util.List;
 public class ModularStorageItem extends GUIItem {
     InventoryData invData;
     int storageNumber;
+    StorageData storageData;
 
-    public ModularStorageItem(InventoryGUI gui, InventoryData invData, int storageNumber) {
+    public ModularStorageItem(InventoryGUI gui, InventoryData invData, int storageNumber, StorageData storageData) {
         super(gui, new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
         if(invData != null){
             super.itemStack = GUIUtils.getCurrentCapacityGlass(invData);
         }
         this.invData = invData;
         this.storageNumber = storageNumber;
+        this.storageData = storageData;
         if(invData == null || invData.displayName == null) {
             this.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Storage&f:") + storageNumber);
         } else {
@@ -45,6 +48,11 @@ public class ModularStorageItem extends GUIItem {
             //gui.openPage(new BuyNewModularStorage(gui));
             return;
         }
-        gui.openPage(new ModularStoragePage(gui, invData, storageNumber));
+        if(invData.displayName == null) {
+            //displayNameがない場合はストレージ名数字
+            gui.openPage(new ModularStoragePage(gui, invData, storageNumber, storageData));
+        }else {
+            gui.openPage(new ModularStoragePage(gui, invData, storageNumber, storageData, invData.displayName));
+        }
     }
 }

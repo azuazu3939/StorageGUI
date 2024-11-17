@@ -43,9 +43,9 @@ public class MainStoragePage extends StorageGUIPage {
                 continue;
             }
             if(numberInventoryList.contains(slot)) {
-                setItem(slotPosition, new ModularStorageItem(gui, storageData.storageInventry.get(String.valueOf(slot)), slot));
+                setItem(slotPosition, new ModularStorageItem(gui, storageData.storageInventry.get(String.valueOf(slot)), slot, storageData));
             }else {
-                setItem(slotPosition, new ModularStorageItem(gui, null ,slot));
+                setItem(slotPosition, new ModularStorageItem(gui, null , slot, storageData));
             }
         }
         setItem(0,new MainStorageAddStartItem(gui,this));
