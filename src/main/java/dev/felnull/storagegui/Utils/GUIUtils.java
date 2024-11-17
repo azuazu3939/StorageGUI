@@ -52,14 +52,15 @@ public class GUIUtils {
     }
 
     //毎回ifするのは冗長すぎるので分割
-    public static void openModularInventory ( InventoryGUI gui, InventoryData invData, int storageNumber, StorageData storageData){
+    public static void openModularInventory ( InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData){
         if(invData.displayName == null) {
             //displayNameがない場合はストレージ名数字
-            gui.openPage(new ModularStoragePage(gui, invData, storageNumber, storageData));
+            gui.openPage(new ModularStoragePage(gui, invData, inventoryNumber, storageData));
         }else {
-            gui.openPage(new ModularStoragePage(gui, invData, storageNumber, storageData, invData.displayName));
+            gui.openPage(new ModularStoragePage(gui, invData, inventoryNumber, storageData, invData.displayName));
         }
     }
+
 
 
 

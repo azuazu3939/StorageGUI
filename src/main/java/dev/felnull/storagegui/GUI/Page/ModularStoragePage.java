@@ -3,7 +3,6 @@ package dev.felnull.storagegui.GUI.Page;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
-import dev.felnull.bettergui.listener.GUIClickListener;
 import dev.felnull.storagegui.GUI.StorageGUIPage;
 import dev.felnull.storagegui.Listener.ModularStoragePageClickListener;
 import dev.felnull.storagegui.StorageGUI;
@@ -22,28 +21,28 @@ public class ModularStoragePage extends StorageGUIPage {
 
     Set<Integer> inventoryKeys;
     InventoryData inventoryData;
-    int storageNumber;
+    int inventoryNumber;
     StorageData storageData;
     ModularStoragePageClickListener listener;
     List<Integer> numberKeyList;
 
     //DisplayNameのない場合のコンストラクタ
-    public ModularStoragePage (InventoryGUI gui, InventoryData invData, int storageNumber, StorageData storageData) {
-        super(gui, ChatColor.translateAlternateColorCodes('&',"&6Storage&f:" + storageNumber), 6*9);
-        initPage(invData, storageNumber, storageData);
+    public ModularStoragePage (InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData) {
+        super(gui, ChatColor.translateAlternateColorCodes('&',"&6Storage&f:" + inventoryNumber), 6*9);
+        initPage(invData, inventoryNumber, storageData);
     }
 
     //DisplayNameのある場合のコンストラクタ
-    public ModularStoragePage (InventoryGUI gui, InventoryData invData, int storageNumber, StorageData storageData, String displayName) {
+    public ModularStoragePage (InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData, String displayName) {
         super(gui, ChatColor.translateAlternateColorCodes('&',"&6Storage&f:" + displayName), 6*9);
-        initPage(invData, storageNumber, storageData);
+        initPage(invData, inventoryNumber, storageData);
     }
 
     //コンストラクタの共通処理
-    public void initPage(InventoryData invData, int storageNumber, StorageData storageData) {
+    public void initPage(InventoryData invData, int inventoryNumber, StorageData storageData) {
         this.inventoryKeys = invData.itemStackSlot.keySet();
         this.inventoryData = invData;
-        this.storageNumber = storageNumber;
+        this.inventoryNumber = inventoryNumber;
         this.storageData = storageData;
         this.close();//リスナー無効化
         this.listener = new ModularStoragePageClickListener(this);//このページ専用リスナー起動
@@ -75,24 +74,24 @@ public class ModularStoragePage extends StorageGUIPage {
 
     @Override
     public void onOutsideWindowRightClick(InventoryClickEvent e) {
-        if(storageNumber >= 0 && storageNumber < 225){
-            Integer nearStorageNumber = nearFigure(numberKeyList,storageNumber,false);
-            if(nearStorageNumber == null){
+        if(inventoryNumber >= 0 && inventoryNumber < 225){
+            Integer nearinventoryNumber = nearFigure(numberKeyList, inventoryNumber,false);
+            if(nearinventoryNumber == null){
                 return;
             }
-            GUIUtils.openModularInventory(gui, storageData.storageInventry.get(String.valueOf(nearStorageNumber)), nearStorageNumber, storageData);
+            GUIUtils.openModularInventory(gui, storageData.storageInventry.get(String.valueOf(nearinventoryNumber)), nearinventoryNumber, storageData);
         }
 
     }
 
     @Override
     public void onOutsideWindowLeftClick(InventoryClickEvent e) {
-        if(storageNumber >= 0 && storageNumber < 225){
-            Integer nearStorageNumber = nearFigure(numberKeyList,storageNumber,true);
-            if(nearStorageNumber == null){
+        if(inventoryNumber >= 0 && inventoryNumber < 225){
+            Integer nearinventoryNumber = nearFigure(numberKeyList, inventoryNumber,true);
+            if(nearinventoryNumber == null){
                 return;
             }
-            GUIUtils.openModularInventory(gui, storageData.storageInventry.get(String.valueOf(nearStorageNumber)), nearStorageNumber, storageData);
+            GUIUtils.openModularInventory(gui, storageData.storageInventry.get(String.valueOf(nearinventoryNumber)), nearinventoryNumber, storageData);
         }
     }
 
