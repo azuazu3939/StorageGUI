@@ -117,8 +117,8 @@ public class ModularStoragePage extends StorageGUIPage {
 
     @Override
     public void close() {
-        //インベントリ保存するコードをここに書くInventoryDataにメソッドを書いてそれを呼び出す
-
+        //更新したページ以外も更新されるバグがある
+        inventoryData.saveInventory(this.inventory);
         HandlerList.unregisterAll(this.listener);
     }
 }
