@@ -9,6 +9,7 @@ import dev.felnull.storagegui.StorageGUI;
 import dev.felnull.storagegui.Utils.GUIUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +45,7 @@ public class ModularStoragePage extends StorageGUIPage {
         this.inventoryData = invData;
         this.inventoryNumber = inventoryNumber;
         this.storageData = storageData;
-        this.close();//リスナー無効化
+        HandlerList.unregisterAll(super.listener); //リスナー無効化
         this.listener = new ModularStoragePageClickListener(this);//このページ専用リスナー起動
         Bukkit.getPluginManager().registerEvents(this.listener, StorageGUI.INSTANCE);
 
@@ -112,5 +113,12 @@ public class ModularStoragePage extends StorageGUIPage {
         }
 
 
+    }
+
+    @Override
+    public void close() {
+        //インベントリ保存するコードをここに書くInventoryDataにメソッドを書いてそれを呼び出す
+
+        HandlerList.unregisterAll(this.listener);
     }
 }

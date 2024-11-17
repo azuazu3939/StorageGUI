@@ -50,4 +50,9 @@ public class ModularStorageItem extends GUIItem {
         }
         GUIUtils.openModularInventory(gui, invData, storageNumber, storageData);
     }
+
+    @Override
+    public void onDropClick(InventoryClickEvent e) {
+        //DisplayName更新
+    }
 }
