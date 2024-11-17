@@ -80,7 +80,7 @@ public class ModularStoragePage extends StorageGUIPage {
             if(nearStorageNumber == null){
                 return;
             }
-            gui.openPage(new ModularStoragePage(gui, storageData.storageInventry.get(String.valueOf(nearStorageNumber)), nearStorageNumber, storageData));
+            GUIUtils.openModularInventory(gui, storageData.storageInventry.get(String.valueOf(nearStorageNumber)), nearStorageNumber, storageData);
         }
 
     }
@@ -92,7 +92,7 @@ public class ModularStoragePage extends StorageGUIPage {
             if(nearStorageNumber == null){
                 return;
             }
-            gui.openPage(new ModularStoragePage(gui, storageData.storageInventry.get(String.valueOf(nearStorageNumber)), nearStorageNumber, storageData));
+            GUIUtils.openModularInventory(gui, storageData.storageInventry.get(String.valueOf(nearStorageNumber)), nearStorageNumber, storageData);
         }
     }
 

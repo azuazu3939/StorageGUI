@@ -1,6 +1,9 @@
 package dev.felnull.storagegui.Utils;
 
 import dev.felnull.Data.InventoryData;
+import dev.felnull.Data.StorageData;
+import dev.felnull.bettergui.core.InventoryGUI;
+import dev.felnull.storagegui.GUI.Page.ModularStoragePage;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
@@ -45,6 +48,16 @@ public class GUIUtils {
 
         } else  {
             return new ItemStack(Material.LIME_STAINED_GLASS_PANE);
+        }
+    }
+
+    //毎回ifするのは冗長すぎるので分割
+    public static void openModularInventory ( InventoryGUI gui, InventoryData invData, int storageNumber, StorageData storageData){
+        if(invData.displayName == null) {
+            //displayNameがない場合はストレージ名数字
+            gui.openPage(new ModularStoragePage(gui, invData, storageNumber, storageData));
+        }else {
+            gui.openPage(new ModularStoragePage(gui, invData, storageNumber, storageData, invData.displayName));
         }
     }
 

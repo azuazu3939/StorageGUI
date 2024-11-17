@@ -41,6 +41,9 @@ public class ModularStoragePageClickListener implements Listener {
     //インベントリを閉じるときにインベントリ内のアイテムデータをInventoryDataに変換する必要がある
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
-        if (e.getView().getTopInventory() != page.inventory) return;
+        if (e.getView().getTopInventory() != page.inventory) {
+            return;
+        }
+        page.close();
     }
 }

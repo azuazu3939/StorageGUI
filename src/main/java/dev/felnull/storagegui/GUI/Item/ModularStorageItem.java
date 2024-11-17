@@ -48,11 +48,6 @@ public class ModularStorageItem extends GUIItem {
             //gui.openPage(new BuyNewModularStorage(gui));
             return;
         }
-        if(invData.displayName == null) {
-            //displayNameがない場合はストレージ名数字
-            gui.openPage(new ModularStoragePage(gui, invData, storageNumber, storageData));
-        }else {
-            gui.openPage(new ModularStoragePage(gui, invData, storageNumber, storageData, invData.displayName));
-        }
+        GUIUtils.openModularInventory(gui, invData, storageNumber, storageData);
     }
 }
