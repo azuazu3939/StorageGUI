@@ -22,14 +22,14 @@ public class CommonListener implements Listener {
     public void onInteractChest(PlayerInteractEvent e) {
         e.setCancelled(true);
         if(e.getClickedBlock().getType() == Material.CHEST){
-            Set<Player> playerlist = new HashSet<>();
-            playerlist.add(e.getPlayer());
+            Set<Player> playerList = new HashSet<>();
+            playerList.add(e.getPlayer());
             Map<Player, String[]> playerPermission = new HashMap<>();
             String[] strings = {"member"};
             Set<String> perm = new HashSet<>();
             perm.add("member");
             playerPermission.put(e.getPlayer(), strings);
-            GroupData groupData = new GroupData(String.valueOf(e.getPlayer().getUniqueId().hashCode()),playerlist, playerPermission);
+            GroupData groupData = new GroupData(String.valueOf(e.getPlayer().getUniqueId().hashCode()),playerList, playerPermission);
             Map<Integer, ItemStack> invitem = new HashMap<>();
             Map<Integer, ItemStack> invitem2 = new HashMap<>();
             invitem.put(1,new ItemStack(Material.DIAMOND));

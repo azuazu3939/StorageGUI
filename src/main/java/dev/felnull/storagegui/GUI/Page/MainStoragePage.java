@@ -2,6 +2,8 @@ package dev.felnull.storagegui.GUI.Page;
 
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
+import dev.felnull.storagegui.Config.SettingsConfig;
+import dev.felnull.storagegui.Data.StorageSoundData;
 import dev.felnull.storagegui.GUI.Item.MainStorageAddStartItem;
 import dev.felnull.storagegui.GUI.Item.MainStorageSubtractStartItem;
 import dev.felnull.storagegui.GUI.Item.ModularStorageItem;
@@ -30,6 +32,10 @@ public class MainStoragePage extends StorageGUIPage {
         Collections.sort(numberKeyList);
         this.numberInventoryList = numberKeyList;
         this.invStartPosition = 0;
+
+
+
+        gui.player.playSound();
     }
 
     @Override
