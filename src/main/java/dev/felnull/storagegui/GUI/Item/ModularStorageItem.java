@@ -5,8 +5,14 @@ import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.GUIItem;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.GUI.Page.ModularStoragePage;
+import dev.felnull.storagegui.StorageGUI;
+import dev.felnull.storagegui.Utils.ChatContentType;
 import dev.felnull.storagegui.Utils.GUIUtils;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -38,8 +44,10 @@ public class ModularStorageItem extends GUIItem {
             for (String tag : invData.userTag) {
                 lore.add(Component.text(tag));
             }
-            this.setLore(lore);
         }
+        lore.add(Component.text("[Qキー]:DisplayName変更"));
+        lore.add(Component.text("[Qキー+Ctrl]:Tag編集"));
+        this.setLore(lore);
     }
 
     @Override
@@ -53,6 +61,30 @@ public class ModularStorageItem extends GUIItem {
 
     @Override
     public void onDropClick(InventoryClickEvent e) {
-        //DisplayName更新
+        if(invData == null){
+            return;
+        }
+        StorageGUI storageGUI = StorageGUI.INSTANCE;
+        storageGUI.chatReader.registerNextChat(gui.player, ChatContentType.DISPLAY_NAME, invData, storageData);
+
+        gui.player.sendTitle(ChatColor.translateAlternateColorCodes('&',"&aチャットに変更したい名前を入力してください"), "", 0, 100, 20);
+        Component message = Component.text("変更したい名前を入力してください").color(TextColor.color(NamedTextColor.WHITE));
+        String displayName;
+        if(invData.displayName == null){
+            displayName = String.valueOf(storageNumber);
+        }else {
+            displayName = invData.displayName;
+        }
+        Component messageCommand = Component.text(ChatColor.translateAlternateColorCodes('&',"&7[&f現在登録しているDisplayNameを表示する&7]"))
+                .hoverEvent(HoverEvent.showText(Component.text(displayName)))
+                .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, displayName));
+        gui.player.sendMessage(message);
+        gui.player.sendMessage(messageCommand);
+    }
+
+    @Override
+    public void onControlDropClick(InventoryClickEvent e) {
+        //gui.open(new EditInventoryUserTagPage(gui, invData, storageData));
+        gui.player.sendMessage("未実装の機能です");
     }
 }

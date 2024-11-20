@@ -4,6 +4,7 @@ import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.GUI.Page.ModularStoragePage;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
