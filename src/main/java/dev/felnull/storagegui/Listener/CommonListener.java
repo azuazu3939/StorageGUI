@@ -37,13 +37,16 @@ public class CommonListener implements Listener {
                 invitem2.put(i,new ItemStack(Material.DIAMOND));
             }
             InventoryData invData = new InventoryData(null, null, 6, perm, invitem);
+            InventoryData invData3 = new InventoryData(null, null, 6, perm, invitem);
+            InventoryData invData4 = new InventoryData(null, null, 6, perm, invitem);
+            InventoryData invData5 = new InventoryData(null, null, 6, perm, invitem);
             InventoryData invData2 = new InventoryData(null, "&6かわいいインベントリ", 6, perm, invitem2);
             Map<String,InventoryData> invmap = new HashMap<>();
             invmap.put(String.valueOf(0),invData);
             invmap.put(String.valueOf(1),invData2);
-            invmap.put(String.valueOf(20),invData);
-            invmap.put(String.valueOf(60),invData);
-            invmap.put(String.valueOf(53),invData);
+            invmap.put(String.valueOf(20),invData3);
+            invmap.put(String.valueOf(60),invData4);
+            invmap.put(String.valueOf(53),invData5);
 
             StorageData storageData = new StorageData(groupData.groupName, true, perm, invmap, 20);
 

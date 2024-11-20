@@ -27,6 +27,9 @@ public class ModularStoragePage extends StorageGUIPage {
     ModularStoragePageClickListener listener;
     List<Integer> numberKeyList;
 
+    //インベントリセーブ中のフラグ trueなら更新中
+    boolean updating = false;
+
     //DisplayNameのない場合のコンストラクタ
     public ModularStoragePage (InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData) {
         super(gui, ChatColor.translateAlternateColorCodes('&',"&6Storage&f:" + inventoryNumber), 6*9);
@@ -75,6 +78,12 @@ public class ModularStoragePage extends StorageGUIPage {
 
     @Override
     public void onOutsideWindowRightClick(InventoryClickEvent e) {
+        //インベントリ更新中はreturn
+        if(updating){
+            return;
+        }
+
+        //ストレージ上限0-225
         if(inventoryNumber >= 0 && inventoryNumber < 225){
             Integer nearinventoryNumber = nearFigure(numberKeyList, inventoryNumber,false);
             if(nearinventoryNumber == null){
@@ -87,6 +96,12 @@ public class ModularStoragePage extends StorageGUIPage {
 
     @Override
     public void onOutsideWindowLeftClick(InventoryClickEvent e) {
+        //インベントリ更新中はreturn
+        if(updating){
+            return;
+        }
+
+        //ストレージ上限0-225 このデータStrageDataで保持すべきか。。？
         if(inventoryNumber >= 0 && inventoryNumber < 225){
             Integer nearinventoryNumber = nearFigure(numberKeyList, inventoryNumber,true);
             if(nearinventoryNumber == null){
@@ -117,8 +132,8 @@ public class ModularStoragePage extends StorageGUIPage {
 
     @Override
     public void close() {
-        //更新したページ以外も更新されるバグがある
-        inventoryData.saveInventory(this.inventory);
+        this.updating = true;
+        this.updating = inventoryData.saveInventory(this.inventory);
         HandlerList.unregisterAll(this.listener);
     }
 }
