@@ -12,12 +12,12 @@ import java.io.File;
 import java.util.EnumMap;
 
 public class SettingsConfig {
-    File configFolder = StorageGUI.INSTANCE.getDataFolder();
-    File settingsFolder = new File(configFolder, "SettingsData");
-    String soundSection = "Sound.";
+    static File configFolder = StorageGUI.INSTANCE.getDataFolder();
+    static File settingsFolder = new File(configFolder, "SettingsData");
+    static String soundSection = "Sound.";
 
     //CustomSound用
-    public void saveSettings(Player player,StorageSoundENUM storageSoundENUM, String soundName) {
+    public static void saveSettings(Player player,StorageSoundENUM storageSoundENUM, String soundName) {
         initSaveSettings();
         File settingsFile = new File(settingsFolder, String.valueOf(player.getUniqueId()));
         FileConfiguration settings = YamlConfiguration.loadConfiguration(settingsFile);
@@ -26,7 +26,7 @@ public class SettingsConfig {
     }
 
     //Minecraft純正Sound用
-    public void saveSettings(Player player, StorageSoundENUM storageSoundENUM, Sound soundName) {
+    public static void saveSettings(Player player, StorageSoundENUM storageSoundENUM, Sound soundName) {
         initSaveSettings();
         File settingsFile = new File(settingsFolder, String.valueOf(player.getUniqueId()));
         FileConfiguration settings = YamlConfiguration.loadConfiguration(settingsFile);
@@ -34,11 +34,8 @@ public class SettingsConfig {
         settings.set(soundSection + storageSoundENUM.name(), soundName.toString());
     }
 
-    public StorageSoundData loadSettings(Player player) {
+    public static StorageSoundData loadSettings(Player player) {
         File settingsFile = new File(settingsFolder, String.valueOf(player.getUniqueId()));
-        if (!settingsFile.exists()) {
-            return null;
-        }
 
         FileConfiguration settings = YamlConfiguration.loadConfiguration(settingsFile);
         EnumMap<StorageSoundENUM, String> soundENUMSoundMap = new EnumMap<>(StorageSoundENUM.class);
@@ -49,7 +46,7 @@ public class SettingsConfig {
         return new StorageSoundData(player, soundENUMSoundMap);
     }
 
-    public void initSaveSettings() {
+    public static void initSaveSettings() {
         //指定されたフォルダがなかったら生成
         if(!settingsFolder.exists()) {
             if(!settingsFolder.mkdirs()){

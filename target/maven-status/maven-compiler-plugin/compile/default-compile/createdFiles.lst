@@ -1,8 +1,13 @@
 dev\felnull\storagegui\Listener\CommonListener.class
+dev\felnull\storagegui\GUI\Item\BuyModularStorage\ReturnMainStoragePageItem.class
+dev\felnull\storagegui\GUI\Page\BuyModularStoragePage.class
 dev\felnull\storagegui\GUI\Page\MainStoragePage.class
+dev\felnull\storagegui\Data\StorageSoundData.class
 dev\felnull\storagegui\Listener\ModularStoragePageClickListener.class
 dev\felnull\storagegui\StorageGUI.class
+dev\felnull\storagegui\GUI\Item\BuyModularStorage\BuyModularStorageItem.class
 dev\felnull\storagegui\Listener\ModularStoragePageClickListener$1.class
+dev\felnull\storagegui\Data\StorageSoundENUM.class
 dev\felnull\storagegui\GUI\StorageGUIPage.class
 dev\felnull\storagegui\GUI\Item\ModularStorageItem.class
 dev\felnull\storagegui\Utils\ChatContentType.class
@@ -10,5 +15,6 @@ dev\felnull\storagegui\Utils\ChatReader.class
 dev\felnull\storagegui\GUI\Item\MainStorageSubtractStartItem.class
 dev\felnull\storagegui\GUI\Page\ModularStoragePage.class
 dev\felnull\storagegui\Listener\ChatListener.class
+dev\felnull\storagegui\Config\SettingsConfig.class
 dev\felnull\storagegui\GUI\Item\MainStorageAddStartItem.class
 dev\felnull\storagegui\Utils\GUIUtils.class

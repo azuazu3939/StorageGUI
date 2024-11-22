@@ -4,7 +4,7 @@ import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.GUIItem;
 import dev.felnull.bettergui.core.InventoryGUI;
-import dev.felnull.storagegui.GUI.Page.ModularStoragePage;
+import dev.felnull.storagegui.GUI.Page.BuyModularStoragePage;
 import dev.felnull.storagegui.StorageGUI;
 import dev.felnull.storagegui.Utils.ChatContentType;
 import dev.felnull.storagegui.Utils.GUIUtils;
@@ -23,19 +23,19 @@ import java.util.List;
 
 public class ModularStorageItem extends GUIItem {
     InventoryData invData;
-    int storageNumber;
+    int inventoryNumber;
     StorageData storageData;
 
-    public ModularStorageItem(InventoryGUI gui, InventoryData invData, int storageNumber, StorageData storageData) {
+    public ModularStorageItem(InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData) {
         super(gui, new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
         if(invData != null){
             super.itemStack = GUIUtils.getCurrentCapacityGlass(invData);
         }
         this.invData = invData;
-        this.storageNumber = storageNumber;
+        this.inventoryNumber = inventoryNumber;
         this.storageData = storageData;
         if(invData == null || invData.displayName == null) {
-            this.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Storage&f:") + storageNumber);
+            this.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Storage&f:") + inventoryNumber);
         } else {
             this.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Storage&f:") + ChatColor.translateAlternateColorCodes('&', invData.displayName));
         }
@@ -53,10 +53,10 @@ public class ModularStorageItem extends GUIItem {
     @Override
     public void onClick(InventoryClickEvent e) {
         if(invData == null){
-            //gui.openPage(new BuyNewModularStorage(gui));
+            gui.openPage(new BuyModularStoragePage(gui, inventoryNumber, storageData));
             return;
         }
-        GUIUtils.openModularInventory(gui, invData, storageNumber, storageData);
+        GUIUtils.openModularInventory(gui, invData, inventoryNumber, storageData);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ModularStorageItem extends GUIItem {
         Component message = Component.text("変更したい名前を入力してください").color(TextColor.color(NamedTextColor.WHITE));
         String displayName;
         if(invData.displayName == null){
-            displayName = String.valueOf(storageNumber);
+            displayName = String.valueOf(inventoryNumber);
         }else {
             displayName = invData.displayName;
         }

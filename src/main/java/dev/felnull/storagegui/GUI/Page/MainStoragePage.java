@@ -4,11 +4,14 @@ import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.Config.SettingsConfig;
 import dev.felnull.storagegui.Data.StorageSoundData;
+import dev.felnull.storagegui.Data.StorageSoundENUM;
 import dev.felnull.storagegui.GUI.Item.MainStorageAddStartItem;
 import dev.felnull.storagegui.GUI.Item.MainStorageSubtractStartItem;
 import dev.felnull.storagegui.GUI.Item.ModularStorageItem;
 import dev.felnull.storagegui.GUI.StorageGUIPage;
 import dev.felnull.storagegui.Utils.GUIUtils;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -22,6 +25,7 @@ public class MainStoragePage extends StorageGUIPage {
     public final StorageData storageData;
     public List<Integer> numberInventoryList;
     public int invStartPosition;
+    public StorageSoundData storageSoundData;
     public MainStoragePage (InventoryGUI gui, StorageData storageData) {
         super(gui, ChatColor.translateAlternateColorCodes('&', "&6BetterStorage!!!"), 6*9);
         this.storageData = storageData;
@@ -33,9 +37,9 @@ public class MainStoragePage extends StorageGUIPage {
         this.numberInventoryList = numberKeyList;
         this.invStartPosition = 0;
 
+        this.storageSoundData = SettingsConfig.loadSettings(gui.player);
+        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.STORAGE_OPEN));
 
-
-        gui.player.playSound();
     }
 
     @Override
@@ -84,6 +88,10 @@ public class MainStoragePage extends StorageGUIPage {
         this.setUp();
     }
 
+    public void playStorageSound(Key soundKey) {
+        gui.player.playSound(Sound.sound(soundKey, Sound.Source.BLOCK, 1.0f, 1.0f));
+    }
+
     @Override
     public void back() {
     }
@@ -91,6 +99,12 @@ public class MainStoragePage extends StorageGUIPage {
     @Override
     public @NotNull Inventory getInventory() {
         return inventory;
+    }
+
+    @Override
+    public void close(){
+        super.close();
+        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.STORAGE_CLOSE));
     }
 
     @Override
