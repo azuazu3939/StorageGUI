@@ -4,7 +4,7 @@ public enum StorageSoundENUM {
     STORAGE_OPEN("StorageOpen"),
     STORAGE_CLOSE("StorageClose");
 
-    private String name;
+    public final String name;
 
     StorageSoundENUM(String name) {
         this.name = name;

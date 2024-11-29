@@ -13,7 +13,7 @@ import java.util.EnumMap;
 
 public class SettingsConfig {
     static File configFolder = StorageGUI.INSTANCE.getDataFolder();
-    static File settingsFolder = new File(configFolder, "SettingsData");
+    static File settingsFolder = new File(configFolder, "SettingsData.yml");
     static String soundSection = "Sound.";
 
     //CustomSound用

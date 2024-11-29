@@ -1,5 +1,6 @@
 package dev.felnull.storagegui;
 
+import dev.felnull.storagegui.Config.SoundList;
 import dev.felnull.storagegui.Listener.ChatListener;
 import dev.felnull.storagegui.Listener.CommonListener;
 import dev.felnull.storagegui.Utils.ChatReader;
@@ -25,6 +26,7 @@ public final class StorageGUI extends JavaPlugin {
             getLogger().warning("Vaultが見つからないか、Economyサービスが利用できません。StorageGUIを強制終了します");
             getServer().getPluginManager().disablePlugin(this);
         }
+        SoundList.initSoundList();
     }
 
     @Override
