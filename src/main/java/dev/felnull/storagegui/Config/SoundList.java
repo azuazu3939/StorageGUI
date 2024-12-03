@@ -1,14 +1,11 @@
 package dev.felnull.storagegui.Config;
 
 import dev.felnull.storagegui.Data.SoundData;
-import dev.felnull.storagegui.Data.StorageSoundData;
 import dev.felnull.storagegui.Data.StorageSoundENUM;
 import dev.felnull.storagegui.StorageGUI;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.*;
@@ -29,14 +26,14 @@ public class SoundList {
         return;
     }
 
-    public static EnumMap<StorageSoundENUM, SoundData> loadSoundList() {
-
+    public static EnumMap<StorageSoundENUM, Set<SoundData>> loadSoundList() {
         FileConfiguration settings = YamlConfiguration.loadConfiguration(settingsFolder);
 
         // ルートノードのみを取得
         Set<String> rootKeys = settings.getKeys(false);
 
-        EnumMap<StorageSoundENUM, SoundData> soundDataMap = new EnumMap<>(StorageSoundENUM.class);
+        EnumMap<StorageSoundENUM, Set<SoundData>> soundDataMap = new EnumMap<>(StorageSoundENUM.class);
+        Set<SoundData> soundDataSet = new HashSet<>();
 
         for(String key : rootKeys){
 
@@ -52,11 +49,7 @@ public class SoundList {
                     .filter(Objects::nonNull)
                     .collect(Collectors.toSet());
 
-            for (StorageSoundENUM enumValue : soundENUMS) {
-                // Mapにデータを追加
-                soundDataMap.put(enumValue, new SoundData(key, settings.getString(key + ".SoundNode"), soundENUMS, settings.getInt(key + ".CMD", 0)));
-            }
-
+            soundDataSet.add(new SoundData(key, settings.getString(key + ".SoundNode"), soundENUMS, settings.getInt(key + ".CMD", 0)));
         }
 
         return soundDataMap;
@@ -64,3 +57,4 @@ public class SoundList {
 
 
 }
+
