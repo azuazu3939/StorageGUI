@@ -20,7 +20,7 @@ public class StorageOptionPage extends StorageGUIPage {
     StorageData storageData;
     StorageSoundData storageSoundData;
 
-    StorageOptionPage(InventoryGUI gui, StorageData storageData, StorageSoundData storageSoundData) {
+    public StorageOptionPage(InventoryGUI gui, StorageData storageData, StorageSoundData storageSoundData) {
         super(gui, ChatColor.translateAlternateColorCodes('&', "&6ストレージ:設定"), 6*9);
         this.storageData = storageData;
         this.storageSoundData = storageSoundData;

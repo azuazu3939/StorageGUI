@@ -5,8 +5,9 @@ import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.Config.SettingsConfig;
 import dev.felnull.storagegui.Data.StorageSoundData;
 import dev.felnull.storagegui.Data.StorageSoundENUM;
-import dev.felnull.storagegui.GUI.Item.MainStorageAddStartItem;
-import dev.felnull.storagegui.GUI.Item.MainStorageSubtractStartItem;
+import dev.felnull.storagegui.GUI.Item.MainStoragePage.MainStorageAddStartItem;
+import dev.felnull.storagegui.GUI.Item.MainStoragePage.MainStorageSubtractStartItem;
+import dev.felnull.storagegui.GUI.Item.MainStoragePage.OpenStorageOption;
 import dev.felnull.storagegui.GUI.Item.ModularStorageItem;
 import dev.felnull.storagegui.GUI.StorageGUIPage;
 import dev.felnull.storagegui.Utils.GUIUtils;
@@ -60,6 +61,7 @@ public class MainStoragePage extends StorageGUIPage {
         }
         setItem(0,new MainStorageAddStartItem(gui,this));
         setItem(1,new MainStorageSubtractStartItem(gui,this));
+        setItem(2, new OpenStorageOption(gui, storageData, storageSoundData));
     }
 
     public void changeSlotStartPosition(int startPosition) {

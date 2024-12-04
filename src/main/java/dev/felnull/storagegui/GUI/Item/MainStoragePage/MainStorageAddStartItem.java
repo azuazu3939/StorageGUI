@@ -1,4 +1,4 @@
-package dev.felnull.storagegui.GUI.Item;
+package dev.felnull.storagegui.GUI.Item.MainStoragePage;
 
 import dev.felnull.bettergui.core.GUIItem;
 import dev.felnull.bettergui.core.InventoryGUI;
@@ -7,27 +7,28 @@ import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class MainStorageSubtractStartItem extends GUIItem {
+public class MainStorageAddStartItem extends GUIItem {
     MainStoragePage mainStoragePage;
-    public MainStorageSubtractStartItem(InventoryGUI gui, MainStoragePage mainStoragePage) {
+    public MainStorageAddStartItem(InventoryGUI gui, MainStoragePage mainStoragePage) {
         super(gui, new ItemStack(Material.SLIME_BALL));
-        setDisplayName("minus1 " + mainStoragePage.invStartPosition);
+        setDisplayName("Plus1 " + mainStoragePage.invStartPosition);
         this.mainStoragePage = mainStoragePage;
     }
 
     @Override
     public void onClick(InventoryClickEvent e) {
-        mainStoragePage.subtractSlotStartPosition(1);
+        mainStoragePage.addSlotStartPosition(1);
     }
 
     @Override
     public void onShiftClick(InventoryClickEvent e) {
-        mainStoragePage.subtractSlotStartPosition(9);
+        mainStoragePage.addSlotStartPosition(9);
     }
 
     @Override
     public void onDropClick(InventoryClickEvent e){
-        mainStoragePage.subtractSlotStartPosition(45);
+        mainStoragePage.addSlotStartPosition(45);
     }
+
 
 }
