@@ -13,6 +13,7 @@ import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
+import java.util.Set;
 
 public class StorageOptionPage extends StorageGUIPage {
 
@@ -27,7 +28,7 @@ public class StorageOptionPage extends StorageGUIPage {
 
     @Override
     public void setUp() {
-        EnumMap<StorageSoundENUM, SoundData> soundDataMap = SoundList.loadSoundList();
+        EnumMap<StorageSoundENUM, Set<SoundData>> soundDataMap = SoundList.loadSoundList();
     }
 
     @Override

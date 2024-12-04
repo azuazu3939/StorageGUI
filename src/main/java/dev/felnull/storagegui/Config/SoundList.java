@@ -8,32 +8,34 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class SoundList {
     static File configFolder = StorageGUI.INSTANCE.getDataFolder();
-    static File settingsFolder = new File(configFolder, "SoundList.yml");
+    static File soundListyaml = new File(configFolder, "SoundList.yml");
 
 
     public static void initSoundList() {
         //指定されたフォルダがなかったら生成
-        if(!settingsFolder.exists()) {
-            if(!settingsFolder.mkdirs()){
-                return;
+        if(!soundListyaml.exists()) {
+            try {
+                soundListyaml.createNewFile(); // 新規ファイルを生成
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return;
     }
 
     public static EnumMap<StorageSoundENUM, Set<SoundData>> loadSoundList() {
-        FileConfiguration settings = YamlConfiguration.loadConfiguration(settingsFolder);
+        FileConfiguration settings = YamlConfiguration.loadConfiguration(soundListyaml);
 
         // ルートノードのみを取得
         Set<String> rootKeys = settings.getKeys(false);
 
         EnumMap<StorageSoundENUM, Set<SoundData>> soundDataMap = new EnumMap<>(StorageSoundENUM.class);
-        Set<SoundData> soundDataSet = new HashSet<>();
 
         for(String key : rootKeys){
 
@@ -48,8 +50,20 @@ public class SoundList {
                     })
                     .filter(Objects::nonNull)
                     .collect(Collectors.toSet());
+            // SoundData を作成
+            SoundData soundData = new SoundData(
+                    key,
+                    settings.getString(key + ".SoundNode"),
+                    soundENUMS,
+                    settings.getInt(key + ".CMD", 0)
+            );
 
-            soundDataSet.add(new SoundData(key, settings.getString(key + ".SoundNode"), soundENUMS, settings.getInt(key + ".CMD", 0)));
+            // ENUMごとに振り分け
+            for (StorageSoundENUM enumValue : soundENUMS) {
+                // 存在しない場合は新しいセットを作成
+                soundDataMap.computeIfAbsent(enumValue, k -> new HashSet<>()).add(soundData);
+            }
+
         }
 
         return soundDataMap;

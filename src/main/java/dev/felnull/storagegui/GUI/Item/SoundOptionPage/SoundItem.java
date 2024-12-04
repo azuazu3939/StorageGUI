@@ -8,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class SoundItem extends GUIItem {
     public SoundItem(InventoryGUI gui, SoundData soundData) {
-        super(gui, new ItemStack(Material.STICK));
-        setCMD(soundData.customModelData);
+        super(gui, soundData.displayItem);
     }
 }

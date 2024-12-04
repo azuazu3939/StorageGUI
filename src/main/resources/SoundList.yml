@@ -1,3 +1,9 @@
+# ENUM一覧 (複数設定可)
+# STORAGE_OPEN   ストレージを開いたとき
+# STORAGE_CLOSE  ストレージを閉じたとき
+#
+#
+#
 チェストを開く:
   SoundNode: "minecraft:block.chest.open"
   ENUM:
