@@ -5,6 +5,7 @@ import dev.felnull.storagegui.Data.SoundData;
 import dev.felnull.storagegui.Data.StorageSoundENUM;
 import dev.felnull.storagegui.StorageGUI;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
@@ -30,7 +31,9 @@ public class ShowStorageSoundList implements CommandExecutor {
             Set<SoundData> soundDataSet = soundDataEnumMap.get(storageSoundENUM);
             sender.sendMessage(Component.text(storageSoundENUM.name).color(NamedTextColor.GOLD).decorate(TextDecoration.BOLD));
             for(SoundData soundData : soundDataSet) {
-                sender.sendMessage(soundData.soundName);
+                sender.sendMessage(Component.text(soundData.soundName)
+                        .hoverEvent(HoverEvent.showText(Component.text(soundData.soundNode)))
+                );
             }
         }
         sender.sendMessage("-----------------");
