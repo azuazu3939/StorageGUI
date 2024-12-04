@@ -6,3 +6,12 @@ depend:
   - BetterGUI
   - BetterStorage
   - Vault
+commands:
+  showstoragesoundlist:
+    permission: storagegui.command.admin
+    aliases: [sssl]
+  soundreload:
+    permission: storagegui.command.admin
+permissions:
+  storagegui.command.admin:
+    default: op

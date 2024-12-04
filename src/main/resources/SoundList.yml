@@ -5,12 +5,12 @@
 #
 #
 チェストを開く:
-  SoundNode: "minecraft:block.chest.open"
+  SoundNode: "block.chest.open"
   ENUM:
     - STORAGE_OPEN
   CMD: 1
 チェストを閉じる:
-  SoundNode: "minecraft:block.chest.close"
+  SoundNode: "block.chest.close"
   ENUM:
     - STORAGE_CLOSE
   CMD: 2

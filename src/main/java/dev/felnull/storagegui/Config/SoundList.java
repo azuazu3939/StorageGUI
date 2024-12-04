@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 public class SoundList {
     static File configFolder = StorageGUI.INSTANCE.getDataFolder();
     static File soundListyaml = new File(configFolder, "SoundList.yml");
+    public static Map<String, SoundData> stringSoundDataMap = new HashMap<>();
+    public static EnumMap<StorageSoundENUM, Set<SoundData>> soundEnumMap;
 
 
     public static void initSoundList() {
@@ -31,6 +33,8 @@ public class SoundList {
 
     public static EnumMap<StorageSoundENUM, Set<SoundData>> loadSoundList() {
         FileConfiguration settings = YamlConfiguration.loadConfiguration(soundListyaml);
+        //StringとSoundDataの紐づけをいったんクリア
+        stringSoundDataMap.clear();
 
         // ルートノードのみを取得
         Set<String> rootKeys = settings.getKeys(false);
@@ -53,7 +57,7 @@ public class SoundList {
             // SoundData を作成
             SoundData soundData = new SoundData(
                     key,
-                    settings.getString(key + ".SoundNode"),
+                    settings.getString(key + ".SoundNode", "entity.zombie.ambient"),
                     soundENUMS,
                     settings.getInt(key + ".CMD", 0)
             );
@@ -63,11 +67,12 @@ public class SoundList {
                 // 存在しない場合は新しいセットを作成
                 soundDataMap.computeIfAbsent(enumValue, k -> new HashSet<>()).add(soundData);
             }
-
+            stringSoundDataMap.put(key,soundData);
         }
-
+        soundEnumMap = soundDataMap;
         return soundDataMap;
     }
+
 
 
 }

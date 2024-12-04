@@ -1,5 +1,6 @@
 package dev.felnull.storagegui;
 
+import dev.felnull.storagegui.Commands.ReloadSound;
 import dev.felnull.storagegui.Commands.ShowStorageSoundList;
 import dev.felnull.storagegui.Config.SoundList;
 import dev.felnull.storagegui.Listener.ChatListener;
@@ -26,6 +27,9 @@ public final class StorageGUI extends JavaPlugin {
         initListener();//リスナー登録
         initCommands();//コマンド登録
         this.chatReader = new ChatReader(this);
+        //Soundを初期化
+        SoundList.loadSoundList();
+
         if (!setupEconomy() ) {
             getLogger().warning("Vaultが見つからないか、Economyサービスが利用できません。StorageGUIを強制終了します");
             getServer().getPluginManager().disablePlugin(this);
@@ -46,6 +50,7 @@ public final class StorageGUI extends JavaPlugin {
 
     public void initCommands() {
         Bukkit.getPluginCommand("showstoragesoundlist").setExecutor(new ShowStorageSoundList());
+        Bukkit.getPluginCommand("soundreload").setExecutor(new ReloadSound());
     }
 
     private boolean setupEconomy() {

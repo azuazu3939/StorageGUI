@@ -28,7 +28,7 @@ public class StorageOptionPage extends StorageGUIPage {
 
     @Override
     public void setUp() {
-        EnumMap<StorageSoundENUM, Set<SoundData>> soundDataMap = SoundList.loadSoundList();
+        EnumMap<StorageSoundENUM, Set<SoundData>> soundDataMap = SoundList.soundEnumMap;
     }
 
     @Override

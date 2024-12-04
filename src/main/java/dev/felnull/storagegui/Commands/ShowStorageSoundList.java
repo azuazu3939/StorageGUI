@@ -24,7 +24,7 @@ public class ShowStorageSoundList implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        Map<StorageSoundENUM, Set<SoundData>> soundDataEnumMap = SoundList.loadSoundList();
+        Map<StorageSoundENUM, Set<SoundData>> soundDataEnumMap = SoundList.soundEnumMap;
         sender.sendMessage("----SoundList----");
         for(StorageSoundENUM storageSoundENUM : StorageSoundENUM.values()) {
             Set<SoundData> soundDataSet = soundDataEnumMap.get(storageSoundENUM);
