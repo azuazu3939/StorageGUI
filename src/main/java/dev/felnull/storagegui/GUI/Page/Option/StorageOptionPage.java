@@ -6,6 +6,7 @@ import dev.felnull.storagegui.Config.SoundList;
 import dev.felnull.storagegui.Data.SoundData;
 import dev.felnull.storagegui.Data.StorageSoundData;
 import dev.felnull.storagegui.Data.StorageSoundENUM;
+import dev.felnull.storagegui.GUI.Item.StorageOptionPage.SoundSettingItem;
 import dev.felnull.storagegui.GUI.Page.MainStoragePage;
 import dev.felnull.storagegui.GUI.StorageGUIPage;
 import org.bukkit.ChatColor;
@@ -29,6 +30,11 @@ public class StorageOptionPage extends StorageGUIPage {
     @Override
     public void setUp() {
         EnumMap<StorageSoundENUM, Set<SoundData>> soundDataMap = SoundList.soundEnumMap;
+        int slot = 0;
+        for(StorageSoundENUM storageSoundENUM : StorageSoundENUM.values()){
+            setItem(slot, new SoundSettingItem(gui, storageSoundENUM, storageData, storageSoundData));
+            slot++;
+        }
     }
 
     @Override

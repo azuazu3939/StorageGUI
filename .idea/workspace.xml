@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="0bf0dc38-186d-4c05-bcd4-a93b24773605" name="変更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Config/SettingsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Config/SettingsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Config/SoundList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Config/SoundList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/StorageOptionPage/SoundSettingItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/StorageOptionPage/SoundSettingItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Page/Option/SoundOptionPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Page/Option/SoundOptionPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Page/Option/StorageOptionPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Page/Option/StorageOptionPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,17 +47,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.StorageGUI [package].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/ShortLife/ShortLifePlugin"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.StorageGUI [package].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/ShortLife/ShortLifePlugin&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\modding\StorageGUI\src\main\resources" />
