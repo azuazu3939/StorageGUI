@@ -1,3 +1,4 @@
+dev\felnull\storagegui\GUI\Item\SoundOptionPage\subtractPosition.class
 dev\felnull\storagegui\Data\SoundData.class
 dev\felnull\storagegui\GUI\Item\BuyModularStorage\ReturnMainStoragePageItem.class
 dev\felnull\storagegui\Commands\ReloadSound.class
@@ -9,6 +10,7 @@ dev\felnull\storagegui\Listener\ModularStoragePageClickListener$1.class
 dev\felnull\storagegui\GUI\Page\Option\SoundOptionPage.class
 dev\felnull\storagegui\GUI\StorageGUIPage.class
 dev\felnull\storagegui\Config\SoundList.class
+dev\felnull\storagegui\GUI\Item\PageBackItem.class
 dev\felnull\storagegui\GUI\Item\StorageOptionPage\SoundSettingItem.class
 dev\felnull\storagegui\Utils\ChatContentType.class
 dev\felnull\storagegui\GUI\Item\MainStoragePage\MainStorageAddStartItem.class
@@ -26,4 +28,5 @@ dev\felnull\storagegui\GUI\Page\Option\StorageOptionPage.class
 dev\felnull\storagegui\GUI\Item\ModularStorageItem.class
 dev\felnull\storagegui\Utils\ChatReader.class
 dev\felnull\storagegui\GUI\Page\ModularStoragePage.class
+dev\felnull\storagegui\GUI\Item\SoundOptionPage\addPosition.class
 dev\felnull\storagegui\Utils\GUIUtils.class

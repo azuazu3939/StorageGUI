@@ -29,7 +29,7 @@ public class CommonListener implements Listener {
             Set<String> perm = new HashSet<>();
             perm.add("member");
             playerPermission.put(e.getPlayer(), strings);
-            GroupData groupData = new GroupData(String.valueOf(e.getPlayer().getUniqueId().hashCode()),playerList, playerPermission);
+
             Map<Integer, ItemStack> invitem = new HashMap<>();
             Map<Integer, ItemStack> invitem2 = new HashMap<>();
             invitem.put(1,new ItemStack(Material.DIAMOND));
@@ -48,7 +48,8 @@ public class CommonListener implements Listener {
             invmap.put(String.valueOf(60),invData4);
             invmap.put(String.valueOf(53),invData5);
 
-            StorageData storageData = new StorageData(groupData.groupName, true, perm, invmap, 20);
+            StorageData storageData = new StorageData(perm, invmap, 20);
+            GroupData groupData = new GroupData(e.getPlayer(), storageData);
 
             InventoryGUI inventoryGUI = new InventoryGUI(e.getPlayer());
             inventoryGUI.openPage(new MainStoragePage(inventoryGUI, storageData));

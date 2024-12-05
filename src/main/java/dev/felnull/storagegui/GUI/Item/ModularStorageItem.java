@@ -4,6 +4,7 @@ import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.GUIItem;
 import dev.felnull.bettergui.core.InventoryGUI;
+import dev.felnull.storagegui.Data.StorageSoundData;
 import dev.felnull.storagegui.GUI.Page.BuyModularStoragePage;
 import dev.felnull.storagegui.StorageGUI;
 import dev.felnull.storagegui.Utils.ChatContentType;
@@ -25,8 +26,9 @@ public class ModularStorageItem extends GUIItem {
     InventoryData invData;
     int inventoryNumber;
     StorageData storageData;
+    StorageSoundData storageSoundData;
 
-    public ModularStorageItem(InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData) {
+    public ModularStorageItem(InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData, StorageSoundData storageSoundData) {
         super(gui, new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
         if(invData != null){
             super.itemStack = GUIUtils.getCurrentCapacityGlass(invData);
@@ -34,6 +36,7 @@ public class ModularStorageItem extends GUIItem {
         this.invData = invData;
         this.inventoryNumber = inventoryNumber;
         this.storageData = storageData;
+        this.storageSoundData = storageSoundData;
         if(invData == null || invData.displayName == null) {
             this.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Storage&f:") + inventoryNumber);
         } else {
@@ -56,7 +59,7 @@ public class ModularStorageItem extends GUIItem {
             gui.openPage(new BuyModularStoragePage(gui, inventoryNumber, storageData));
             return;
         }
-        GUIUtils.openModularInventory(gui, invData, inventoryNumber, storageData);
+        GUIUtils.openModularInventory(gui, invData, inventoryNumber, storageData, storageSoundData);
     }
 
     @Override

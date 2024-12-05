@@ -1,7 +1,7 @@
 # ENUM一覧 (複数設定可)
 # STORAGE_OPEN   ストレージを開いたとき
 # STORAGE_CLOSE  ストレージを閉じたとき
-#
+# PAGE_SCROLL    ストレージをスクロールするときの音
 #
 #
 チェストを開く:
@@ -14,3 +14,9 @@
   ENUM:
     - STORAGE_CLOSE
   CMD: 2
+ボタンを押す:
+  SoundNode: "ui.button.click"
+  ENUM:
+    - PAGE_SCROLL
+    - CHANGE_PAGE
+  CMD: 3

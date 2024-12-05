@@ -60,6 +60,14 @@ public class SettingsConfig {
                 soundNameMap.get(settings.getString(soundSection + StorageSoundENUM.STORAGE_CLOSE.name(), "チェストを閉じる"))
         );
 
+        soundENUMSoundMap.put(StorageSoundENUM.PAGE_SCROLL,
+                soundNameMap.get(settings.getString(soundSection + StorageSoundENUM.PAGE_SCROLL.name(), "ボタンを押す"))
+        );
+
+        soundENUMSoundMap.put(StorageSoundENUM.CHANGE_PAGE,
+                soundNameMap.get(settings.getString(soundSection + StorageSoundENUM.CHANGE_PAGE.name(), "ボタンを押す"))
+        );
+
         return new StorageSoundData(player, soundENUMSoundMap);
     }
 

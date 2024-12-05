@@ -7,7 +7,10 @@ import dev.felnull.storagegui.Data.SoundData;
 import dev.felnull.storagegui.Data.StorageSoundData;
 import dev.felnull.storagegui.Data.StorageSoundENUM;
 import dev.felnull.storagegui.GUI.Item.ModularStorageItem;
+import dev.felnull.storagegui.GUI.Item.PageBackItem;
 import dev.felnull.storagegui.GUI.Item.SoundOptionPage.SoundItem;
+import dev.felnull.storagegui.GUI.Item.SoundOptionPage.addPosition;
+import dev.felnull.storagegui.GUI.Item.SoundOptionPage.subtractPosition;
 import dev.felnull.storagegui.GUI.StorageGUIPage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import static dev.felnull.storagegui.Utils.GUIUtils.playStorageSound;
 
 public class SoundOptionPage extends StorageGUIPage {
 
@@ -46,13 +51,16 @@ public class SoundOptionPage extends StorageGUIPage {
 
         for(int slot = 0; slot < 270; slot++) {
             int slotPosition = slot - this.invStartPosition; //インベントリの参照範囲を動かす
-            if(slotPosition > 53 || slotPosition < 0){
+            if(slotPosition > 50 || slotPosition < 0){
                 continue;
             }
             if(slot < soundDataList.size()) {
                 setItem(slotPosition, new SoundItem(gui, soundDataList.get(slot), storageSoundData, storageSoundENUM, this));
             }
         }
+        setItem(51, new subtractPosition(gui, this));
+        setItem(52, new addPosition(gui, this));
+        setItem(53, new PageBackItem(gui, this));
     }
 
     @Override
@@ -70,6 +78,7 @@ public class SoundOptionPage extends StorageGUIPage {
         if (this.invStartPosition > 225){
             this.invStartPosition = 225;
         }
+        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.PAGE_SCROLL), gui.player);
         this.setUp();
     }
 
@@ -78,6 +87,7 @@ public class SoundOptionPage extends StorageGUIPage {
         if (this.invStartPosition < 0){
             this.invStartPosition = 0;
         }
+        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.PAGE_SCROLL), gui.player);
         this.setUp();
     }
 

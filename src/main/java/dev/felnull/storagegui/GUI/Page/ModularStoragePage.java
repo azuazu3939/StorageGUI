@@ -3,6 +3,7 @@ package dev.felnull.storagegui.GUI.Page;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
+import dev.felnull.storagegui.Data.StorageSoundData;
 import dev.felnull.storagegui.GUI.StorageGUIPage;
 import dev.felnull.storagegui.Listener.ModularStoragePageClickListener;
 import dev.felnull.storagegui.StorageGUI;
@@ -26,19 +27,22 @@ public class ModularStoragePage extends StorageGUIPage {
     StorageData storageData;
     ModularStoragePageClickListener listener;
     List<Integer> numberKeyList;
+    StorageSoundData storageSoundData;
 
     //インベントリセーブ中のフラグ trueなら更新中
     boolean updating = false;
 
     //DisplayNameのない場合のコンストラクタ
-    public ModularStoragePage (InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData) {
+    public ModularStoragePage (InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData, StorageSoundData storageSoundData) {
         super(gui, ChatColor.translateAlternateColorCodes('&',"&6Storage&f:" + inventoryNumber), 6*9);
+        this.storageSoundData = storageSoundData;
         initPage(invData, inventoryNumber, storageData);
     }
 
     //DisplayNameのある場合のコンストラクタ
-    public ModularStoragePage (InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData, String displayName) {
+    public ModularStoragePage (InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData, StorageSoundData storageSoundData, String displayName) {
         super(gui, ChatColor.translateAlternateColorCodes('&',"&6Storage&f:" + displayName), 6*9);
+        this.storageSoundData = storageSoundData;
         initPage(invData, inventoryNumber, storageData);
     }
 
@@ -53,7 +57,7 @@ public class ModularStoragePage extends StorageGUIPage {
         Bukkit.getPluginManager().registerEvents(this.listener, StorageGUI.INSTANCE);
 
         //StorageData内のInventoryDataに紐づいたページ名を取得して数字のページ名のみListに入れている
-        List<Integer> numberKeyList = GUIUtils.getNumericKeyList(storageData.storageInventry);
+        List<Integer> numberKeyList = GUIUtils.getNumericKeyList(storageData.storageInventory);
         //昇順にソート
         Collections.sort(numberKeyList);
         this.numberKeyList = numberKeyList;
@@ -89,7 +93,7 @@ public class ModularStoragePage extends StorageGUIPage {
             if(nearinventoryNumber == null){
                 return;
             }
-            GUIUtils.openModularInventory(gui, storageData.storageInventry.get(String.valueOf(nearinventoryNumber)), nearinventoryNumber, storageData);
+            GUIUtils.openModularInventory(gui, storageData.storageInventory.get(String.valueOf(nearinventoryNumber)), nearinventoryNumber, storageData, storageSoundData);
         }
 
     }
@@ -107,7 +111,7 @@ public class ModularStoragePage extends StorageGUIPage {
             if(nearinventoryNumber == null){
                 return;
             }
-            GUIUtils.openModularInventory(gui, storageData.storageInventry.get(String.valueOf(nearinventoryNumber)), nearinventoryNumber, storageData);
+            GUIUtils.openModularInventory(gui, storageData.storageInventory.get(String.valueOf(nearinventoryNumber)), nearinventoryNumber, storageData, storageSoundData);
         }
     }
 

@@ -21,6 +21,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
+import static dev.felnull.storagegui.Utils.GUIUtils.playStorageSound;
+
 public class MainStoragePage extends StorageGUIPage {
 
     public final StorageData storageData;
@@ -32,14 +34,14 @@ public class MainStoragePage extends StorageGUIPage {
         this.storageData = storageData;
 
         //StorageData内のInventoryDataに紐づいたページ名を取得して数字のページ名のみListに入れている
-        List<Integer> numberKeyList = GUIUtils.getNumericKeyList(storageData.storageInventry);
+        List<Integer> numberKeyList = GUIUtils.getNumericKeyList(storageData.storageInventory);
         //昇順にソート
         Collections.sort(numberKeyList);
         this.numberInventoryList = numberKeyList;
         this.invStartPosition = 0;
 
         this.storageSoundData = SettingsConfig.loadSettings(gui.player);
-        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.STORAGE_OPEN));
+        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.STORAGE_OPEN), gui.player);
 
     }
 
@@ -54,9 +56,9 @@ public class MainStoragePage extends StorageGUIPage {
                 continue;
             }
             if(numberInventoryList.contains(slot)) {
-                setItem(slotPosition, new ModularStorageItem(gui, storageData.storageInventry.get(String.valueOf(slot)), slot, storageData));
+                setItem(slotPosition, new ModularStorageItem(gui, storageData.storageInventory.get(String.valueOf(slot)), slot, storageData, storageSoundData));
             }else {
-                setItem(slotPosition, new ModularStorageItem(gui, null , slot, storageData));
+                setItem(slotPosition, new ModularStorageItem(gui, null , slot, storageData, storageSoundData));
             }
         }
         setItem(0,new MainStorageAddStartItem(gui,this));
@@ -79,6 +81,7 @@ public class MainStoragePage extends StorageGUIPage {
         if (this.invStartPosition > 225){
             this.invStartPosition = 225;
         }
+        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.PAGE_SCROLL), gui.player);
         this.setUp();
     }
 
@@ -87,11 +90,8 @@ public class MainStoragePage extends StorageGUIPage {
         if (this.invStartPosition < 0){
             this.invStartPosition = 0;
         }
+        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.PAGE_SCROLL), gui.player);
         this.setUp();
-    }
-
-    public void playStorageSound(Key soundKey) {
-        gui.player.playSound(Sound.sound(soundKey, Sound.Source.BLOCK, 1.0f, 1.0f));
     }
 
     @Override
@@ -106,7 +106,7 @@ public class MainStoragePage extends StorageGUIPage {
     @Override
     public void close(){
         super.close();
-        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.STORAGE_CLOSE));
+        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.STORAGE_CLOSE), gui.player);
     }
 
     @Override

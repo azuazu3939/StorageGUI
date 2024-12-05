@@ -3,10 +3,15 @@ package dev.felnull.storagegui.Utils;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
+import dev.felnull.storagegui.Data.StorageSoundData;
+import dev.felnull.storagegui.Data.StorageSoundENUM;
 import dev.felnull.storagegui.GUI.Page.ModularStoragePage;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,14 +42,14 @@ public class GUIUtils {
      */
     public static ItemStack getCurrentCapacityGlass(InventoryData inventoryData) {
         // インベントリの空きスロット数を取得
-        int emptySlots = inventoryData.rows*9 - inventoryData.itemStackSlot.size();
+        int emptySlots = inventoryData.rows * 9 - inventoryData.itemStackSlot.size();
         if(emptySlots == 0){
             return new ItemStack(Material.RED_STAINED_GLASS_PANE);
 
-        } else if (emptySlots <= inventoryData.rows*9/4) {
+        } else if (emptySlots <= inventoryData.rows * 9 / 4) {
             return new ItemStack(Material.ORANGE_STAINED_GLASS_PANE);
 
-        }else if (emptySlots <= inventoryData.rows*9/2) {
+        }else if (emptySlots <= inventoryData.rows * 9 / 2) {
             return new ItemStack(Material.YELLOW_STAINED_GLASS_PANE);
 
         } else  {
@@ -53,13 +58,19 @@ public class GUIUtils {
     }
 
     //毎回ifするのは冗長すぎるので分割
-    public static void openModularInventory ( InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData){
+    public static void openModularInventory (InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData, StorageSoundData storageSoundData){
+        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.CHANGE_PAGE), gui.player);
         if(invData.displayName == null) {
             //displayNameがない場合はストレージ名数字
-            gui.openPage(new ModularStoragePage(gui, invData, inventoryNumber, storageData));
+            gui.openPage(new ModularStoragePage(gui, invData, inventoryNumber, storageData, storageSoundData));
         }else {
-            gui.openPage(new ModularStoragePage(gui, invData, inventoryNumber, storageData, invData.displayName));
+            gui.openPage(new ModularStoragePage(gui, invData, inventoryNumber, storageData, storageSoundData, invData.displayName));
         }
+    }
+
+    //keyで音を流すメソッド
+    public static void playStorageSound(Key soundKey, Player player) {
+        player.playSound(Sound.sound(soundKey, Sound.Source.BLOCK, 1.0f, 1.0f));
     }
 
 
