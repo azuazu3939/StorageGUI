@@ -14,6 +14,8 @@ public class SoundData {
     public final String soundNode; //サウンドのノード(テクスチャで指定)
     public final Set<StorageSoundENUM> storageSoundENUM; //そのサウンドが対応しているストレージの動作
     public ItemStack displayItem;  //サウンドの見た目
+    public int soundCost; //そのサウンドの開放コスト
+    public ItemStack soundCostItem;
 
     public SoundData(@NotNull String soundName, @NotNull String soundNode, @NotNull Set<StorageSoundENUM> storageSoundENUM, int customModelData) {
         if (!soundNode.matches("[a-z0-9/._-]+")) {

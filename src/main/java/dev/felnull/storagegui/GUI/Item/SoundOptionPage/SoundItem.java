@@ -32,7 +32,7 @@ public class SoundItem extends GUIItem {
         storageSoundData = SettingsConfig.loadSettings(gui.player);
         if(storageSoundData.soundENUMSoundMap.get(storageSoundENUM) == soundData){
             ItemMeta meta = this.itemStack.getItemMeta();
-            meta.addEnchant(Enchantment.DURABILITY, 1 , true);
+            meta.addEnchant(Enchantment.DURABILITY, 1 , false,);
             this.itemStack.setItemMeta(meta);
         }else{
             ItemMeta meta = this.itemStack.getItemMeta();
