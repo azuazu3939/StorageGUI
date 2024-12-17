@@ -12,6 +12,9 @@ commands:
     aliases: [sssl]
   soundreload:
     permission: storagegui.command.admin
+  shownowstoragesound:
+    permission: storagegui.command.admin
+    aliases: [ snss ]
 permissions:
   storagegui.command.admin:
     default: op

@@ -17,6 +17,7 @@ dev\felnull\storagegui\GUI\Item\MainStoragePage\MainStorageAddStartItem.class
 dev\felnull\storagegui\Listener\ChatListener.class
 dev\felnull\storagegui\Config\SettingsConfig.class
 dev\felnull\storagegui\Listener\CommonListener.class
+dev\felnull\storagegui\Commands\ShowNowSetSound.class
 dev\felnull\storagegui\GUI\Item\SoundOptionPage\SoundItem.class
 dev\felnull\storagegui\Commands\ShowStorageSoundList.class
 dev\felnull\storagegui\GUI\Page\BuyModularStoragePage.class

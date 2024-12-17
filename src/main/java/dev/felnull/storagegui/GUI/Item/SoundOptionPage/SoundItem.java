@@ -16,12 +16,14 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.intellij.lang.annotations.Subst;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SoundItem extends GUIItem {
     public StorageSoundENUM storageSoundENUM;
+    @Subst("sample.sample.sample")
     public SoundData soundData;
     public StorageGUIPage storageGUIPage;
 

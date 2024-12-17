@@ -2,6 +2,7 @@ package dev.felnull.storagegui.GUI.Page.Option;
 
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
+import dev.felnull.storagegui.Config.SettingsConfig;
 import dev.felnull.storagegui.Config.SoundList;
 import dev.felnull.storagegui.Data.SoundData;
 import dev.felnull.storagegui.Data.StorageSoundData;
@@ -46,6 +47,7 @@ public class SoundOptionPage extends StorageGUIPage {
     @Override
     public void setUp() {
         super.inventory.clear();
+        this.storageSoundData = SettingsConfig.loadSettings(gui.player);
         Set<SoundData> soundDataSet = SoundList.soundEnumMap.get(storageSoundENUM);
         List<SoundData> soundDataList = new ArrayList<>(soundDataSet);
 

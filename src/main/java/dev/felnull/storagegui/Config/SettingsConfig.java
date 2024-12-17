@@ -22,7 +22,7 @@ public class SettingsConfig {
 
     public static void saveSettings(Player player, StorageSoundENUM storageSoundENUM, SoundData soundData) {
         initSaveSettings();
-        File settingsFile = new File(settingsFolder, String.valueOf(player.getUniqueId()));
+        File settingsFile = new File(settingsFolder, String.valueOf(player.getUniqueId()) + ".yml");
         if(!settingsFile.exists()) {
             try {
                 settingsFile.createNewFile(); // 新規ファイルを生成
@@ -32,7 +32,15 @@ public class SettingsConfig {
         }
         FileConfiguration settings = YamlConfiguration.loadConfiguration(settingsFile);
 
+        //データ追加
         settings.set(soundSection + storageSoundENUM.name(), soundData.soundName);
+
+        //データ書き込み
+        try {
+            settings.save(settingsFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void initSaveSettings() {
@@ -67,6 +75,11 @@ public class SettingsConfig {
         soundENUMSoundMap.put(StorageSoundENUM.CHANGE_PAGE,
                 soundNameMap.get(settings.getString(soundSection + StorageSoundENUM.CHANGE_PAGE.name(), "ボタンを押す"))
         );
+
+        soundENUMSoundMap.put(StorageSoundENUM.BUY,
+                soundNameMap.get(settings.getString(soundSection + StorageSoundENUM.BUY.name(), "経験値を獲得"))
+        );
+
 
         return new StorageSoundData(player, soundENUMSoundMap);
     }

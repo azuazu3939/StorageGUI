@@ -16,13 +16,16 @@ C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\Listener\CommonListen
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\Data\SoundData.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Page\Option\SoundOptionPage.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\Config\SoundList.java
+C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\SoundOptionPage\addPosition.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\SoundOptionPage\SoundItem.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\Utils\ChatReader.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\Data\StorageSoundData.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\Listener\ModularStoragePageClickListener.java
+C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\PageBackItem.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\StorageOptionPage\SoundSettingItem.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\Data\StorageSoundENUM.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\StorageGUI.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\MainStoragePage\MainStorageAddStartItem.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\BuyModularStorage\ReturnMainStoragePageItem.java
+C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\SoundOptionPage\subtractPosition.java
 C:\modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Page\MainStoragePage.java

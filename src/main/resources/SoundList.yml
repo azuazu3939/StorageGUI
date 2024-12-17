@@ -20,3 +20,8 @@
     - PAGE_SCROLL
     - CHANGE_PAGE
   CMD: 3
+経験値を獲得:
+  SoundNode: "entity.experience_orb.pickup"
+  ENUM:
+    - BUY
+  CMD: 3

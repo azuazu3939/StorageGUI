@@ -1,6 +1,7 @@
 package dev.felnull.storagegui;
 
 import dev.felnull.storagegui.Commands.ReloadSound;
+import dev.felnull.storagegui.Commands.ShowNowSetSound;
 import dev.felnull.storagegui.Commands.ShowStorageSoundList;
 import dev.felnull.storagegui.Config.SoundList;
 import dev.felnull.storagegui.Listener.ChatListener;
@@ -20,6 +21,7 @@ public final class StorageGUI extends JavaPlugin {
     @Getter
     public ChatReader chatReader;
     public static Economy economy = null;
+    public static String pluginName = "StorageGUI";
 
     @Override
     public void onEnable() {
@@ -51,6 +53,7 @@ public final class StorageGUI extends JavaPlugin {
     public void initCommands() {
         Bukkit.getPluginCommand("showstoragesoundlist").setExecutor(new ShowStorageSoundList());
         Bukkit.getPluginCommand("soundreload").setExecutor(new ReloadSound());
+        Bukkit.getPluginCommand("shownowstoragesound").setExecutor(new ShowNowSetSound());
     }
 
     private boolean setupEconomy() {

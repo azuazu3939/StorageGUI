@@ -5,6 +5,8 @@ import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.GUI.Page.MainStoragePage;
+import dev.felnull.storagegui.StorageGUI;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -49,8 +51,7 @@ public class CommonListener implements Listener {
             invmap.put(String.valueOf(53),invData5);
 
             StorageData storageData = new StorageData(perm, invmap, 20);
-            GroupData groupData = new GroupData(e.getPlayer(), storageData);
-
+            GroupData groupData = new GroupData(Bukkit.getServer().getOfflinePlayer(e.getPlayer().getUniqueId()), storageData, StorageGUI.pluginName);
             InventoryGUI inventoryGUI = new InventoryGUI(e.getPlayer());
             inventoryGUI.openPage(new MainStoragePage(inventoryGUI, storageData));
         }
