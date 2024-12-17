@@ -54,7 +54,7 @@ public class SettingsConfig {
     }
 
     public static StorageSoundData loadSettings(Player player) {
-        File settingsFile = new File(settingsFolder, String.valueOf(player.getUniqueId()));
+        File settingsFile = new File(settingsFolder, String.valueOf(player.getUniqueId()) + ".yml");
 
         FileConfiguration settings = YamlConfiguration.loadConfiguration(settingsFile);
         EnumMap<StorageSoundENUM, SoundData> soundENUMSoundMap = new EnumMap<>(StorageSoundENUM.class);
