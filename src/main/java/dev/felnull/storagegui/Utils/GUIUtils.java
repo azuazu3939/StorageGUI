@@ -73,6 +73,15 @@ public class GUIUtils {
         player.playSound(Sound.sound(soundKey, Sound.Source.BLOCK, 1.0f, 1.0f));
     }
 
+    //MaterialをStringから取得するメソッド
+    public static Material getMaterialFromString(String materialName) {
+        try {
+            return Material.valueOf(materialName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("無効なMaterial名: " + materialName);
+            return null;
+        }
+    }
 
 
 
