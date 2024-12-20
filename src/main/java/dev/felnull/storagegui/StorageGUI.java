@@ -4,16 +4,20 @@ import dev.felnull.storagegui.Commands.ReloadSound;
 import dev.felnull.storagegui.Commands.ShowNowSetSound;
 import dev.felnull.storagegui.Commands.ShowStorageSoundList;
 import dev.felnull.storagegui.Config.SoundList;
+import dev.felnull.storagegui.Config.UniqueItem;
 import dev.felnull.storagegui.Listener.ChatListener;
 import dev.felnull.storagegui.Listener.CommonListener;
 import dev.felnull.storagegui.Utils.ChatReader;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class StorageGUI extends JavaPlugin {
 
@@ -22,6 +26,9 @@ public final class StorageGUI extends JavaPlugin {
     public ChatReader chatReader;
     public static Economy economy = null;
     public static String pluginName = "StorageGUI";
+
+    //UniqueItemのMap
+    public static Map<String, ItemStack> uniqueItemHashMap;
 
     @Override
     public void onEnable() {
@@ -38,6 +45,7 @@ public final class StorageGUI extends JavaPlugin {
         }
         saveResourceFile("SoundList.yml");
         SoundList.initSoundList();
+        uniqueItemHashMap = UniqueItem.loadUniqueItem();
     }
 
     @Override

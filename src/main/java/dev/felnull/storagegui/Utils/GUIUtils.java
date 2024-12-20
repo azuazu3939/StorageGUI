@@ -9,6 +9,8 @@ import dev.felnull.storagegui.GUI.Page.ModularStoragePage;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -78,11 +80,19 @@ public class GUIUtils {
         try {
             return Material.valueOf(materialName.toUpperCase());
         } catch (IllegalArgumentException e) {
-            System.out.println("無効なMaterial名: " + materialName);
+            Bukkit.getLogger().warning("[StorageGUI] カスタムアイテムのItem_Typeが不正です");
+            Bukkit.getLogger().warning("無効なItem_Type名: " + materialName);
             return null;
         }
     }
 
-
-
+    //CS形式(|で改行)の書式でloreを取得
+    public static List<Component> splitLoreFactory(String stringLore) {
+        List<Component> lore = new ArrayList<>();
+        String[] loreParts = stringLore.split("\\|");
+        for (String part : loreParts) {
+            lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',part)));
+        }
+        return lore;
+    }
 }

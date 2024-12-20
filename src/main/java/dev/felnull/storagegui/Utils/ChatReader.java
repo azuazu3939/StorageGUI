@@ -3,6 +3,7 @@ package dev.felnull.storagegui.Utils;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
+import dev.felnull.storagegui.Data.UniqueItemData;
 import dev.felnull.storagegui.GUI.Page.MainStoragePage;
 import dev.felnull.storagegui.StorageGUI;
 import lombok.RequiredArgsConstructor;
@@ -19,16 +20,24 @@ public class ChatReader {
     private final Map<UUID, ChatContentType> contentTypes = new HashMap<>();
     private final Map<UUID, InventoryData> inventoryDataMap = new HashMap<>();
     private final Map<UUID, StorageData> storageDataMap = new HashMap<>();
+    private final Map<UUID, UniqueItemData> uniqueItemDataMap = new HashMap<>();
 
     //ChatContentを選択してこのメソッドを呼び出すとチャットからデータ(Componentを取得できる)
     public void registerNextChat(Player p, ChatContentType type) {
         contentTypes.put(p.getUniqueId(), type);
         p.closeInventory();
     }
+    //StorageのDisplayName設定用
     public void registerNextChat(Player p, ChatContentType type, InventoryData inventoryData, StorageData storageData) {
         contentTypes.put(p.getUniqueId(), type);
         inventoryDataMap.put(p.getUniqueId(), inventoryData);
         storageDataMap.put(p.getUniqueId(), storageData);
+        p.closeInventory();
+    }
+    //UniqueItem設定用
+    public void registerNextChat(Player p, ChatContentType type, UniqueItemData uniqueItemData) {
+        contentTypes.put(p.getUniqueId(), type);
+        uniqueItemDataMap.put(p.getUniqueId(), uniqueItemData);
         p.closeInventory();
     }
 
@@ -49,13 +58,21 @@ public class ChatReader {
         }
         ChatContentType type = contentTypes.get(p.getUniqueId());
 
-        //ChatContentTypeがDisplay_Nameの場合の処理
-        if (type == ChatContentType.DISPLAY_NAME) {
-            updateInventoryDisplayName(p,componentToString(msg));
-            InventoryGUI gui = new InventoryGUI(p);
-            StorageData storageData = storageDataMap.get(p.getUniqueId());
-            gui.openPage(new MainStoragePage(gui,storageData));
+        switch (type) {
+            //ChatContentTypeがDisplay_Nameの場合の処理
+            case DISPLAY_NAME:
+                updateInventoryDisplayName(p,componentToString(msg));
+                InventoryGUI gui = new InventoryGUI(p);
+                StorageData storageData = storageDataMap.get(p.getUniqueId());
+                gui.openPage(new MainStoragePage(gui,storageData));
+                break;
+            case UNIQUEITEM_ITEMID:
+                UniqueItemData uniqueItemData = uniqueItemDataMap.get(p.getUniqueId());
+                uniqueItemData.itemID = componentToString(msg);
+                break;
         }
+
+
 
         unregisterNextChat(p);
     }
