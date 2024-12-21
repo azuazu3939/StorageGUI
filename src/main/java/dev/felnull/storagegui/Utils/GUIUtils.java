@@ -95,4 +95,14 @@ public class GUIUtils {
         }
         return lore;
     }
+
+    //Stringの中の数字以外の文字を消す=数字だけの文字列にするメソッド
+    public static String replaceCharToNumber(String str) {
+        return str.replaceAll("[^0-9]", "");
+    }
+
+    //Stringを数字にするメソッド
+    public static int getIntFromString(String str) {
+        return Integer.parseInt(replaceCharToNumber(str));
+    }
 }

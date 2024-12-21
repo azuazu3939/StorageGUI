@@ -8,11 +8,11 @@ public class UniqueItemData {
     public String itemID;
     public String displayName;
     public Material material;
-    public Integer cmdNumber;
+    public int cmdNumber;
     public String lore;
     public Boolean doEnchant;
 
-    public UniqueItemData(String itemID, String displayName, Material material, Integer cmdNumber, String lore, Boolean doEnchant) {
+    public UniqueItemData(String itemID, @NotNull String displayName, @NotNull Material material, int cmdNumber, @NotNull String lore, @NotNull Boolean doEnchant) {
         this.itemID = itemID;
         this.displayName = displayName;
         this.material = material;

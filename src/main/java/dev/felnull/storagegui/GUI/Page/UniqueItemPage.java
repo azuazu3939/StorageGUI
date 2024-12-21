@@ -29,8 +29,8 @@ public class UniqueItemPage extends StorageGUIPage {
         setItem(13, new SetItemDisplayName(gui, uniqueItemData));
         setItem(14, new SetItemLore(gui, uniqueItemData));
         setItem(15, new SetItemDoEnchant(gui, uniqueItemData));
-        if(uniqueItemData != null){
-            setItem(17, new SetItemPreview(gui, uniqueItemData));
+        if(uniqueItemData != null && uniqueItemData.itemID != null && uniqueItemData.material != null){
+            setItem(8, new SetItemPreview(gui, uniqueItemData));
         }
     }
 

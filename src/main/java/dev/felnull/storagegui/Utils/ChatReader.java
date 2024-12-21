@@ -5,14 +5,16 @@ import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.Data.UniqueItemData;
 import dev.felnull.storagegui.GUI.Page.MainStoragePage;
+import dev.felnull.storagegui.GUI.Page.UniqueItemPage;
 import dev.felnull.storagegui.StorageGUI;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+
+import java.util.*;
 
 @RequiredArgsConstructor
 public class ChatReader {
@@ -57,18 +59,36 @@ public class ChatReader {
             return;
         }
         ChatContentType type = contentTypes.get(p.getUniqueId());
+        UniqueItemData uniqueItemData = uniqueItemDataMap.get(p.getUniqueId());
+        InventoryGUI gui = new InventoryGUI(p);
+        StorageData storageData = storageDataMap.get(p.getUniqueId());
+        StorageGUI.INSTANCE.tabCompletionEnabled.remove(p);
 
         switch (type) {
             //ChatContentTypeがDisplay_Nameの場合の処理
             case DISPLAY_NAME:
                 updateInventoryDisplayName(p,componentToString(msg));
-                InventoryGUI gui = new InventoryGUI(p);
-                StorageData storageData = storageDataMap.get(p.getUniqueId());
                 gui.openPage(new MainStoragePage(gui,storageData));
                 break;
             case UNIQUEITEM_ITEMID:
-                UniqueItemData uniqueItemData = uniqueItemDataMap.get(p.getUniqueId());
                 uniqueItemData.itemID = componentToString(msg);
+                gui.openPage(new UniqueItemPage(gui,uniqueItemData));
+                break;
+            case UNIQUEITEM_ITEMTYPE:
+                uniqueItemData.material = GUIUtils.getMaterialFromString(componentToString(msg));
+                gui.openPage(new UniqueItemPage(gui,uniqueItemData));
+                break;
+            case UNIQUEITEM_CMD:
+                uniqueItemData.cmdNumber = GUIUtils.getIntFromString(componentToString(msg));
+                gui.openPage(new UniqueItemPage(gui,uniqueItemData));
+                break;
+            case UNIQUEITEM_DISPLAYNAME:
+                uniqueItemData.displayName = componentToString(msg);
+                gui.openPage(new UniqueItemPage(gui,uniqueItemData));
+                break;
+            case UNIQUEITEM_LORE:
+                uniqueItemData.lore = componentToString(msg);
+                gui.openPage(new UniqueItemPage(gui,uniqueItemData));
                 break;
         }
 
@@ -79,7 +99,7 @@ public class ChatReader {
 
     //ComponentMessageをStringに変換するメソッド
     public String componentToString(Component msg) {
-        return PlainComponentSerializer.plain().serialize(msg);
+        return ChatColor.translateAlternateColorCodes('&', LegacyComponentSerializer.legacyAmpersand().serialize(msg));
     }
 
     //InventoryDataのDisplayNameを更新するメソッド

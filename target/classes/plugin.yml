@@ -15,6 +15,12 @@ commands:
   shownowstoragesound:
     permission: storagegui.command.admin
     aliases: [ snss ]
+  createuniqueitem:
+    permission: storagegui.command.admin
+    aliases: [ createuni ]
+  materialinput:
+    description: ダミーコマンド（TAB補完用）
+    usage: /materialinput
 permissions:
   storagegui.command.admin:
     default: op

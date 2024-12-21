@@ -6,6 +6,7 @@ depend:
   - BetterGUI
   - BetterStorage
   - Vault
+  - ProtocolLib
 commands:
   showstoragesoundlist:
     permission: storagegui.command.admin
@@ -15,6 +16,9 @@ commands:
   shownowstoragesound:
     permission: storagegui.command.admin
     aliases: [ snss ]
+  createuniqueitem:
+    permission: storagegui.command.admin
+    aliases: [ createuni ]
 permissions:
   storagegui.command.admin:
     default: op

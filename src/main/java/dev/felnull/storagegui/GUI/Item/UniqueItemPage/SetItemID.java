@@ -16,8 +16,9 @@ import java.util.List;
 
 public class SetItemID extends GUIItem {
     UniqueItemData uniqueItemData;
+
     public SetItemID(InventoryGUI gui, UniqueItemData uniqueItemData) {
-        super(gui, new ItemStack(Material.DIRT));
+        super(gui, new ItemStack(Material.GRASS_BLOCK));
         this.uniqueItemData = uniqueItemData;
         setDisplayName(ChatColor.translateAlternateColorCodes('&',"&6ItemIDを設定するまたは指定したItemIDのアイテムを編集する"));
         if(uniqueItemData != null){
@@ -26,7 +27,7 @@ public class SetItemID extends GUIItem {
             loreList.add(Component.text(ChatColor.translateAlternateColorCodes('&', "※注意! ItemIDを変更すると今まで存在していたItemが使えなくなります")));
             setLore(loreList);
         }else{
-            this.uniqueItemData = new UniqueItemData(null, null, null, null, null, null);
+            this.uniqueItemData = new UniqueItemData(null, "", Material.GRASS_BLOCK, 0, "", false);
         }
     }
 
