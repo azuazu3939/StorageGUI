@@ -8,18 +8,18 @@ import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class subtractPosition extends GUIItem {
+public class AddPosition extends GUIItem {
 
     public SoundOptionPage soundOptionPage;
 
-    public subtractPosition(InventoryGUI gui, SoundOptionPage soundOptionPage) {
+    public AddPosition(InventoryGUI gui, SoundOptionPage soundOptionPage) {
         super(gui, new ItemStack(Material.BARRIER));
-        setDisplayName(ChatColor.translateAlternateColorCodes('&',"&6上にスクロール"));
+        setDisplayName(ChatColor.translateAlternateColorCodes('&',"&6下にスクロール"));
         this.soundOptionPage = soundOptionPage;
     }
 
     @Override
     public void onClick(InventoryClickEvent e) {
-        soundOptionPage.subtractSlotStartPosition(9);
+        soundOptionPage.addSlotStartPosition(9);
     }
 }

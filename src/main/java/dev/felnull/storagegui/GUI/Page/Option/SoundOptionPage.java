@@ -2,28 +2,22 @@ package dev.felnull.storagegui.GUI.Page.Option;
 
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
-import dev.felnull.storagegui.Config.SettingsConfig;
 import dev.felnull.storagegui.Config.SoundList;
 import dev.felnull.storagegui.Data.SoundData;
 import dev.felnull.storagegui.Data.StorageSoundData;
 import dev.felnull.storagegui.Data.StorageSoundENUM;
-import dev.felnull.storagegui.GUI.Item.ModularStorageItem;
 import dev.felnull.storagegui.GUI.Item.PageBackItem;
 import dev.felnull.storagegui.GUI.Item.SoundOptionPage.SoundItem;
-import dev.felnull.storagegui.GUI.Item.SoundOptionPage.addPosition;
-import dev.felnull.storagegui.GUI.Item.SoundOptionPage.subtractPosition;
+import dev.felnull.storagegui.GUI.Item.SoundOptionPage.AddPosition;
+import dev.felnull.storagegui.GUI.Item.SoundOptionPage.SubtractPosition;
 import dev.felnull.storagegui.GUI.StorageGUIPage;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import static dev.felnull.storagegui.Utils.GUIUtils.playStorageSound;
 
@@ -47,7 +41,6 @@ public class SoundOptionPage extends StorageGUIPage {
     @Override
     public void setUp() {
         super.inventory.clear();
-        this.storageSoundData = SettingsConfig.loadSettings(gui.player);
         Set<SoundData> soundDataSet = SoundList.soundEnumMap.get(storageSoundENUM);
         List<SoundData> soundDataList = new ArrayList<>(soundDataSet);
 
@@ -60,8 +53,8 @@ public class SoundOptionPage extends StorageGUIPage {
                 setItem(slotPosition, new SoundItem(gui, soundDataList.get(slot), storageSoundData, storageSoundENUM, this));
             }
         }
-        setItem(51, new subtractPosition(gui, this));
-        setItem(52, new addPosition(gui, this));
+        setItem(51, new SubtractPosition(gui, this));
+        setItem(52, new AddPosition(gui, this));
         setItem(53, new PageBackItem(gui, this));
     }
 
