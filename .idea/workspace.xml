@@ -5,24 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0bf0dc38-186d-4c05-bcd4-a93b24773605" name="変更" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Data/UniqueItemData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Data/UniqueItemData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemCMD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemCMD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemDisplayName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemDisplayName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemDoEnchant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemDoEnchant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemID.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemLore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemLore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemPreview.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemPreview.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Item/UniqueItemPage/SetItemType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Page/UniqueItemPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/GUI/Page/UniqueItemPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Listener/ChatListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Listener/ChatListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/StorageGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/StorageGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Utils/ChatContentType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Utils/ChatContentType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Utils/ChatReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Utils/ChatReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Utils/GUIUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/felnull/storagegui/Utils/GUIUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
