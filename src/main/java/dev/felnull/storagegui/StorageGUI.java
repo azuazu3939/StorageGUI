@@ -1,5 +1,6 @@
 package dev.felnull.storagegui;
 
+import dev.felnull.Data.InventoryData;
 import dev.felnull.storagegui.Commands.CreateUniqueItem;
 import dev.felnull.storagegui.Commands.ReloadSound;
 import dev.felnull.storagegui.Commands.ShowNowSetSound;
@@ -14,6 +15,7 @@ import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class StorageGUI extends JavaPlugin {
@@ -35,6 +38,8 @@ public final class StorageGUI extends JavaPlugin {
     public static Map<String, ItemStack> uniqueItemHashMap;
     //Material名のTab補完の管理用map
     public final ConcurrentHashMap<Player, Boolean> tabCompletionEnabled = new ConcurrentHashMap<>();
+    public static Map<InventoryData, Inventory> nowOpenInventory = new HashMap<>();
+    public static Map<InventoryData, Set<Player>> nowInvSeenPlayerListMap = new HashMap<>();
 
     @Override
     public void onEnable() {
