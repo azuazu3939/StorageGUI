@@ -20,7 +20,6 @@ dev\felnull\storagegui\GUI\Item\BuyModularStorage\BuyModularStorageItem.class
 dev\felnull\storagegui\Data\StorageSoundENUM.class
 dev\felnull\storagegui\GUI\Page\Option\StorageOptionPage.class
 dev\felnull\storagegui\Listener\CreatePrivateGroupPageClickListener.class
-dev\felnull\storagegui\GUI\Item\ModularStorageItem.class
 dev\felnull\storagegui\GUI\Item\UniqueItemPage\SetItemCMD.class
 dev\felnull\storagegui\GUI\Page\ModularStoragePage.class
 dev\felnull\storagegui\GUI\Item\UniqueItemPage\SetItemPreview.class
@@ -31,6 +30,7 @@ dev\felnull\storagegui\Listener\ModularStoragePageClickListener$1.class
 dev\felnull\storagegui\Config\SoundList.class
 dev\felnull\storagegui\GUI\Item\PageBackItem.class
 dev\felnull\storagegui\Utils\ChatContentType.class
+dev\felnull\storagegui\GUI\Item\MainStoragePage\ModularStorageItem.class
 dev\felnull\storagegui\GUI\Item\CreatePrivateGroupPageItem\TrueItem.class
 dev\felnull\storagegui\Listener\ChatListener.class
 dev\felnull\storagegui\Config\SettingsConfig.class

@@ -6,7 +6,7 @@
 
     <groupId>dev.felnull</groupId>
     <artifactId>StorageGUI</artifactId>
-    <version>1.0</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>StorageGUI</name>
@@ -93,7 +93,7 @@
         <dependency>
             <groupId>dev.felnull</groupId>
             <artifactId>BetterStorage</artifactId>
-            <version>1.0.5-20250622.043326-1</version>
+            <version>1.0.5-20250622.174801-2</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->

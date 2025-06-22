@@ -1,13 +1,17 @@
 package dev.felnull.storagegui.GUI.Item.BuyModularStorage;
 
+import dev.felnull.BetterStorage;
 import dev.felnull.Data.GroupPermENUM;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
+import dev.felnull.DataIO.DataIO;
+import dev.felnull.DataIO.DatabaseManager;
 import dev.felnull.bettergui.core.GUIItem;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.GUI.Page.MainStoragePage;
 import dev.felnull.storagegui.StorageGUI;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -40,6 +44,8 @@ public class BuyModularStorageItem extends GUIItem {
         perm.add(GroupPermENUM.MEMBER.getPermName());
         storageData.storageInventory.put(String.valueOf(inventoryNumber), new InventoryData(null, null, 6*9, perm, new HashMap<>()));
         economy.withdrawPlayer((OfflinePlayer) e.getWhoClicked(), inventoryNumber * 50);
+        DataIO.saveInventoryOnly(BetterStorage.BSPlugin.getDatabaseManager(), storageData.groupData, String.valueOf(inventoryNumber));
+        Bukkit.getLogger().info("[StorageGUI][Save][" + storageData.groupName + "]に" + e.getWhoClicked().getName() + "が" + inventoryNumber + "番のスロットを追加しました");
         gui.openPage(new MainStoragePage(gui,storageData));
     }
 }

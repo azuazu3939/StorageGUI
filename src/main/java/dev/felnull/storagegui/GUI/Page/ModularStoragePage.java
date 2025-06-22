@@ -181,10 +181,12 @@ public class ModularStoragePage extends StorageGUIPage {
         inventoryData.saveInventory(this.inventory);
 
         HandlerList.unregisterAll(this.listener);
-        if(!DataIO.saveGroupData(BetterStorage.BSPlugin.getDatabaseManager(), storageData.groupData, storageData.groupData.version)) {
+        if(!DataIO.saveInventoryOnly(BetterStorage.BSPlugin.getDatabaseManager(), storageData.groupData, String.valueOf(inventoryNumber))) {
             gui.player.getInventory().setContents(playerInvOld);
             gui.player.setItemOnCursor(cursorItem);
             gui.player.sendMessage(GUIUtils.c("&4アイテム更新が競合したため更新前にロールバックしました"));
+        }else {
+            Bukkit.getLogger().info("[StorageGUI][Save]" + gui.player.getName() + "のストレージ" + inventoryNumber + "を保存しました");
         }
     }
 }

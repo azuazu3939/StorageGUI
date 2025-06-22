@@ -1,4 +1,4 @@
-package dev.felnull.storagegui.GUI.Item;
+package dev.felnull.storagegui.GUI.Item.MainStoragePage;
 
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
@@ -68,7 +68,7 @@ public class ModularStorageItem extends GUIItem {
             return;
         }
         StorageGUI storageGUI = StorageGUI.INSTANCE;
-        storageGUI.chatReader.registerNextChat(gui.player, ChatContentType.DISPLAY_NAME, invData, storageData);
+        storageGUI.chatReader.registerNextChat(gui.player, ChatContentType.DISPLAY_NAME, invData, storageData, inventoryNumber);
 
         gui.player.sendTitle(ChatColor.translateAlternateColorCodes('&',"&aチャットに変更したい名前を入力してください"), "", 0, 100, 20);
         Component message = Component.text("変更したい名前を入力してください").color(TextColor.color(NamedTextColor.WHITE));

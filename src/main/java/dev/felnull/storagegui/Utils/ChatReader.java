@@ -1,7 +1,9 @@
 package dev.felnull.storagegui.Utils;
 
+import dev.felnull.BetterStorage;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
+import dev.felnull.DataIO.DataIO;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.Data.UniqueItemData;
 import dev.felnull.storagegui.GUI.Page.MainStoragePage;
@@ -23,6 +25,7 @@ public class ChatReader {
     private final Map<UUID, InventoryData> inventoryDataMap = new HashMap<>();
     private final Map<UUID, StorageData> storageDataMap = new HashMap<>();
     private final Map<UUID, UniqueItemData> uniqueItemDataMap = new HashMap<>();
+    private final Map<UUID, Integer> invNumberMap = new HashMap<>();
 
     //ChatContentを選択してこのメソッドを呼び出すとチャットからデータ(Componentを取得できる)
     public void registerNextChat(Player p, ChatContentType type) {
@@ -30,10 +33,11 @@ public class ChatReader {
         p.closeInventory();
     }
     //StorageのDisplayName設定用
-    public void registerNextChat(Player p, ChatContentType type, InventoryData inventoryData, StorageData storageData) {
+    public void registerNextChat(Player p, ChatContentType type, InventoryData inventoryData, StorageData storageData, int invNumber) {
         contentTypes.put(p.getUniqueId(), type);
         inventoryDataMap.put(p.getUniqueId(), inventoryData);
         storageDataMap.put(p.getUniqueId(), storageData);
+        invNumberMap.put(p.getUniqueId(), invNumber);
         p.closeInventory();
     }
     //UniqueItem設定用
@@ -47,6 +51,7 @@ public class ChatReader {
         contentTypes.remove(p.getUniqueId());
         inventoryDataMap.remove(p.getUniqueId());
         storageDataMap.remove(p.getUniqueId());
+        invNumberMap.remove(p.getUniqueId());
     }
 
     public boolean isRegistered(Player p) {
@@ -62,12 +67,14 @@ public class ChatReader {
         UniqueItemData uniqueItemData = uniqueItemDataMap.get(p.getUniqueId());
         InventoryGUI gui = new InventoryGUI(p);
         StorageData storageData = storageDataMap.get(p.getUniqueId());
+        int invNumber = invNumberMap.get(p.getUniqueId());
         StorageGUI.INSTANCE.tabCompletionEnabled.remove(p);
+
 
         switch (type) {
             //ChatContentTypeがDisplay_Nameの場合の処理
             case DISPLAY_NAME:
-                updateInventoryDisplayName(p,componentToString(msg));
+                storageData.storageInventory.put(String.valueOf(invNumber), updateInventoryDisplayName(p,componentToString(msg)));
                 gui.openPage(new MainStoragePage(gui,storageData));
                 break;
             case UNIQUEITEM_ITEMID:
@@ -103,10 +110,13 @@ public class ChatReader {
     }
 
     //InventoryDataのDisplayNameを更新するメソッド
-    public void updateInventoryDisplayName (Player p, String displayName){
+    public InventoryData updateInventoryDisplayName (Player p, String displayName){
         InventoryData inventoryData = inventoryDataMap.get(p.getUniqueId());
+        StorageData storageData = storageDataMap.get(p.getUniqueId());
         if(inventoryData != null){
             inventoryData.displayName = displayName;
         }
+        DataIO.saveInventoryOnly(BetterStorage.BSPlugin.getDatabaseManager(), storageData.groupData, String.valueOf(invNumberMap.get(p.getUniqueId())));
+        return inventoryData;
     }
 }

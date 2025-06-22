@@ -8,11 +8,9 @@ import dev.felnull.storagegui.Data.StorageSoundENUM;
 import dev.felnull.storagegui.GUI.Item.MainStoragePage.MainStorageAddStartItem;
 import dev.felnull.storagegui.GUI.Item.MainStoragePage.MainStorageSubtractStartItem;
 import dev.felnull.storagegui.GUI.Item.MainStoragePage.OpenStorageOption;
-import dev.felnull.storagegui.GUI.Item.ModularStorageItem;
+import dev.felnull.storagegui.GUI.Item.MainStoragePage.ModularStorageItem;
 import dev.felnull.storagegui.GUI.StorageGUIPage;
 import dev.felnull.storagegui.Utils.GUIUtils;
-import net.kyori.adventure.key.Key;
-import net.kyori.adventure.sound.Sound;
 import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -29,7 +27,9 @@ public class MainStoragePage extends StorageGUIPage {
     public List<Integer> numberInventoryList;
     public int invStartPosition;
     public StorageSoundData storageSoundData;
-    private int maxline = 30;
+    private static final int MAX_SLOT_COUNT = 270; // 30行 × 9スロット
+    private static final int DISPLAY_SLOT_COUNT = 45; // 5行 × 9スロット
+
     public MainStoragePage (InventoryGUI gui, StorageData storageData) {
         super(gui, ChatColor.translateAlternateColorCodes('&', "&6BetterStorage!!!"), 6*9);
         this.storageData = storageData;
@@ -49,6 +49,15 @@ public class MainStoragePage extends StorageGUIPage {
     @Override
     public void setUp() {
         super.inventory.clear();
+        /** 表示スロット確認用
+        Bukkit.getLogger().info("invStartPosition=" + invStartPosition);
+        Bukkit.getLogger().info("表示予定スロット: " +
+                IntStream.range(0, 45)
+                        .map(i -> invStartPosition + i)
+                        .mapToObj(String::valueOf)
+                        .collect(Collectors.joining(", "))
+        );
+         **/
 
         int displaySlots = 45; // 6行中、下5行＝5*9スロット（0-8はボタンなど用）
         for (int i = 0; i < displaySlots; i++) {
@@ -79,7 +88,7 @@ public class MainStoragePage extends StorageGUIPage {
     public void changeSlotStartPosition(int startPosition) {
         this.invStartPosition = startPosition;
 
-        int maxStart = Math.max(0, numberInventoryList.size() - 45); // 5行 * 9スロット
+        int maxStart = MAX_SLOT_COUNT - DISPLAY_SLOT_COUNT;
         if (this.invStartPosition > maxStart) {
             this.invStartPosition = maxStart;
         } else if (this.invStartPosition < 0) {
@@ -92,7 +101,7 @@ public class MainStoragePage extends StorageGUIPage {
     public void addSlotStartPosition(int plusPosition) {
         this.invStartPosition += plusPosition;
 
-        int maxStart = Math.max(0, numberInventoryList.size() - 45);
+        int maxStart = MAX_SLOT_COUNT - DISPLAY_SLOT_COUNT;
         if (this.invStartPosition > maxStart) {
             this.invStartPosition = maxStart;
         }
