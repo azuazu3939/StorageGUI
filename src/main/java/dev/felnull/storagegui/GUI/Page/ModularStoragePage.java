@@ -1,7 +1,9 @@
 package dev.felnull.storagegui.GUI.Page;
 
+import dev.felnull.BetterStorage;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
+import dev.felnull.DataIO.DataIO;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.Data.StorageSoundData;
 import dev.felnull.storagegui.GUI.StorageGUIPage;
@@ -14,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -30,6 +33,8 @@ public class ModularStoragePage extends StorageGUIPage {
     ModularStoragePageClickListener listener;
     List<Integer> numberKeyList;
     StorageSoundData storageSoundData;
+    ItemStack[] playerInvOld;
+    public ItemStack cursorItem = null;
 
     //インベントリセーブ中のフラグ trueなら更新中
     boolean updating = false;
@@ -64,6 +69,9 @@ public class ModularStoragePage extends StorageGUIPage {
         this.inventoryData = invData;
         this.inventoryNumber = inventoryNumber;
         this.storageData = storageData;
+        Inventory playerInv = gui.player.getInventory();
+        this.playerInvOld = playerInv.getContents();
+
         HandlerList.unregisterAll(super.listener); //リスナー無効化
         this.listener = new ModularStoragePageClickListener(this);//このページ専用リスナー起動
         Bukkit.getPluginManager().registerEvents(this.listener, StorageGUI.INSTANCE);
@@ -170,6 +178,13 @@ public class ModularStoragePage extends StorageGUIPage {
         if(nowInvSeenPlayerList.isEmpty()){
             StorageGUI.nowOpenInventory.remove(inventoryData);
         }
+        inventoryData.saveInventory(this.inventory);
+
         HandlerList.unregisterAll(this.listener);
+        if(!DataIO.saveGroupData(BetterStorage.BSPlugin.getDatabaseManager(), storageData.groupData, storageData.groupData.version)) {
+            gui.player.getInventory().setContents(playerInvOld);
+            gui.player.setItemOnCursor(cursorItem);
+            gui.player.sendMessage(GUIUtils.c("&4アイテム更新が競合したため更新前にロールバックしました"));
+        }
     }
 }

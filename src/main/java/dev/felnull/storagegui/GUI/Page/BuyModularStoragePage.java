@@ -1,22 +1,40 @@
 package dev.felnull.storagegui.GUI.Page;
 
+import dev.felnull.BetterStorage;
 import dev.felnull.Data.StorageData;
+import dev.felnull.DataIO.DataIO;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.GUI.Item.BuyModularStorage.BuyModularStorageItem;
 import dev.felnull.storagegui.GUI.Item.BuyModularStorage.ReturnMainStoragePageItem;
 import dev.felnull.storagegui.GUI.StorageGUIPage;
+import dev.felnull.storagegui.Listener.CreatePrivateGroupPageClickListener;
+import dev.felnull.storagegui.Listener.ModularStoragePageClickListener;
+import dev.felnull.storagegui.StorageGUI;
+import dev.felnull.storagegui.Utils.GUIUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class BuyModularStoragePage extends StorageGUIPage {
     StorageData storageData;
     int inventoryNumber;
+    ItemStack[] playerInvOld;
+    public ItemStack cursorItem = null;
+    CreatePrivateGroupPageClickListener listener;
 
     public BuyModularStoragePage(InventoryGUI gui, int inventoryNumber, StorageData storageData) {
         super(gui,  ChatColor.translateAlternateColorCodes('&', "&6新規購入&f-" + inventoryNumber), 3*9);
         this.storageData = storageData;
         this.inventoryNumber = inventoryNumber;
+        Inventory playerInv = gui.player.getInventory();
+        this.playerInvOld = playerInv.getContents();
+
+        HandlerList.unregisterAll(super.listener); //リスナー無効化
+        this.listener = new CreatePrivateGroupPageClickListener(this);//このページ専用リスナー起動
+        Bukkit.getPluginManager().registerEvents(this.listener, StorageGUI.INSTANCE);
     }
     @Override
     public void setUp() {
@@ -32,5 +50,15 @@ public class BuyModularStoragePage extends StorageGUIPage {
     @Override
     public @NotNull Inventory getInventory(){
         return this.inventory;
+    }
+
+    @Override
+    public void close() {
+        HandlerList.unregisterAll(this.listener);
+        if(!DataIO.saveGroupData(BetterStorage.BSPlugin.getDatabaseManager(), storageData.groupData, storageData.groupData.version)) {
+            gui.player.getInventory().setContents(playerInvOld);
+            gui.player.setItemOnCursor(cursorItem);
+            gui.player.sendMessage(GUIUtils.c("&4アイテム更新が競合したため更新前にロールバックしました"));
+        }
     }
 }

@@ -4,8 +4,10 @@ import dev.felnull.Data.GroupData;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.bettergui.core.InventoryGUI;
+import dev.felnull.storagegui.GUI.Page.CreatePrivateGroupPage;
 import dev.felnull.storagegui.GUI.Page.MainStoragePage;
 import dev.felnull.storagegui.StorageGUI;
+import dev.felnull.storagegui.Utils.GUIUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class CommonListener implements Listener {
+    /**
     @EventHandler
     public void onInteractChest(PlayerInteractEvent e) {
         e.setCancelled(true);
@@ -56,5 +59,18 @@ public class CommonListener implements Listener {
             inventoryGUI.openPage(new MainStoragePage(inventoryGUI, storageData));
         }
 
+    }
+    **/
+    @EventHandler
+    public void onInteractChest(PlayerInteractEvent e) {
+        if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.CHEST) {
+            e.setCancelled(true);
+            // ここでプレイヤーUUIDやグループUUIDなどを取得
+            String groupName = e.getPlayer().getUniqueId().toString(); // 仮: 個人用
+            if(!GUIUtils.openStorageGUI(e.getPlayer(), groupName)){
+                InventoryGUI gui = new InventoryGUI(e.getPlayer());
+                gui.openPage(new CreatePrivateGroupPage(gui));
+            }
+        }
     }
 }

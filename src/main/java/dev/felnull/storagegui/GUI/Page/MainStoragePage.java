@@ -29,6 +29,7 @@ public class MainStoragePage extends StorageGUIPage {
     public List<Integer> numberInventoryList;
     public int invStartPosition;
     public StorageSoundData storageSoundData;
+    private int maxline = 30;
     public MainStoragePage (InventoryGUI gui, StorageData storageData) {
         super(gui, ChatColor.translateAlternateColorCodes('&', "&6BetterStorage!!!"), 6*9);
         this.storageData = storageData;
@@ -49,47 +50,64 @@ public class MainStoragePage extends StorageGUIPage {
     public void setUp() {
         super.inventory.clear();
 
-        for(int slot = 0; slot < 270; slot++) {
-            int slotPosition = slot - this.invStartPosition; //インベントリの参照範囲を動かす
-            slotPosition += 9; //1行目は空ける
-            if(slotPosition > 53 || slotPosition < 9){
-                continue;
+        int displaySlots = 45; // 6行中、下5行＝5*9スロット（0-8はボタンなど用）
+        for (int i = 0; i < displaySlots; i++) {
+            int slot = invStartPosition + i;
+            int uiSlot = i + 9; // UIの表示位置（1行目は固定）
+
+            if (uiSlot > 53) {
+                break; // GUIの最大スロット数超え防止
             }
-            if(numberInventoryList.contains(slot)) {
-                setItem(slotPosition, new ModularStorageItem(gui, storageData.storageInventory.get(String.valueOf(slot)), slot, storageData, storageSoundData));
-            }else {
-                setItem(slotPosition, new ModularStorageItem(gui, null , slot, storageData, storageSoundData));
+
+            if (numberInventoryList.contains(slot)) {
+                setItem(uiSlot, new ModularStorageItem(gui,
+                        storageData.storageInventory.get(String.valueOf(slot)),
+                        slot,
+                        storageData,
+                        storageSoundData));
+            } else {
+                setItem(uiSlot, new ModularStorageItem(gui, null, slot, storageData, storageSoundData));
             }
         }
-        setItem(0,new MainStorageAddStartItem(gui,this));
-        setItem(1,new MainStorageSubtractStartItem(gui,this));
+
+        // UI固定ボタン
+        setItem(0, new MainStorageAddStartItem(gui, this));
+        setItem(1, new MainStorageSubtractStartItem(gui, this));
         setItem(2, new OpenStorageOption(gui, storageData, storageSoundData));
     }
 
     public void changeSlotStartPosition(int startPosition) {
         this.invStartPosition = startPosition;
-        if (this.invStartPosition > 225){//9スロット*5行*5ページ
-            this.invStartPosition = 225;
+
+        int maxStart = Math.max(0, numberInventoryList.size() - 45); // 5行 * 9スロット
+        if (this.invStartPosition > maxStart) {
+            this.invStartPosition = maxStart;
         } else if (this.invStartPosition < 0) {
             this.invStartPosition = 0;
         }
+
         this.setUp();
     }
 
     public void addSlotStartPosition(int plusPosition) {
         this.invStartPosition += plusPosition;
-        if (this.invStartPosition > 225){
-            this.invStartPosition = 225;
+
+        int maxStart = Math.max(0, numberInventoryList.size() - 45);
+        if (this.invStartPosition > maxStart) {
+            this.invStartPosition = maxStart;
         }
+
         playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.PAGE_SCROLL), gui.player);
         this.setUp();
     }
 
+
     public void subtractSlotStartPosition(int minusPosition) {
         this.invStartPosition -= minusPosition;
-        if (this.invStartPosition < 0){
+        if (this.invStartPosition < 0) {
             this.invStartPosition = 0;
         }
+
         playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.PAGE_SCROLL), gui.player);
         this.setUp();
     }

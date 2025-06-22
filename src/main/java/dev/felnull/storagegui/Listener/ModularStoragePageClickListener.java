@@ -1,15 +1,18 @@
 package dev.felnull.storagegui.Listener;
 
 import dev.felnull.bettergui.core.GUIPage;
+import dev.felnull.storagegui.GUI.Page.ModularStoragePage;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class ModularStoragePageClickListener implements Listener {
-    private final GUIPage page;
+    private final ModularStoragePage page;
 
-    public ModularStoragePageClickListener(GUIPage page){
+
+    public ModularStoragePageClickListener(ModularStoragePage page){
         this.page = page;
     }
 
@@ -36,7 +39,7 @@ public class ModularStoragePageClickListener implements Listener {
                 }
                 break;
         }
-
+        page.cursorItem = e.getCursor() == null ? null : e.getCursor().clone();
     }
     //インベントリを閉じるときにインベントリ内のアイテムデータをInventoryDataに変換する必要がある
     @EventHandler

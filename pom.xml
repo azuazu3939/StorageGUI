@@ -93,7 +93,7 @@
         <dependency>
             <groupId>dev.felnull</groupId>
             <artifactId>BetterStorage</artifactId>
-            <version>1.0.4-20241211.125047-14</version>
+            <version>1.0.5-20250622.043326-1</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->

@@ -6,6 +6,7 @@ depend:
   - BetterGUI
   - BetterStorage
   - Vault
+  - ProtocolLib
 commands:
   showstoragesoundlist:
     permission: storagegui.command.admin
@@ -18,9 +19,6 @@ commands:
   createuniqueitem:
     permission: storagegui.command.admin
     aliases: [ createuni ]
-  materialinput:
-    description: ダミーコマンド（TAB補完用）
-    usage: /materialinput
 permissions:
   storagegui.command.admin:
     default: op

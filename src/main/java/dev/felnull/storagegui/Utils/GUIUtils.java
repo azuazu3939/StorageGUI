@@ -1,15 +1,20 @@
 package dev.felnull.storagegui.Utils;
 
+import dev.felnull.BetterStorage;
+import dev.felnull.Data.GroupData;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
+import dev.felnull.DataIO.DataIO;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.Data.StorageSoundData;
 import dev.felnull.storagegui.Data.StorageSoundENUM;
+import dev.felnull.storagegui.GUI.Page.MainStoragePage;
 import dev.felnull.storagegui.GUI.Page.ModularStoragePage;
 import dev.felnull.storagegui.StorageGUI;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,6 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +80,7 @@ public class GUIUtils {
     }
 
     //keyで音を流すメソッド
+    //
     public static void playStorageSound(Key soundKey, Player player) {
         player.playSound(Sound.sound(soundKey, Sound.Source.BLOCK, 1.0f, 1.0f));
     }
@@ -108,4 +115,33 @@ public class GUIUtils {
     public static int getIntFromString(String str) {
         return Integer.parseInt(replaceCharToNumber(str));
     }
+
+    //Storageを開くメソッド
+    public static boolean openStorageGUI(Player player, String groupName) {
+        GroupData groupData = DataIO.loadGroupData(BetterStorage.BSPlugin.getDatabaseManager(), groupName);
+        if (groupData == null) {
+            player.sendMessage("ストレージが見つかりません！");
+            return false;
+        }
+        InventoryGUI inventoryGUI = new InventoryGUI(player);
+        // 必要に応じてページの生成方法・表示内容をここで調整
+        inventoryGUI.openPage(new MainStoragePage(inventoryGUI, groupData.storageData));
+        return true;
+    }
+
+    // メッセージをフォーマットして、&で色をつける
+    public static String f(String text, Object... args) {
+        return MessageFormat.format(ChatColor.translateAlternateColorCodes('&', text), args);
+    }
+
+    // 色を消す
+    public static String r(String text) {
+        return ChatColor.stripColor(text);
+    }
+
+    public static Component c(String text){
+       return Component.text( f(text));
+    }
+
+
 }
