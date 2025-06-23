@@ -116,7 +116,7 @@ public class ChatReader {
         if(inventoryData != null){
             inventoryData.displayName = displayName;
         }
-        DataIO.saveInventoryOnly(storageData.groupData, String.valueOf(invNumberMap.get(p.getUniqueId())));
+        DataIO.saveInventoryOnly(storageData.groupData, storageData, String.valueOf(invNumberMap.get(p.getUniqueId())));
         return inventoryData;
     }
 }

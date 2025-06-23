@@ -119,14 +119,11 @@ public class GUIUtils {
     }
 
     //Storageを開くメソッド
-    public static boolean openStorageGUI(Player player, String groupName) {
+    public static boolean openStorageGUI(Player player, GroupData groupData) {
         StorageData storageData = null;
-        try (Connection conn = BetterStorage.BSPlugin.getDatabaseManager().getConnection()) {
-            storageData = DataIO.loadStorageMetaOnly(conn, groupName);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        storageData = groupData.storageData;
         if(storageData == null){
+            player.sendMessage("ストレージがありません" + groupData.groupUUID);
             return false;
         }
         InventoryGUI inventoryGUI = new InventoryGUI(player);

@@ -44,8 +44,8 @@ public class BuyModularStorageItem extends GUIItem {
         perm.add(GroupPermENUM.MEMBER.getPermName());
         storageData.storageInventory.put(String.valueOf(inventoryNumber), new InventoryData(null, 6, perm, new HashMap<>()));
         economy.withdrawPlayer((OfflinePlayer) e.getWhoClicked(), inventoryNumber * 50);
-        DataIO.saveInventoryOnly(storageData.groupData, String.valueOf(inventoryNumber));
-        Bukkit.getLogger().info("[StorageGUI][Save][" + storageData.groupName + "]に" + e.getWhoClicked().getName() + "が" + inventoryNumber + "番のスロットを追加しました");
+        DataIO.saveInventoryOnly(storageData.groupData, storageData, String.valueOf(inventoryNumber));
+        Bukkit.getLogger().info("[StorageGUI][Save][" + storageData.groupData.groupName + "]に" + e.getWhoClicked().getName() + "が" + inventoryNumber + "番のスロットを追加しました");
         gui.openPage(new MainStoragePage(gui,storageData));
     }
 }

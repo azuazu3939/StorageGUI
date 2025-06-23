@@ -12,6 +12,7 @@ import dev.felnull.storagegui.StorageGUI;
 import dev.felnull.storagegui.Utils.GUIUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -178,10 +179,20 @@ public class ModularStoragePage extends StorageGUIPage {
         if(nowInvSeenPlayerList.isEmpty()){
             StorageGUI.nowOpenInventory.remove(inventoryData);
         }
-        inventoryData.saveInventory(this.inventory);
+        // 🔥インベントリの中身を itemStackSlot に反映させる！
+        for (int slot = 0; slot < inventory.getSize(); slot++) {
+            ItemStack item = inventory.getItem(slot);
+            if (item == null || item.getType() == Material.AIR) {
+                inventoryData.itemStackSlot.remove(slot);
+            } else {
+                inventoryData.itemStackSlot.put(slot, item.clone());
+            }
+        }
+
+        storageData.storageInventory.put(String.valueOf(inventoryNumber), inventoryData);
 
         HandlerList.unregisterAll(this.listener);
-        if(!DataIO.saveInventoryOnly(storageData.groupData, String.valueOf(inventoryNumber))) {
+        if(!DataIO.saveInventoryOnly(storageData.groupData, storageData, String.valueOf(inventoryNumber))) {
             gui.player.getInventory().setContents(playerInvOld);
             gui.player.setItemOnCursor(cursorItem);
             gui.player.sendMessage(GUIUtils.c("&4アイテム更新が競合したため更新前にロールバックしました"));

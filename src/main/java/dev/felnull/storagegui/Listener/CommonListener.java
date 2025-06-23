@@ -3,6 +3,8 @@ package dev.felnull.storagegui.Listener;
 import dev.felnull.Data.GroupData;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
+import dev.felnull.DataIO.DataIO;
+import dev.felnull.DataIO.GroupManager;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.GUI.Page.CreatePrivateGroupPage;
 import dev.felnull.storagegui.GUI.Page.MainStoragePage;
@@ -16,10 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class CommonListener implements Listener {
     /**
@@ -66,8 +65,10 @@ public class CommonListener implements Listener {
         if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.CHEST) {
             e.setCancelled(true);
             // ここでプレイヤーUUIDやグループUUIDなどを取得
-            String groupName = e.getPlayer().getUniqueId().toString(); // 仮: 個人用
-            if(!GUIUtils.openStorageGUI(e.getPlayer(), groupName)){
+            GroupData group = DataIO.loadGroupData(e.getPlayer().getUniqueId().toString());
+            if (group != null && GUIUtils.openStorageGUI(e.getPlayer(), group)) {
+                // 正常に開けた
+            } else {
                 InventoryGUI gui = new InventoryGUI(e.getPlayer());
                 gui.openPage(new CreatePrivateGroupPage(gui));
             }
