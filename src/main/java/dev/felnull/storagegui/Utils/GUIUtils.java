@@ -23,6 +23,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -118,14 +120,18 @@ public class GUIUtils {
 
     //Storageを開くメソッド
     public static boolean openStorageGUI(Player player, String groupName) {
-        GroupData groupData = DataIO.loadGroupData(BetterStorage.BSPlugin.getDatabaseManager(), groupName);
-        if (groupData == null) {
-            player.sendMessage("ストレージが見つかりません！");
+        StorageData storageData = null;
+        try (Connection conn = BetterStorage.BSPlugin.getDatabaseManager().getConnection()) {
+            storageData = DataIO.loadStorageMetaOnly(conn, groupName);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if(storageData == null){
             return false;
         }
         InventoryGUI inventoryGUI = new InventoryGUI(player);
         // 必要に応じてページの生成方法・表示内容をここで調整
-        inventoryGUI.openPage(new MainStoragePage(inventoryGUI, groupData.storageData));
+        inventoryGUI.openPage(new MainStoragePage(inventoryGUI, storageData));
         return true;
     }
 

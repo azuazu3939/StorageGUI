@@ -42,7 +42,7 @@ public class TrueItem extends GUIItem {
         GroupData groupData = new GroupData(player, storageData, StorageGUI.pluginName);
 
         // DBへ保存（version=0 なので新規作成用とする）
-        DataIO.saveGroupData(BetterStorage.BSPlugin.getDatabaseManager(), groupData, 0L);
+        DataIO.saveGroupData(groupData, 0L);
 
         // GUIを開く
         GUIUtils.openStorageGUI(player, player.getUniqueId().toString());

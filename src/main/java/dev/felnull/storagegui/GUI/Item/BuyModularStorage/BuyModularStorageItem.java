@@ -42,9 +42,9 @@ public class BuyModularStorageItem extends GUIItem {
 
         Set<String> perm = new HashSet<>();
         perm.add(GroupPermENUM.MEMBER.getPermName());
-        storageData.storageInventory.put(String.valueOf(inventoryNumber), new InventoryData(null, null, 6*9, perm, new HashMap<>()));
+        storageData.storageInventory.put(String.valueOf(inventoryNumber), new InventoryData(null, 6, perm, new HashMap<>()));
         economy.withdrawPlayer((OfflinePlayer) e.getWhoClicked(), inventoryNumber * 50);
-        DataIO.saveInventoryOnly(BetterStorage.BSPlugin.getDatabaseManager(), storageData.groupData, String.valueOf(inventoryNumber));
+        DataIO.saveInventoryOnly(storageData.groupData, String.valueOf(inventoryNumber));
         Bukkit.getLogger().info("[StorageGUI][Save][" + storageData.groupName + "]に" + e.getWhoClicked().getName() + "が" + inventoryNumber + "番のスロットを追加しました");
         gui.openPage(new MainStoragePage(gui,storageData));
     }

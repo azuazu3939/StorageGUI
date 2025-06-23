@@ -181,7 +181,7 @@ public class ModularStoragePage extends StorageGUIPage {
         inventoryData.saveInventory(this.inventory);
 
         HandlerList.unregisterAll(this.listener);
-        if(!DataIO.saveInventoryOnly(BetterStorage.BSPlugin.getDatabaseManager(), storageData.groupData, String.valueOf(inventoryNumber))) {
+        if(!DataIO.saveInventoryOnly(storageData.groupData, String.valueOf(inventoryNumber))) {
             gui.player.getInventory().setContents(playerInvOld);
             gui.player.setItemOnCursor(cursorItem);
             gui.player.sendMessage(GUIUtils.c("&4アイテム更新が競合したため更新前にロールバックしました"));

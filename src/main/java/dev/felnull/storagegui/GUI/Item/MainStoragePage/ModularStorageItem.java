@@ -1,7 +1,9 @@
 package dev.felnull.storagegui.GUI.Item.MainStoragePage;
 
+import dev.felnull.BetterStorage;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
+import dev.felnull.DataIO.DataIO;
 import dev.felnull.bettergui.core.GUIItem;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.Data.StorageSoundData;
@@ -19,6 +21,8 @@ import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +36,16 @@ public class ModularStorageItem extends GUIItem {
         super(gui, new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
         if(invData != null){
             super.itemStack = GUIUtils.getCurrentCapacityGlass(invData);
+            if(!invData.fullyLoaded){
+                try (Connection conn = BetterStorage.BSPlugin.getDatabaseManager().getConnection()) {
+                    storageData.loadPage(conn, StorageGUI.pluginName, String.valueOf(inventoryNumber));
+                    invData = storageData.storageInventory.get(String.valueOf(inventoryNumber));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
+
         this.invData = invData;
         this.inventoryNumber = inventoryNumber;
         this.storageData = storageData;
@@ -43,9 +56,10 @@ public class ModularStorageItem extends GUIItem {
             this.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Storage&f:") + ChatColor.translateAlternateColorCodes('&', invData.displayName));
         }
         List<Component> lore = new ArrayList<>();
-        if(invData != null && invData.userTag != null) {
-            for (String tag : invData.userTag) {
-                lore.add(Component.text(tag));
+        if (invData != null && invData.userTags != null && !invData.userTags.isEmpty()) {
+            lore.add(Component.text("タグ:"));
+            for (String tag : invData.userTags) {
+                lore.add(Component.text("- " + tag));
             }
         }
         lore.add(Component.text("[Qキー]:DisplayName変更"));

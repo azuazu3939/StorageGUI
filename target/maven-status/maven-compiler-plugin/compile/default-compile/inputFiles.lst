@@ -1,5 +1,6 @@
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\UniqueItemPage\SetItemDoEnchant.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\CreatePrivateGroupPageItem\TrueItem.java
+Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\Listener\CreatePrivateGroupPageClickListener.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\Config\SoundList.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Page\ModularStoragePage.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\MainStoragePage\MainStorageAddStartItem.java
@@ -29,13 +30,13 @@ Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\Listener\TabCompleteL
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\BuyModularStorage\BuyModularStorageItem.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\Config\UniqueItem.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\StorageGUIPage.java
+Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\MainStoragePage\ModularStorageItem.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\SoundOptionPage\AddPosition.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\Data\SoundData.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\SoundOptionPage\SubtractPosition.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\Data\StorageSoundData.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\PageBackItem.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Page\MainStoragePage.java
-Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\ModularStorageItem.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\CreatePrivateGroupPageItem\FalseItem.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\StorageGUI.java
 Z:\Modding\StorageGUI\src\main\java\dev\felnull\storagegui\GUI\Item\MainStoragePage\OpenStorageOption.java
