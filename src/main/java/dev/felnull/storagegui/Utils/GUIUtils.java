@@ -26,9 +26,9 @@ import org.bukkit.inventory.ItemStack;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static dev.felnull.storagegui.GUI.Page.ModularStoragePage.playerPages;
 
 public class GUIUtils {
 
@@ -69,16 +69,34 @@ public class GUIUtils {
     }
 
     //毎回ifするのは冗長すぎるので分割
-    public static void openModularInventory (InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData, StorageSoundData storageSoundData){
-        playStorageSound(storageSoundData.getSoundKey(StorageSoundENUM.CHANGE_PAGE), gui.player);
-        if(StorageGUI.nowOpenInventory.containsKey(invData)){
-            gui.openPage(new ModularStoragePage(gui, invData, inventoryNumber, storageData, storageSoundData, StorageGUI.nowOpenInventory.get(invData)));
-        }else if(invData.displayName == null) {
-            //displayNameがない場合はストレージ名数字
-            gui.openPage(new ModularStoragePage(gui, invData, inventoryNumber, storageData, storageSoundData));
-        }else {
-            gui.openPage(new ModularStoragePage(gui, invData, inventoryNumber, storageData, storageSoundData, invData.displayName));
+    public static void openModularInventory(
+            InventoryGUI gui,
+            InventoryData invData,
+            int inventoryNumber,
+            StorageData storageData,
+            StorageSoundData storageSoundData
+    ) {
+        UUID uuid = gui.player.getUniqueId();
+        String pageId = String.valueOf(inventoryNumber);
+
+        Map<String, ModularStoragePage> pageMap = playerPages.computeIfAbsent(uuid, k -> new HashMap<>());
+        ModularStoragePage existingPage = pageMap.get(pageId);
+
+        if (existingPage != null) {
+            existingPage.switchingPage = true;
+            gui.openPage(existingPage);
+            return;
         }
+
+        // 新規作成
+        ModularStoragePage newPage;
+        if (invData.displayName != null && !invData.displayName.isEmpty()) {
+            newPage = new ModularStoragePage(gui, invData, inventoryNumber, storageData, storageSoundData, invData.displayName);
+        } else {
+            newPage = new ModularStoragePage(gui, invData, inventoryNumber, storageData, storageSoundData);
+        }
+        pageMap.put(pageId, newPage);
+        gui.openPage(newPage);
     }
 
     //keyで音を流すメソッド
@@ -145,6 +163,5 @@ public class GUIUtils {
     public static Component c(String text, Object... args){
        return Component.text( f(text, args));
     }
-
 
 }

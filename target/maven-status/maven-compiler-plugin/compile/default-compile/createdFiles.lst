@@ -13,6 +13,7 @@ dev\felnull\storagegui\GUI\Item\UniqueItemPage\SetItemDisplayName.class
 dev\felnull\storagegui\GUI\Item\MainStoragePage\MainStorageAddStartItem.class
 dev\felnull\storagegui\GUI\Item\SoundOptionPage\AddPosition.class
 dev\felnull\storagegui\Listener\CommonListener.class
+dev\felnull\storagegui\Utils\InvUtil.class
 dev\felnull\storagegui\Config\UniqueItem.class
 dev\felnull\storagegui\GUI\Page\MainStoragePage.class
 dev\felnull\storagegui\Listener\TabCompleteListener.class
@@ -27,6 +28,7 @@ dev\felnull\storagegui\GUI\Item\UniqueItemPage\SetItemID.class
 dev\felnull\storagegui\Data\StorageSoundData.class
 dev\felnull\storagegui\Listener\ModularStoragePageClickListener.class
 dev\felnull\storagegui\Listener\ModularStoragePageClickListener$1.class
+dev\felnull\storagegui\UniqueItem\StorageUnlockItemManager.class
 dev\felnull\storagegui\Config\SoundList.class
 dev\felnull\storagegui\GUI\Item\PageBackItem.class
 dev\felnull\storagegui\Utils\ChatContentType.class

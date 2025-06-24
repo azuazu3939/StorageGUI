@@ -38,8 +38,6 @@ public final class StorageGUI extends JavaPlugin {
     public static Map<String, ItemStack> uniqueItemHashMap;
     //Material名のTab補完の管理用map
     public final ConcurrentHashMap<Player, Boolean> tabCompletionEnabled = new ConcurrentHashMap<>();
-    public static Map<InventoryData, Inventory> nowOpenInventory = new HashMap<>();
-    public static Map<InventoryData, Set<Player>> nowInvSeenPlayerListMap = new HashMap<>();
 
     @Override
     public void onEnable() {

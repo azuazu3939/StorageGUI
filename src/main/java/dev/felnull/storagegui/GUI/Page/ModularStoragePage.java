@@ -21,26 +21,24 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ModularStoragePage extends StorageGUIPage {
+
+    public static final Map<UUID, Map<String, ModularStoragePage>> playerPages = new HashMap<>();
 
     Set<Integer> inventoryKeys;
     InventoryData inventoryData;
     int inventoryNumber;
     StorageData storageData;
-    //ModularStoragePageClickListener listener;
+    ModularStoragePageClickListener listener;
     List<Integer> numberKeyList;
     StorageSoundData storageSoundData;
     ItemStack[] playerInvOld;
-    //public ItemStack cursorItem = null;
+    public boolean switchingPage = false;
 
     //インベントリセーブ中のフラグ trueなら更新中
     boolean updating = false;
-    Set<Player> nowInvSeenPlayerList;
 
 
 
@@ -74,8 +72,8 @@ public class ModularStoragePage extends StorageGUIPage {
         Inventory playerInv = gui.player.getInventory();
         this.playerInvOld = playerInv.getContents();
 
-        //HandlerList.unregisterAll(super.listener); //リスナー無効化
-        //this.listener = new ModularStoragePageClickListener(this);//このページ専用リスナー起動
+        HandlerList.unregisterAll(super.listener); //リスナー無効化
+        this.listener = new ModularStoragePageClickListener(this);//このページ専用リスナー起動
         Bukkit.getPluginManager().registerEvents(this.listener, StorageGUI.INSTANCE);
 
         //StorageData内のInventoryDataに紐づいたページ名を取得して数字のページ名のみListに入れている
@@ -83,25 +81,11 @@ public class ModularStoragePage extends StorageGUIPage {
         //昇順にソート
         Collections.sort(numberKeyList);
         this.numberKeyList = numberKeyList;
-
-        if(StorageGUI.nowInvSeenPlayerListMap.containsKey(invData)){
-            this.nowInvSeenPlayerList = StorageGUI.nowInvSeenPlayerListMap.get(invData);
-        }else {
-            this.nowInvSeenPlayerList = new HashSet<>();
-            StorageGUI.nowInvSeenPlayerListMap.put(invData, this.nowInvSeenPlayerList);
-        }
-
     }
 
     @Override
     public void setUp() {
-        if(StorageGUI.nowOpenInventory.containsKey(this.inventoryData)){
-            this.nowInvSeenPlayerList.add(gui.player);
-        }else {
-            StorageGUI.nowOpenInventory.put(this.inventoryData, inventory);
-            this.nowInvSeenPlayerList.add(gui.player);
-            this.update();
-        }
+        this.update();
     }
 
     @Override
@@ -127,12 +111,17 @@ public class ModularStoragePage extends StorageGUIPage {
             return;
         }
 
-        //ストレージ上限0-225
-        if(inventoryNumber >= 0 && inventoryNumber < 225){
+        //ストレージ上限0-270
+        if(inventoryNumber >= 0 && inventoryNumber < 270){
             Integer nearInventoryNumber = nearFigure(numberKeyList, inventoryNumber,false);
             if(nearInventoryNumber == null){
                 return;
             }
+
+            // ページ移動前に現在のページ内容を保存
+            InvUtil.saveWithRollback(this, storageData, inventoryData, inventoryNumber, playerInvOld, this.cursorItem);
+
+            this.switchingPage = true;
             GUIUtils.openModularInventory(gui, storageData.storageInventory.get(String.valueOf(nearInventoryNumber)), nearInventoryNumber, storageData, storageSoundData);
         }
 
@@ -145,12 +134,17 @@ public class ModularStoragePage extends StorageGUIPage {
             return;
         }
 
-        //ストレージ上限0-225 このデータStrageDataで保持すべきか。。？
-        if(inventoryNumber >= 0 && inventoryNumber < 225){
+        //ストレージ上限0-270 このデータStrageDataで保持すべきか。。？
+        if(inventoryNumber >= 0 && inventoryNumber < 270){
             Integer nearinventoryNumber = nearFigure(numberKeyList, inventoryNumber,true);
             if(nearinventoryNumber == null){
                 return;
             }
+
+            // ページ移動前に現在のページ内容を保存
+            InvUtil.saveWithRollback(this, storageData, inventoryData, inventoryNumber, playerInvOld, this.cursorItem);
+
+            this.switchingPage = true;
             GUIUtils.openModularInventory(gui, storageData.storageInventory.get(String.valueOf(nearinventoryNumber)), nearinventoryNumber, storageData, storageSoundData);
         }
     }
@@ -176,13 +170,14 @@ public class ModularStoragePage extends StorageGUIPage {
 
     @Override
     public void close() {
-        nowInvSeenPlayerList.remove(gui.player);
-        if (nowInvSeenPlayerList.isEmpty()) {
-            StorageGUI.nowOpenInventory.remove(inventoryData);
-        }
+        super.close();
 
-        // イベント解除
-        HandlerList.unregisterAll(this.listener);
+        playerPages.get(gui.player.getUniqueId()).remove(String.valueOf(inventoryNumber)); // ✅ thisインスタンス破棄
+
+        if (switchingPage) {
+            switchingPage = false;
+            return; // ページ切り替え中は保存しない
+        }
 
         // 保存＋ロールバック＋ログ出力
         InvUtil.saveWithRollback(this, storageData, inventoryData, inventoryNumber, playerInvOld, this.cursorItem);
