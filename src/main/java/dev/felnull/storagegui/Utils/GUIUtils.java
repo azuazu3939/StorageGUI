@@ -142,8 +142,8 @@ public class GUIUtils {
         return ChatColor.stripColor(text);
     }
 
-    public static Component c(String text){
-       return Component.text( f(text));
+    public static Component c(String text, Object... args){
+       return Component.text( f(text, args));
     }
 
 

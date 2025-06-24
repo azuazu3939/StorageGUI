@@ -25,6 +25,7 @@ public class UniqueItem {
     static String materialNameSection = ".ItemType";
     static String enchantSection = ".Enchant";
     static String loreSection = ".Lore";
+    private static Map<String, ItemStack> cachedItems = null;
 
     public static void saveUniqueItem(UniqueItemData uniqueItemData) {
         initSaveSettings();
@@ -63,6 +64,33 @@ public class UniqueItem {
             }
         }
         return;
+    }
+
+    public static Map<String, ItemStack> loadAllUniqueItems() {
+        if (cachedItems != null) return cachedItems; // 初回以降キャッシュ
+
+        Map<String, ItemStack> map = new HashMap<>();
+        if (!uniqueItemFolder.exists()) {
+            Bukkit.getLogger().warning("[StorageGUI] UniqueItemフォルダが見つかりません！");
+            return map;
+        }
+
+        File[] files = uniqueItemFolder.listFiles((dir, name) -> name.endsWith(".yml"));
+        if (files == null) return map;
+
+        for (File file : files) {
+            YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
+            for (String key : yaml.getKeys(false)) {
+                ItemStack item = yamlToItemStack(yaml, key);
+                if (item != null) {
+                    map.put(key, item);
+                }
+            }
+        }
+
+        Bukkit.getLogger().info("[StorageGUI] カスタムアイテムを読み込みました");
+        cachedItems = map;
+        return map;
     }
 
     public static Map<String, ItemStack> loadUniqueItem() {
@@ -139,5 +167,15 @@ public class UniqueItem {
         return item;
     }
 
+    public static ItemStack getUniqueItem(String id) {
+        Map<String, ItemStack> map = loadAllUniqueItems();
+        return map.getOrDefault(id, null);
+    }
+
+    public static boolean isSameUniqueItem(ItemStack a, ItemStack b) {
+        if (a == null || b == null) return false;
+        if (!a.getType().equals(b.getType())) return false;
+        return Objects.equals(a.getItemMeta().getCustomModelData(), b.getItemMeta().getCustomModelData());
+    }
 
 }

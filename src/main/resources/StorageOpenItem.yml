@@ -1,0 +1,5 @@
+StorageOpenItem:
+  StorageKeyItem:
+    Power: 5
+  StorageStrongKeyItem:
+    Power: 10
