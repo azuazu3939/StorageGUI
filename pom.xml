@@ -6,7 +6,7 @@
 
     <groupId>dev.felnull</groupId>
     <artifactId>StorageGUI</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>StorageGUI</name>
@@ -87,7 +87,7 @@
         <dependency>
             <groupId>dev.felnull</groupId>
             <artifactId>BetterGUI</artifactId>
-            <version>1.0.6-20250411.020102-9</version>
+            <version>1.0.7</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

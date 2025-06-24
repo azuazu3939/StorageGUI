@@ -62,16 +62,27 @@ public class CommonListener implements Listener {
     **/
     @EventHandler
     public void onInteractChest(PlayerInteractEvent e) {
-        if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.CHEST) {
-            e.setCancelled(true);
-            // ここでプレイヤーUUIDやグループUUIDなどを取得
-            GroupData group = DataIO.loadGroupData(e.getPlayer().getUniqueId().toString());
-            if (group != null && GUIUtils.openStorageGUI(e.getPlayer(), group)) {
-                // 正常に開けた
-            } else {
-                InventoryGUI gui = new InventoryGUI(e.getPlayer());
-                gui.openPage(new CreatePrivateGroupPage(gui));
-            }
-        }
+        if (e.getClickedBlock() == null || e.getClickedBlock().getType() != Material.CHEST)
+            return;
+
+        e.setCancelled(true); // ここは同期なので即処理
+
+        Player player = e.getPlayer();
+        UUID playerUUID = player.getUniqueId();
+
+        // 非同期でDBアクセス
+        Bukkit.getScheduler().runTaskAsynchronously(StorageGUI.INSTANCE, () -> {
+            GroupData group = DataIO.loadGroupData(playerUUID.toString());
+
+            // 結果をもとに同期でGUIを開く
+            Bukkit.getScheduler().runTask(StorageGUI.INSTANCE, () -> {
+                if (group != null && GUIUtils.openStorageGUI(player, group)) {
+                    // 正常に開けた
+                } else {
+                    InventoryGUI gui = new InventoryGUI(player);
+                    gui.openPage(new CreatePrivateGroupPage(gui));
+                }
+            });
+        });
     }
 }

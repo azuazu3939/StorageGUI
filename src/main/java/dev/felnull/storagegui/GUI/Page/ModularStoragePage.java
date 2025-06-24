@@ -10,6 +10,7 @@ import dev.felnull.storagegui.GUI.StorageGUIPage;
 import dev.felnull.storagegui.Listener.ModularStoragePageClickListener;
 import dev.felnull.storagegui.StorageGUI;
 import dev.felnull.storagegui.Utils.GUIUtils;
+import dev.felnull.storagegui.Utils.InvUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -31,11 +32,11 @@ public class ModularStoragePage extends StorageGUIPage {
     InventoryData inventoryData;
     int inventoryNumber;
     StorageData storageData;
-    ModularStoragePageClickListener listener;
+    //ModularStoragePageClickListener listener;
     List<Integer> numberKeyList;
     StorageSoundData storageSoundData;
     ItemStack[] playerInvOld;
-    public ItemStack cursorItem = null;
+    //public ItemStack cursorItem = null;
 
     //インベントリセーブ中のフラグ trueなら更新中
     boolean updating = false;
@@ -73,8 +74,8 @@ public class ModularStoragePage extends StorageGUIPage {
         Inventory playerInv = gui.player.getInventory();
         this.playerInvOld = playerInv.getContents();
 
-        HandlerList.unregisterAll(super.listener); //リスナー無効化
-        this.listener = new ModularStoragePageClickListener(this);//このページ専用リスナー起動
+        //HandlerList.unregisterAll(super.listener); //リスナー無効化
+        //this.listener = new ModularStoragePageClickListener(this);//このページ専用リスナー起動
         Bukkit.getPluginManager().registerEvents(this.listener, StorageGUI.INSTANCE);
 
         //StorageData内のInventoryDataに紐づいたページ名を取得して数字のページ名のみListに入れている
@@ -128,11 +129,11 @@ public class ModularStoragePage extends StorageGUIPage {
 
         //ストレージ上限0-225
         if(inventoryNumber >= 0 && inventoryNumber < 225){
-            Integer nearinventoryNumber = nearFigure(numberKeyList, inventoryNumber,false);
-            if(nearinventoryNumber == null){
+            Integer nearInventoryNumber = nearFigure(numberKeyList, inventoryNumber,false);
+            if(nearInventoryNumber == null){
                 return;
             }
-            GUIUtils.openModularInventory(gui, storageData.storageInventory.get(String.valueOf(nearinventoryNumber)), nearinventoryNumber, storageData, storageSoundData);
+            GUIUtils.openModularInventory(gui, storageData.storageInventory.get(String.valueOf(nearInventoryNumber)), nearInventoryNumber, storageData, storageSoundData);
         }
 
     }
@@ -176,28 +177,14 @@ public class ModularStoragePage extends StorageGUIPage {
     @Override
     public void close() {
         nowInvSeenPlayerList.remove(gui.player);
-        if(nowInvSeenPlayerList.isEmpty()){
+        if (nowInvSeenPlayerList.isEmpty()) {
             StorageGUI.nowOpenInventory.remove(inventoryData);
         }
-        // 🔥インベントリの中身を itemStackSlot に反映させる！
-        for (int slot = 0; slot < inventory.getSize(); slot++) {
-            ItemStack item = inventory.getItem(slot);
-            if (item == null || item.getType() == Material.AIR) {
-                inventoryData.itemStackSlot.remove(slot);
-            } else {
-                inventoryData.itemStackSlot.put(slot, item.clone());
-            }
-        }
 
-        storageData.storageInventory.put(String.valueOf(inventoryNumber), inventoryData);
-
+        // イベント解除
         HandlerList.unregisterAll(this.listener);
-        if(!DataIO.saveInventoryOnly(storageData.groupData, storageData, String.valueOf(inventoryNumber))) {
-            gui.player.getInventory().setContents(playerInvOld);
-            gui.player.setItemOnCursor(cursorItem);
-            gui.player.sendMessage(GUIUtils.c("&4アイテム更新が競合したため更新前にロールバックしました"));
-        }else {
-            Bukkit.getLogger().info("[StorageGUI][Save]" + gui.player.getName() + "のストレージ" + inventoryNumber + "を保存しました");
-        }
+
+        // 保存＋ロールバック＋ログ出力
+        InvUtil.saveWithRollback(this, storageData, inventoryData, inventoryNumber, playerInvOld, this.cursorItem);
     }
 }
