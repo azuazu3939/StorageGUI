@@ -81,6 +81,7 @@ public class ModularStoragePage extends StorageGUIPage {
         //昇順にソート
         Collections.sort(numberKeyList);
         this.numberKeyList = numberKeyList;
+        Bukkit.getLogger().info("debug: initpage: inv:" + invData.version + "sto:" + storageData.storageInventory.get(String.valueOf(inventoryNumber)).version);
     }
 
     @Override

@@ -1,12 +1,11 @@
 name: StorageGUI
-version: '1.0.3-SNAPSHOT'
+version: '1.1.0-SNAPSHOT'
 main: dev.felnull.storagegui.StorageGUI
 api-version: '1.16'
 depend:
   - BetterGUI
   - BetterStorage
   - Vault
-  - ProtocolLib
 commands:
   showstoragesoundlist:
     permission: storagegui.command.admin

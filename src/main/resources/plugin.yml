@@ -6,7 +6,6 @@ depend:
   - BetterGUI
   - BetterStorage
   - Vault
-  - ProtocolLib
 commands:
   showstoragesoundlist:
     permission: storagegui.command.admin

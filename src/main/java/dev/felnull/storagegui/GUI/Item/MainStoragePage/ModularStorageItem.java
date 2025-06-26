@@ -16,6 +16,7 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -40,10 +41,16 @@ public class ModularStorageItem extends GUIItem {
                 try (Connection conn = BetterStorage.BSPlugin.getDatabaseManager().getConnection()) {
                     storageData.loadPage(conn, StorageGUI.pluginName, String.valueOf(inventoryNumber));
                     invData = storageData.storageInventory.get(String.valueOf(inventoryNumber));
+                    if(invData != null){
+                        Bukkit.getLogger().info("msiのコンストラクタ1:" + invData.version);
+                    }
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
             }
+        }else {
+            Bukkit.getLogger().info("ModularStorageItemにinvdfataは存在しない、、、");
+
         }
 
         this.invData = invData;
@@ -65,6 +72,7 @@ public class ModularStorageItem extends GUIItem {
         lore.add(Component.text("[Qキー]:DisplayName変更"));
         lore.add(Component.text("[Qキー+Ctrl]:Tag編集"));
         this.setLore(lore);
+
     }
 
     @Override

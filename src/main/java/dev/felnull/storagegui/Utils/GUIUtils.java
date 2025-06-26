@@ -77,6 +77,7 @@ public class GUIUtils {
     ) {
         storageData.updateInventoryData(String.valueOf(inventoryNumber));
         InventoryData invData = storageData.getInventoryData(String.valueOf(inventoryNumber));
+        Bukkit.getLogger().info("openModularInventory:" + invData.version);
         UUID uuid = gui.player.getUniqueId();
         String pageId = String.valueOf(inventoryNumber);
 
@@ -97,6 +98,7 @@ public class GUIUtils {
             newPage = new ModularStoragePage(gui, invData, inventoryNumber, storageData, storageSoundData);
         }
         pageMap.put(pageId, newPage);
+        Bukkit.getLogger().warning("GUI開く前のinvdata:" + invData.version);
         gui.openPage(newPage);
     }
 
