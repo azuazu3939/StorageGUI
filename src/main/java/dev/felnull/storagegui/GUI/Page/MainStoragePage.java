@@ -11,6 +11,7 @@ import dev.felnull.storagegui.GUI.Item.MainStoragePage.OpenStorageOption;
 import dev.felnull.storagegui.GUI.Item.MainStoragePage.ModularStorageItem;
 import dev.felnull.storagegui.GUI.StorageGUIPage;
 import dev.felnull.storagegui.Utils.GUIUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -69,6 +70,12 @@ public class MainStoragePage extends StorageGUIPage {
             }
 
             if (numberInventoryList.contains(slot)) {
+                if(storageData.storageInventory.get(String.valueOf(slot)) == null){
+                    Bukkit.getLogger().info("mainstorage:storageData.storageInventory.get = null");
+                }else {
+                    Bukkit.getLogger().info("mainstorage:storageData.storageInventory.get = true");
+                }
+
                 setItem(uiSlot, new ModularStorageItem(gui,
                         storageData.storageInventory.get(String.valueOf(slot)),
                         slot,
