@@ -58,7 +58,7 @@ public class TrueItem extends GUIItem {
         }
 
         // 保存（新規作成用として version=0）
-        DataIO.saveGroupData(groupData, 0L);
+        DataIO.saveGroupData(groupData);
         GroupManager.registerGroup(groupData);
 
         // GUIを開く

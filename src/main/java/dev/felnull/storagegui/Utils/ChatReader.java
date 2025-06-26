@@ -116,7 +116,10 @@ public class ChatReader {
         if(inventoryData != null){
             inventoryData.displayName = displayName;
         }
-        DataIO.saveInventoryOnly(storageData.groupData, storageData, String.valueOf(invNumberMap.get(p.getUniqueId())));
+        boolean result = DataIO.saveInventoryOnly(storageData.groupData, storageData, String.valueOf(invNumberMap.get(p.getUniqueId())));
+        if (!result) {
+            p.sendMessage(ChatColor.RED + "インベントリの保存が競合したため失敗しました。もう一度入力してください");
+        }
         return inventoryData;
     }
 }

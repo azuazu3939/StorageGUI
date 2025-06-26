@@ -22,7 +22,13 @@ public class InvUtil {
             if (item == null || item.getType() == Material.AIR) {
                 inventoryData.itemStackSlot.remove(slot);
             } else {
-                inventoryData.itemStackSlot.put(slot, item.clone());
+                try {
+                    item.getItemMeta(); // ← ここで例外が出るかチェック
+                    inventoryData.itemStackSlot.put(slot, item.clone());
+                } catch (Throwable t) {
+                    Bukkit.getLogger().warning("[StorageGUI] 破損アイテムを検出・除去しました: slot=" + slot + ", invdata_DisplayName=" + inventoryData.displayName);
+                    inventoryData.itemStackSlot.remove(slot);
+                }
             }
         }
     }
@@ -45,11 +51,19 @@ public class InvUtil {
         // 🔧 インベントリ内容を InventoryData に反映
         applyInventoryToItemSlot(page.getInventory(), invData);
 
+        // 🔒 データの完全性確認
+        if (!invData.isFullyLoaded()) {
+            rollbackPlayerInventory(page.gui.player, rollbackInv, cursorItem);
+            page.gui.player.sendMessage(GUIUtils.c("&cこのページは完全にロードされていないため保存できません"));
+            return false;
+        }
+
         // 最新データを保持
         storageData.storageInventory.put(pageId, invData);
 
         // 保存処理
         if (!DataIO.saveInventoryOnly(group, storageData, pageId)) {
+            Bukkit.getLogger().warning("[StorageGUI][Conflict] " + page.gui.player.getName() + " の保存が競合によりロールバックされました");
             rollbackPlayerInventory(page.gui.player, rollbackInv, cursorItem);
             page.gui.player.sendMessage(GUIUtils.c("&4アイテム更新が競合したため更新前にロールバックしました"));
             return false;

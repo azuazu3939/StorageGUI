@@ -71,11 +71,12 @@ public class GUIUtils {
     //毎回ifするのは冗長すぎるので分割
     public static void openModularInventory(
             InventoryGUI gui,
-            InventoryData invData,
-            int inventoryNumber,
             StorageData storageData,
+            int inventoryNumber,
             StorageSoundData storageSoundData
     ) {
+        storageData.updateInventoryData(String.valueOf(inventoryNumber));
+        InventoryData invData = storageData.getInventoryData(String.valueOf(inventoryNumber));
         UUID uuid = gui.player.getUniqueId();
         String pageId = String.valueOf(inventoryNumber);
 
@@ -97,6 +98,20 @@ public class GUIUtils {
         }
         pageMap.put(pageId, newPage);
         gui.openPage(newPage);
+    }
+
+    //Storageを開くメソッド
+    public static boolean openStorageGUI(Player player, GroupData groupData) {
+        StorageData storageData = null;
+        storageData = groupData.storageData;
+        if(storageData == null){
+            player.sendMessage("ストレージがありません" + groupData.groupUUID);
+            return false;
+        }
+        InventoryGUI inventoryGUI = new InventoryGUI(player);
+        // 必要に応じてページの生成方法・表示内容をここで調整
+        inventoryGUI.openPage(new MainStoragePage(inventoryGUI, storageData));
+        return true;
     }
 
     //keyで音を流すメソッド
@@ -136,19 +151,7 @@ public class GUIUtils {
         return Integer.parseInt(replaceCharToNumber(str));
     }
 
-    //Storageを開くメソッド
-    public static boolean openStorageGUI(Player player, GroupData groupData) {
-        StorageData storageData = null;
-        storageData = groupData.storageData;
-        if(storageData == null){
-            player.sendMessage("ストレージがありません" + groupData.groupUUID);
-            return false;
-        }
-        InventoryGUI inventoryGUI = new InventoryGUI(player);
-        // 必要に応じてページの生成方法・表示内容をここで調整
-        inventoryGUI.openPage(new MainStoragePage(inventoryGUI, storageData));
-        return true;
-    }
+
 
     // メッセージをフォーマットして、&で色をつける
     public static String f(String text, Object... args) {

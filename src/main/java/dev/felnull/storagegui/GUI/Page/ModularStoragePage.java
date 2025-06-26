@@ -122,7 +122,7 @@ public class ModularStoragePage extends StorageGUIPage {
             InvUtil.saveWithRollback(this, storageData, inventoryData, inventoryNumber, playerInvOld, this.cursorItem);
 
             this.switchingPage = true;
-            GUIUtils.openModularInventory(gui, storageData.storageInventory.get(String.valueOf(nearInventoryNumber)), nearInventoryNumber, storageData, storageSoundData);
+            GUIUtils.openModularInventory(gui, storageData, nearInventoryNumber, storageSoundData);
         }
 
     }
@@ -145,7 +145,7 @@ public class ModularStoragePage extends StorageGUIPage {
             InvUtil.saveWithRollback(this, storageData, inventoryData, inventoryNumber, playerInvOld, this.cursorItem);
 
             this.switchingPage = true;
-            GUIUtils.openModularInventory(gui, storageData.storageInventory.get(String.valueOf(nearinventoryNumber)), nearinventoryNumber, storageData, storageSoundData);
+            GUIUtils.openModularInventory(gui, storageData, nearinventoryNumber, storageSoundData);
         }
     }
 
@@ -164,8 +164,6 @@ public class ModularStoragePage extends StorageGUIPage {
         } else {
             return null;
         }
-
-
     }
 
     @Override

@@ -73,7 +73,7 @@ public class ModularStorageItem extends GUIItem {
             gui.openPage(new BuyModularStoragePage(gui, inventoryNumber, storageData));
             return;
         }
-        GUIUtils.openModularInventory(gui, invData, inventoryNumber, storageData, storageSoundData);
+        GUIUtils.openModularInventory(gui, storageData, inventoryNumber, storageSoundData);
     }
 
     @Override
