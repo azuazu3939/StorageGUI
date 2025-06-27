@@ -35,6 +35,7 @@ public class MainStoragePage extends StorageGUIPage {
         super(gui, ChatColor.translateAlternateColorCodes('&', "&6BetterStorage!!!"), 6*9);
         this.storageData = storageData;
 
+
         //StorageData内のInventoryDataに紐づいたページ名を取得して数字のページ名のみListに入れている
         List<Integer> numberKeyList = GUIUtils.getNumericKeyList(storageData.storageInventory);
         //昇順にソート
@@ -70,12 +71,6 @@ public class MainStoragePage extends StorageGUIPage {
             }
 
             if (numberInventoryList.contains(slot)) {
-                if(storageData.storageInventory.get(String.valueOf(slot)) == null){
-                    Bukkit.getLogger().info("mainstorage:storageData.storageInventory.get = null");
-                }else {
-                    Bukkit.getLogger().info("mainstorage:storageData.storageInventory.get = true");
-                }
-
                 setItem(uiSlot, new ModularStorageItem(gui,
                         storageData.storageInventory.get(String.valueOf(slot)),
                         slot,

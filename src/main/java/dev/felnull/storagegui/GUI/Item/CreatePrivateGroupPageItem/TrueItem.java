@@ -7,6 +7,7 @@ import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.DataIO.DataIO;
 import dev.felnull.DataIO.GroupManager;
+import dev.felnull.DataIO.UnifiedLogManager;
 import dev.felnull.bettergui.core.GUIItem;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.StorageGUI;
@@ -60,6 +61,7 @@ public class TrueItem extends GUIItem {
         // 保存（新規作成用として version=0）
         DataIO.saveGroupData(groupData);
         GroupManager.registerGroup(groupData);
+        UnifiedLogManager.saveBackupSnapshot(groupData);
 
         // GUIを開く
         GUIUtils.openStorageGUI(player, groupData);

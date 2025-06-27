@@ -41,16 +41,10 @@ public class ModularStorageItem extends GUIItem {
                 try (Connection conn = BetterStorage.BSPlugin.getDatabaseManager().getConnection()) {
                     storageData.loadPage(conn, StorageGUI.pluginName, String.valueOf(inventoryNumber));
                     invData = storageData.storageInventory.get(String.valueOf(inventoryNumber));
-                    if(invData != null){
-                        Bukkit.getLogger().info("msiのコンストラクタ1:" + invData.version);
-                    }
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
             }
-        }else {
-            Bukkit.getLogger().info("ModularStorageItemにinvdfataは存在しない、、、");
-
         }
 
         this.invData = invData;

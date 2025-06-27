@@ -77,7 +77,11 @@ public class GUIUtils {
     ) {
         storageData.updateInventoryData(String.valueOf(inventoryNumber));
         InventoryData invData = storageData.getInventoryData(String.valueOf(inventoryNumber));
-        Bukkit.getLogger().info("openModularInventory:" + invData.version);
+
+        // InventoryDataをdeepCloneして個別化
+        InventoryData clonedInvData = invData.deepClone();
+
+        Bukkit.getLogger().info("openModularInventory:" + clonedInvData.version);
         UUID uuid = gui.player.getUniqueId();
         String pageId = String.valueOf(inventoryNumber);
 
@@ -92,27 +96,32 @@ public class GUIUtils {
 
         // 新規作成
         ModularStoragePage newPage;
-        if (invData.displayName != null && !invData.displayName.isEmpty()) {
-            newPage = new ModularStoragePage(gui, invData, inventoryNumber, storageData, storageSoundData, invData.displayName);
+        if (clonedInvData.displayName != null && !clonedInvData.displayName.isEmpty()) {
+            newPage = new ModularStoragePage(gui, clonedInvData, inventoryNumber, storageData, storageSoundData, clonedInvData.displayName);
         } else {
-            newPage = new ModularStoragePage(gui, invData, inventoryNumber, storageData, storageSoundData);
+            newPage = new ModularStoragePage(gui, clonedInvData, inventoryNumber, storageData, storageSoundData);
         }
         pageMap.put(pageId, newPage);
-        Bukkit.getLogger().warning("GUI開く前のinvdata:" + invData.version);
+        Bukkit.getLogger().warning("GUI開く前のinvdata:" + clonedInvData.version);
         gui.openPage(newPage);
     }
 
     //Storageを開くメソッド
     public static boolean openStorageGUI(Player player, GroupData groupData) {
-        StorageData storageData = null;
-        storageData = groupData.storageData;
-        if(storageData == null){
-            player.sendMessage("ストレージがありません" + groupData.groupUUID);
+        // GUI表示用にメタデータのみ読み込む
+        StorageData storageData = DataIO.loadStorageMetaOnly(groupData.groupUUID);
+
+        if (storageData == null) {
+            player.sendMessage("ストレージがありません: " + groupData.groupUUID);
             return false;
         }
+
+        // StorageData全体をdeepCloneしてGUIに渡す（アイテムデータはまだ読み込まれていない）
+        StorageData clonedStorage = storageData.deepClone(groupData);
+
+        // クローンしたStorageDataを使ってGUIを開く
         InventoryGUI inventoryGUI = new InventoryGUI(player);
-        // 必要に応じてページの生成方法・表示内容をここで調整
-        inventoryGUI.openPage(new MainStoragePage(inventoryGUI, storageData));
+        inventoryGUI.openPage(new MainStoragePage(inventoryGUI, clonedStorage));
         return true;
     }
 
