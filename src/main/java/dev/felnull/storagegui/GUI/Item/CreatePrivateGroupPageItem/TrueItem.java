@@ -57,10 +57,9 @@ public class TrueItem extends GUIItem {
             InventoryData invData = new InventoryData(null, 6, perm, new HashMap<>());
             storageData.storageInventory.put(String.valueOf(i), invData);
         }
-
+        storageData.attach(groupData);
         // 保存（新規作成用として version=0）
         DataIO.saveGroupData(groupData);
-        GroupManager.registerGroup(groupData);
         UnifiedLogManager.saveBackupSnapshot(groupData);
 
         // GUIを開く
