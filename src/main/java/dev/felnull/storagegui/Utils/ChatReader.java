@@ -6,6 +6,7 @@ import dev.felnull.Data.StorageData;
 import dev.felnull.DataIO.DataIO;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.Data.UniqueItemData;
+import dev.felnull.storagegui.GUI.Page.EditInventoryTags;
 import dev.felnull.storagegui.GUI.Page.MainStoragePage;
 import dev.felnull.storagegui.GUI.Page.UniqueItemPage;
 import dev.felnull.storagegui.StorageGUI;
@@ -68,6 +69,7 @@ public class ChatReader {
         UniqueItemData uniqueItemData = uniqueItemDataMap.get(p.getUniqueId());
         InventoryGUI gui = new InventoryGUI(p);
         StorageData storageData = storageDataMap.get(p.getUniqueId());
+        InventoryData inventoryData = inventoryDataMap.get(p.getUniqueId());
         int invNumber = invNumberMap.get(p.getUniqueId());
         StorageGUI.INSTANCE.tabCompletionEnabled.remove(p);
 
@@ -77,6 +79,10 @@ public class ChatReader {
             case DISPLAY_NAME:
                 storageData.storageInventory.put(String.valueOf(invNumber), updateInventoryDisplayName(p,componentToString(msg)));
                 gui.openPage(new MainStoragePage(gui,storageData));
+                break;
+            case TAG:
+                storageData.storageInventory.put(String.valueOf(invNumber), updateInventoryTags(p, componentToString(msg)));
+                gui.openPage(new EditInventoryTags(gui, inventoryData, storageData, invNumber));
                 break;
             case UNIQUEITEM_ITEMID:
                 uniqueItemData.itemID = componentToString(msg);
@@ -117,7 +123,22 @@ public class ChatReader {
         if(inventoryData != null){
             inventoryData.displayName = displayName;
         }
-        boolean result = DataIO.saveInventoryOnly(storageData.groupData, storageData, String.valueOf(invNumberMap.get(p.getUniqueId())));
+        boolean result = DataIO.saveInventoryOnly(storageData.groupData, storageData, String.valueOf(invNumberMap.get(p.getUniqueId())), p.getUniqueId());
+        if (!result) {
+            p.sendMessage(ChatColor.RED + "インベントリの保存が競合したため失敗しました。もう一度入力してください");
+        }
+        return inventoryData;
+    }
+
+    public InventoryData updateInventoryTags (Player p, String tagName){
+        InventoryData inventoryData = inventoryDataMap.get(p.getUniqueId());
+        StorageData storageData = storageDataMap.get(p.getUniqueId());
+        if(inventoryData != null){
+            inventoryData.addUserTag(tagName);
+            p.sendMessage("追加");
+        }
+        boolean result = DataIO.saveTagsOnly(storageData.groupData, String.valueOf(invNumberMap.get(p.getUniqueId())), inventoryData);
+        p.sendMessage("さヴぇ");
         if (!result) {
             p.sendMessage(ChatColor.RED + "インベントリの保存が競合したため失敗しました。もう一度入力してください");
         }

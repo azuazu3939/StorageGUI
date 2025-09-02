@@ -62,7 +62,7 @@ public class InvUtil {
         storageData.storageInventory.put(pageId, invData);
 
         // 保存処理
-        if (!DataIO.saveInventoryOnly(group, storageData, pageId)) {
+        if (!DataIO.saveInventoryOnly(group, storageData, pageId, null)) {
             Bukkit.getLogger().warning("[StorageGUI][Conflict] " + page.gui.player.getName() + " の保存が競合によりロールバックされました");
             rollbackPlayerInventory(page.gui.player, rollbackInv, cursorItem);
             page.gui.player.sendMessage(GUIUtils.c("&4アイテム更新が競合したため更新前にロールバックしました"));
@@ -80,7 +80,7 @@ public class InvUtil {
         String pageId = String.valueOf(inventoryNumber);
         GroupData group = storageData.groupData;
 
-        if (!DataIO.saveInventoryOnly(group, storageData, pageId)) {
+        if (!DataIO.saveInventoryOnly(group, storageData, pageId, null)) {
             return false;
         }
 

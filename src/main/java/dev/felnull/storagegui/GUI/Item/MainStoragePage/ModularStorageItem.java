@@ -8,6 +8,7 @@ import dev.felnull.bettergui.core.GUIItem;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.Data.StorageSoundData;
 import dev.felnull.storagegui.GUI.Page.BuyModularStoragePage;
+import dev.felnull.storagegui.GUI.Page.EditInventoryTags;
 import dev.felnull.storagegui.StorageGUI;
 import dev.felnull.storagegui.Utils.ChatContentType;
 import dev.felnull.storagegui.Utils.GUIUtils;
@@ -58,9 +59,9 @@ public class ModularStorageItem extends GUIItem {
         }
         List<Component> lore = new ArrayList<>();
         if (invData != null && invData.userTags != null && !invData.userTags.isEmpty()) {
-            lore.add(Component.text("タグ:"));
+            lore.add(GUIUtils.c("&fタグ:"));
             for (String tag : invData.userTags) {
-                lore.add(Component.text("- " + tag));
+            lore.add(GUIUtils.c("&f- " + tag));
             }
         }
         lore.add(Component.text("[Qキー]:DisplayName変更"));
@@ -103,7 +104,6 @@ public class ModularStorageItem extends GUIItem {
 
     @Override
     public void onControlDropClick(InventoryClickEvent e) {
-        //gui.open(new EditInventoryUserTagPage(gui, invData, storageData));
-        gui.player.sendMessage("未実装の機能です");
+        gui.openPage(new EditInventoryTags(gui, invData, storageData, inventoryNumber));
     }
 }

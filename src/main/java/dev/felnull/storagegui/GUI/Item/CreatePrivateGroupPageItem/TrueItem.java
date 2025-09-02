@@ -59,7 +59,7 @@ public class TrueItem extends GUIItem {
         }
         storageData.attach(groupData);
         // 保存（新規作成用として version=0）
-        DataIO.saveGroupData(groupData);
+        DataIO.saveGroupData(groupData, null);
         UnifiedLogManager.saveBackupSnapshot(groupData);
 
         // GUIを開く
