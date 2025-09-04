@@ -135,10 +135,8 @@ public class ChatReader {
         StorageData storageData = storageDataMap.get(p.getUniqueId());
         if(inventoryData != null){
             inventoryData.addUserTag(tagName);
-            p.sendMessage("追加");
         }
         boolean result = DataIO.saveTagsOnly(storageData.groupData, String.valueOf(invNumberMap.get(p.getUniqueId())), inventoryData);
-        p.sendMessage("さヴぇ");
         if (!result) {
             p.sendMessage(ChatColor.RED + "インベントリの保存が競合したため失敗しました。もう一度入力してください");
         }
