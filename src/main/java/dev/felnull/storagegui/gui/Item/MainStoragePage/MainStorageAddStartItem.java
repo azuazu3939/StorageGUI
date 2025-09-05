@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class MainStorageAddStartItem extends GUIItem {
     MainStoragePage mainStoragePage;
     public MainStorageAddStartItem(InventoryGUI gui, @NotNull MainStoragePage mainStoragePage) {
-        super(gui, new ItemStack(Material.SLIME_BALL));
+        super(gui, new ItemStack(Material.ARROW));
         setDisplayName(GUIReload.getAddViewPos() + " " + mainStoragePage.invStartPosition);
         this.mainStoragePage = mainStoragePage;
     }
