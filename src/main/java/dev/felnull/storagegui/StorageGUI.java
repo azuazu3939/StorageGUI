@@ -1,35 +1,35 @@
 package dev.felnull.storagegui;
 
-import dev.felnull.Data.InventoryData;
-import dev.felnull.storagegui.Commands.CreateUniqueItem;
-import dev.felnull.storagegui.Commands.ReloadSound;
-import dev.felnull.storagegui.Commands.ShowNowSetSound;
-import dev.felnull.storagegui.Commands.ShowStorageSoundList;
-import dev.felnull.storagegui.Config.SoundList;
-import dev.felnull.storagegui.Config.UniqueItem;
-import dev.felnull.storagegui.Listener.ChatListener;
-import dev.felnull.storagegui.Listener.CommonListener;
-import dev.felnull.storagegui.Listener.TabCompleteListener;
-import dev.felnull.storagegui.Utils.ChatReader;
-import lombok.Getter;
+import dev.felnull.storagegui.commands.*;
+import dev.felnull.storagegui.config.SoundList;
+import dev.felnull.storagegui.config.UniqueItem;
+import dev.felnull.storagegui.listener.ChatListener;
+import dev.felnull.storagegui.listener.CommonListener;
+import dev.felnull.storagegui.utils.ChatReader;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class StorageGUI extends JavaPlugin {
 
-    public static StorageGUI INSTANCE;
-    @Getter
+    private static StorageGUI INSTANCE;
+
+    public static StorageGUI getInstance() {
+        return INSTANCE;
+    }
+
+    public ChatReader getChatReader() {
+        return chatReader;
+    }
+
     public ChatReader chatReader;
     public static Economy economy = null;
     public static String pluginName = "StorageGUI";
@@ -59,21 +59,17 @@ public final class StorageGUI extends JavaPlugin {
         //new TabCompleteListener();
     }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
-
     public void initListener() {
         Bukkit.getPluginManager().registerEvents(new CommonListener(),this);
         Bukkit.getPluginManager().registerEvents(new ChatListener(this), this);
     }
 
     public void initCommands() {
-        Bukkit.getPluginCommand("showstoragesoundlist").setExecutor(new ShowStorageSoundList());
-        Bukkit.getPluginCommand("soundreload").setExecutor(new ReloadSound());
-        Bukkit.getPluginCommand("shownowstoragesound").setExecutor(new ShowNowSetSound());
-        Bukkit.getPluginCommand("createuniqueitem").setExecutor(new CreateUniqueItem());
+        Objects.requireNonNull(Bukkit.getPluginCommand("showstoragesoundlist")).setExecutor(new ShowStorageSoundList());
+        Objects.requireNonNull(Bukkit.getPluginCommand("soundreload")).setExecutor(new ReloadSound());
+        Objects.requireNonNull(Bukkit.getPluginCommand("shownowstoragesound")).setExecutor(new ShowNowSetSound());
+        Objects.requireNonNull(Bukkit.getPluginCommand("createuniqueitem")).setExecutor(new CreateUniqueItem());
+        Objects.requireNonNull(Bukkit.getPluginCommand("vault")).setExecutor(new Vault());
     }
 
     private boolean setupEconomy() {

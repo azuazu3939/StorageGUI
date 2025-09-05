@@ -1,5 +1,5 @@
 name: StorageGUI
-version: '${project.version}'
+version: @version
 main: dev.felnull.storagegui.StorageGUI
 api-version: '1.16'
 depend:
@@ -18,6 +18,10 @@ commands:
   createuniqueitem:
     permission: storagegui.command.admin
     aliases: [ createuni ]
+  vault:
+    permission: storagegui.command.user
 permissions:
   storagegui.command.admin:
+    default: op
+  storagegui.command.user:
     default: op

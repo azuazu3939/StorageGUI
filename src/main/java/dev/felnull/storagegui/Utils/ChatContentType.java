@@ -1,5 +1,0 @@
-package dev.felnull.storagegui.Utils;
-
-public enum ChatContentType {
-    DISPLAY_NAME, TAG, UNIQUEITEM_ITEMID, UNIQUEITEM_DISPLAYNAME, UNIQUEITEM_CMD, UNIQUEITEM_ITEMTYPE, UNIQUEITEM_LORE
-}
