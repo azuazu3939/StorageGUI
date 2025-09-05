@@ -1,5 +1,5 @@
 name: StorageGUI
-version: @version
+version: @version@
 main: dev.felnull.storagegui.StorageGUI
 api-version: '1.16'
 depend:
