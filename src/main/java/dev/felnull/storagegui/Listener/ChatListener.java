@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,13 @@ public class ChatListener implements Listener {
         }
 
         e.setCancelled(true);
-        plugin.getServer().getScheduler().runTask(plugin, () -> plugin.getChatReader().onChat(p, msg));
+        plugin.getServer().getScheduler().runTask(plugin, () -> {
+            try {
+                plugin.getChatReader().onChat(p, msg);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
     }
 

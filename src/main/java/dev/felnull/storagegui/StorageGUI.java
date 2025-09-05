@@ -56,7 +56,7 @@ public final class StorageGUI extends JavaPlugin {
         SoundList.initSoundList();
         uniqueItemHashMap = UniqueItem.loadUniqueItem();
         // ProtocolLibを使用してTAB補完を処理
-        new TabCompleteListener();
+        //new TabCompleteListener();
     }
 
     @Override

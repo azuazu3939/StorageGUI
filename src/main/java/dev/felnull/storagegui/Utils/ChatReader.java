@@ -4,6 +4,7 @@ import dev.felnull.BetterStorage;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.DataIO.DataIO;
+import dev.felnull.DataIO.UnifiedLogManager;
 import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.Data.UniqueItemData;
 import dev.felnull.storagegui.GUI.Page.EditInventoryTags;
@@ -18,6 +19,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.sql.SQLException;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -61,7 +63,7 @@ public class ChatReader {
     }
 
     //
-    public void onChat(Player p, Component msg) {
+    public void onChat(Player p, Component msg) throws SQLException {
         if (!contentTypes.containsKey(p.getUniqueId())) {
             return;
         }
@@ -117,20 +119,21 @@ public class ChatReader {
     }
 
     //InventoryDataのDisplayNameを更新するメソッド
-    public InventoryData updateInventoryDisplayName (Player p, String displayName){
+    public InventoryData updateInventoryDisplayName (Player p, String displayName) throws SQLException {
         InventoryData inventoryData = inventoryDataMap.get(p.getUniqueId());
         StorageData storageData = storageDataMap.get(p.getUniqueId());
-        if(inventoryData != null){
-            inventoryData.displayName = displayName;
-        }
+        String oldName = inventoryData.displayName;
+        inventoryData.displayName = displayName;
         boolean result = DataIO.saveInventoryOnly(storageData.groupData, storageData, String.valueOf(invNumberMap.get(p.getUniqueId())), p.getUniqueId());
         if (!result) {
             p.sendMessage(ChatColor.RED + "インベントリの保存が競合したため失敗しました。もう一度入力してください");
+        }else {
+            UnifiedLogManager.diffRename(storageData.groupUUID, StorageGUI.pluginName, String.valueOf(invNumberMap.get(p.getUniqueId())), oldName, displayName);
         }
         return inventoryData;
     }
 
-    public InventoryData updateInventoryTags (Player p, String tagName){
+    public InventoryData updateInventoryTags (Player p, String tagName) throws SQLException {
         InventoryData inventoryData = inventoryDataMap.get(p.getUniqueId());
         StorageData storageData = storageDataMap.get(p.getUniqueId());
         if(inventoryData != null){
@@ -139,6 +142,10 @@ public class ChatReader {
         boolean result = DataIO.saveTagsOnly(storageData.groupData, String.valueOf(invNumberMap.get(p.getUniqueId())), inventoryData);
         if (!result) {
             p.sendMessage(ChatColor.RED + "インベントリの保存が競合したため失敗しました。もう一度入力してください");
+        } else {
+            if(inventoryData != null) {
+                UnifiedLogManager.diffCreateLogMeta(storageData.groupUUID, StorageGUI.pluginName, String.valueOf(invNumberMap.get(p.getUniqueId())), inventoryData.displayName, inventoryData.rows, inventoryData.requirePermission);
+            }
         }
         return inventoryData;
     }

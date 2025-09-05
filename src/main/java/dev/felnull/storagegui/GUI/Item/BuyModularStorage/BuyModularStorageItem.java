@@ -18,6 +18,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -57,12 +58,14 @@ public class BuyModularStorageItem extends GUIItem {
 
         InventoryData invData = new InventoryData(null, rowCount, perm, new HashMap<>());
         storageData.storageInventory.put(String.valueOf(inventoryNumber), invData);
-
-        if (!isFree) {
-            economy.withdrawPlayer(player, finalPrice);
+        try {
+            InvUtil.saveWithLog(storageData, inventoryNumber);
+            if (!isFree) {
+                economy.withdrawPlayer(player, finalPrice);
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
-
-        InvUtil.saveWithLog(storageData, inventoryNumber);
         gui.openPage(new MainStoragePage(gui, storageData));
     }
 }

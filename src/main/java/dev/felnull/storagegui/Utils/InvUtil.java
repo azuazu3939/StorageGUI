@@ -4,12 +4,16 @@ import dev.felnull.Data.GroupData;
 import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.DataIO.DataIO;
+import dev.felnull.DataIO.OperationType;
+import dev.felnull.DataIO.UnifiedLogManager;
 import dev.felnull.bettergui.core.GUIPage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.sql.SQLException;
 
 public class InvUtil {
 
@@ -76,14 +80,14 @@ public class InvUtil {
     /**
      * InventoryDataを保存し、成功時にログを出力する（ロールバックなし）
      */
-    public static boolean saveWithLog(StorageData storageData, int inventoryNumber) {
+    public static boolean saveWithLog(StorageData storageData, int inventoryNumber) throws SQLException {
         String pageId = String.valueOf(inventoryNumber);
         GroupData group = storageData.groupData;
 
         if (!DataIO.saveInventoryOnly(group, storageData, pageId, null)) {
             return false;
         }
-
+        UnifiedLogManager.logPageEvent(group.groupUUID, group.ownerPlugin, pageId, OperationType.PAGE_CREATE, null);
         Bukkit.getLogger().info("[StorageGUI][Save][" + group.groupName + "] に " + group.groupName + " の " + inventoryNumber + " 番インベントリを保存しました");
         return true;
     }
