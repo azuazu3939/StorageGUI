@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 
@@ -19,7 +20,7 @@ public class ChatListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onChat(AsyncChatEvent e) {
+    public void onChat(@NotNull AsyncChatEvent e) {
         Player p = e.getPlayer();
         Component msg = e.message();
         StorageGUI.getInstance().tabCompletionEnabled.put(p, true);
@@ -40,7 +41,7 @@ public class ChatListener implements Listener {
     }
 
     @EventHandler
-    public void onLeave(PlayerQuitEvent e) {
+    public void onLeave(@NotNull PlayerQuitEvent e) {
         Player p = e.getPlayer();
         plugin.getChatReader().unregisterNextChat(p);
         StorageGUI.getInstance().tabCompletionEnabled.remove(p);

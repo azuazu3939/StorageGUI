@@ -5,7 +5,6 @@ import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.StorageGUI;
 import dev.felnull.storagegui.data.UniqueItemData;
 import dev.felnull.storagegui.utils.ChatContentType;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +13,7 @@ public class SetItemDisplayName extends GUIItem {
     UniqueItemData uniqueItemData;
     public SetItemDisplayName(InventoryGUI gui, UniqueItemData uniqueItemData) {
         super(gui, new ItemStack(Material.NAME_TAG));
-        setDisplayName(ChatColor.translateAlternateColorCodes('&',"&6DisplayNameを変更する"));
+        setDisplayName("§6DisplayNameを変更する");
         this.uniqueItemData = uniqueItemData;
     }
 

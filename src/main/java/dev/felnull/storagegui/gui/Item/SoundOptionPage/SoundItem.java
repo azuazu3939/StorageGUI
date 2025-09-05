@@ -10,11 +10,11 @@ import dev.felnull.storagegui.gui.StorageGUIPage;
 import dev.felnull.storagegui.utils.GUIUtils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.intellij.lang.annotations.Subst;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +25,9 @@ public class SoundItem extends GUIItem {
     public SoundData soundData;
     public StorageGUIPage storageGUIPage;
 
-    public SoundItem(InventoryGUI gui, SoundData soundData, StorageSoundData storageSoundData, StorageSoundENUM storageSoundENUM, StorageGUIPage storageGUIPage) {
+    public SoundItem(InventoryGUI gui, @NotNull SoundData soundData, StorageSoundENUM storageSoundENUM, StorageGUIPage storageGUIPage) {
         super(gui, soundData.displayItem);
-        storageSoundData = SettingsConfig.loadSettings(gui.player);
+        StorageSoundData storageSoundData = SettingsConfig.loadSettings(gui.player);
         if(storageSoundData.soundENUMSoundMap.get(storageSoundENUM) == soundData){
             ItemMeta meta = this.itemStack.getItemMeta();
             meta.addEnchant(Enchantment.UNBREAKING, 1 , false);
@@ -38,8 +38,8 @@ public class SoundItem extends GUIItem {
             this.itemStack.setItemMeta(meta);
         }
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text("[クリック]:").color(NamedTextColor.GRAY).append(Component.text("この音を設定")));
-        lore.add(Component.text("[シフトクリック]:").color(NamedTextColor.GRAY).append(Component.text("サンプル再生")));
+        lore.add(Component.text("§7[クリック]:§rこの音を設定"));
+        lore.add(Component.text("§7[シフトクリック]:§rサンプル再生"));
         setLore(lore);
         this.storageSoundENUM = storageSoundENUM;
         this.soundData = soundData;

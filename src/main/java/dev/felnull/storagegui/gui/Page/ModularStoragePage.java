@@ -10,7 +10,6 @@ import dev.felnull.storagegui.listener.ModularStoragePageClickListener;
 import dev.felnull.storagegui.utils.GUIUtils;
 import dev.felnull.storagegui.utils.InvUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -40,14 +39,14 @@ public class ModularStoragePage extends StorageGUIPage {
 
     //DisplayNameのない場合のコンストラクタ
     public ModularStoragePage (InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData, StorageSoundData storageSoundData) {
-        super(gui, ChatColor.translateAlternateColorCodes('&',"&6Storage&f:" + inventoryNumber), 6*9);
+        super(gui, "§6Storage§f : " + inventoryNumber, 6 * 9);
         this.storageSoundData = storageSoundData;
         initPage(invData, inventoryNumber, storageData);
     }
 
     //DisplayNameのある場合のコンストラクタ
     public ModularStoragePage (InventoryGUI gui, InventoryData invData, int inventoryNumber, StorageData storageData, StorageSoundData storageSoundData, String displayName) {
-        super(gui, ChatColor.translateAlternateColorCodes('&',"&6Storage&f:" + displayName), 6*9);
+        super(gui, "§6Storage§f : " + displayName, 6 * 9);
         this.storageSoundData = storageSoundData;
         initPage(invData, inventoryNumber, storageData);
     }
@@ -77,7 +76,7 @@ public class ModularStoragePage extends StorageGUIPage {
         //昇順にソート
         Collections.sort(numberKeyList);
         this.numberKeyList = numberKeyList;
-        Bukkit.getLogger().info("debug: initpage: inv:" + invData.version + "sto:" + storageData.storageInventory.get(String.valueOf(inventoryNumber)).version);
+        StorageGUI.getInstance().getLogger().info("debug: initpage: inv:" + invData.version + "sto:" + storageData.storageInventory.get(String.valueOf(inventoryNumber)).version);
     }
 
     @Override

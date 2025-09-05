@@ -1,0 +1,10 @@
+messages:
+  page-back: "§r§6§lストレージオプションに戻る"
+  return-main: "§r§cキャンセルする"
+  buy-storage: "§r§e§l%value%Mineでストレージを購入する!"
+  buy-fail: "§r§c§lお金が %lack%Mine 足りません! 現在: %value%Mine"
+  add-view-pos: "§r§a§lスロットPosを上げる"
+  sub-view-pos: "§r§b§lスロットPosを下げる"
+
+
+symbol: "Mine"

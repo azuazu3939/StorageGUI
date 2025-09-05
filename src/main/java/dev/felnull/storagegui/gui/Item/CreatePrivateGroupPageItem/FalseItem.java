@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public class FalseItem extends GUIItem {
     public FalseItem(InventoryGUI gui) {
         super(gui, new ItemStack(Material.RED_STAINED_GLASS));
-        setDisplayName(GUIUtils.f("&6ストレージを作成しない"));
+        setDisplayName(GUIUtils.textFormat("§6ストレージを作成しない"));
     }
 
     @Override

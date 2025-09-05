@@ -16,15 +16,17 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ModularStorageItem extends GUIItem {
     InventoryData invData;
@@ -51,19 +53,19 @@ public class ModularStorageItem extends GUIItem {
         this.storageData = storageData;
         this.storageSoundData = storageSoundData;
         if(invData == null || invData.displayName == null) {
-            this.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Storage&f:") + inventoryNumber);
+            this.setDisplayName("§6Storage§f : " + inventoryNumber);
         } else {
-            this.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Storage&f:") + ChatColor.translateAlternateColorCodes('&', invData.displayName));
+            this.setDisplayName("§6Storage§f : "+ invData.displayName.replaceAll("&", "§"));
         }
         List<Component> lore = new ArrayList<>();
         if (invData != null && invData.userTags != null && !invData.userTags.isEmpty()) {
-            lore.add(GUIUtils.c("&fタグ:"));
+            lore.add(GUIUtils.getComponent("§fタグ:"));
             for (String tag : invData.userTags) {
-            lore.add(GUIUtils.c("&f- " + tag));
+            lore.add(GUIUtils.getComponent("§f- " + tag));
             }
         }
-        lore.add(Component.text("[Qキー]:DisplayName変更"));
-        lore.add(Component.text("[Qキー+Ctrl]:Tag編集"));
+        lore.add(Component.text("§r§b[Qキー]:DisplayName変更"));
+        lore.add(Component.text("§r§a[Qキー+Ctrl]:Tag編集"));
         this.setLore(lore);
 
     }
@@ -85,17 +87,13 @@ public class ModularStorageItem extends GUIItem {
         StorageGUI storageGUI = StorageGUI.getInstance();
         storageGUI.chatReader.registerNextChat(gui.player, ChatContentType.DISPLAY_NAME, invData, storageData, inventoryNumber);
 
-        gui.player.sendTitle(ChatColor.translateAlternateColorCodes('&',"&aチャットに変更したい名前を入力してください"), "", 0, 100, 20);
+        gui.player.showTitle(Title.title(Component.text("§aチャットに変更したい名前を入力してください"), Component.empty(), Title.Times.times(Duration.ZERO, Duration.ofSeconds(5), Duration.ofSeconds(1))));
         Component message = Component.text("変更したい名前を入力してください").color(TextColor.color(NamedTextColor.WHITE));
         String displayName;
-        if(invData.displayName == null){
-            displayName = String.valueOf(inventoryNumber);
-        }else {
-            displayName = invData.displayName;
-        }
-        Component messageCommand = Component.text(ChatColor.translateAlternateColorCodes('&',"&7[&f現在登録しているDisplayNameを表示する&7]"))
+        displayName = Objects.requireNonNullElseGet(invData.displayName, () -> String.valueOf(inventoryNumber));
+        Component messageCommand = Component.text("§7[§f現在登録しているDisplayNameを表示する§7]")
                 .hoverEvent(HoverEvent.showText(Component.text(displayName)))
-                .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, displayName));
+                .clickEvent(ClickEvent.suggestCommand(displayName));
         gui.player.sendMessage(message);
         gui.player.sendMessage(messageCommand);
     }

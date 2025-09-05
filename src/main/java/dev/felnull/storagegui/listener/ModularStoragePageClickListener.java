@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class ModularStoragePageClickListener implements Listener {
     private final ModularStoragePage page;
@@ -37,11 +38,11 @@ public class ModularStoragePageClickListener implements Listener {
                 }
                 break;
         }
-        page.cursorItem = e.getCursor() == null ? null : e.getCursor().clone();
+        page.cursorItem = e.getCursor().getType().isAir() ? null : e.getCursor().clone();
     }
     //インベントリを閉じるときにインベントリ内のアイテムデータをInventoryDataに変換する必要がある
     @EventHandler
-    public void onClose(InventoryCloseEvent e) {
+    public void onClose(@NotNull InventoryCloseEvent e) {
         if (e.getView().getTopInventory() != page.inventory) {
             return;
         }

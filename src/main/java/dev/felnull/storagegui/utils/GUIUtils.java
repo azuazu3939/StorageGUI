@@ -5,17 +5,19 @@ import dev.felnull.Data.InventoryData;
 import dev.felnull.Data.StorageData;
 import dev.felnull.DataIO.DataIO;
 import dev.felnull.bettergui.core.InventoryGUI;
+import dev.felnull.storagegui.StorageGUI;
 import dev.felnull.storagegui.data.StorageSoundData;
 import dev.felnull.storagegui.gui.Page.MainStoragePage;
 import dev.felnull.storagegui.gui.Page.ModularStoragePage;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.MessageFormat;
 import java.util.*;
@@ -62,8 +64,8 @@ public class GUIUtils {
 
     //毎回ifするのは冗長すぎるので分割
     public static void openModularInventory(
-            InventoryGUI gui,
-            StorageData storageData,
+            @NotNull InventoryGUI gui,
+            @NotNull StorageData storageData,
             int inventoryNumber,
             StorageSoundData storageSoundData
     ) {
@@ -73,7 +75,7 @@ public class GUIUtils {
         // InventoryDataをdeepCloneして個別化
         InventoryData clonedInvData = invData.deepClone();
 
-        Bukkit.getLogger().info("openModularInventory:" + clonedInvData.version);
+        StorageGUI.getInstance().getLogger().info("openModularInventory:" + clonedInvData.version);
         UUID uuid = gui.player.getUniqueId();
         String pageId = String.valueOf(inventoryNumber);
 
@@ -94,7 +96,7 @@ public class GUIUtils {
             newPage = new ModularStoragePage(gui, clonedInvData, inventoryNumber, storageData, storageSoundData);
         }
         pageMap.put(pageId, newPage);
-        Bukkit.getLogger().warning("GUI開く前のinvdata:" + clonedInvData.version);
+        StorageGUI.getInstance().getLogger().info("GUI開く前のinvdata:" + clonedInvData.version);
         gui.openPage(newPage);
     }
 
@@ -104,7 +106,7 @@ public class GUIUtils {
         StorageData storageData = DataIO.loadStorageMetaOnly(groupData.groupUUID);
 
         if (storageData == null) {
-            player.sendMessage("ストレージがありません: " + groupData.groupUUID);
+            player.sendMessage("§cストレージがありません: " + groupData.groupUUID);
             return false;
         }
 
@@ -128,8 +130,8 @@ public class GUIUtils {
         try {
             return Material.valueOf(materialName.toUpperCase());
         } catch (IllegalArgumentException e) {
-            Bukkit.getLogger().warning("[StorageGUI] カスタムアイテムのItem_Typeが不正です");
-            Bukkit.getLogger().warning("無効なItem_Type名: " + materialName);
+            StorageGUI.getInstance().getLogger().warning("カスタムアイテムのItem_Typeが不正です");
+            StorageGUI.getInstance().getLogger().warning("無効なItem_Type名: " + materialName);
             return null;
         }
     }
@@ -139,7 +141,7 @@ public class GUIUtils {
         List<Component> lore = new ArrayList<>();
         String[] loreParts = stringLore.split("\\|");
         for (String part : loreParts) {
-            lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',part)));
+            lore.add(Component.text(part.replaceAll("&", "§")));
         }
         return lore;
     }
@@ -157,17 +159,20 @@ public class GUIUtils {
 
 
     // メッセージをフォーマットして、&で色をつける
-    public static String f(String text, Object... args) {
-        return MessageFormat.format(ChatColor.translateAlternateColorCodes('&', text), args);
+    public static @NotNull String textFormat(String text, Object... args) {
+        return MessageFormat.format(text.replaceAll("&", "§"), args);
     }
 
     // 色を消す
-    public static String r(String text) {
-        return ChatColor.stripColor(text);
+    @SuppressWarnings("unused")
+    public static @NotNull String textColorReset(@NotNull String text) {
+        return PlainTextComponentSerializer.plainText().serialize(Component.text(text.replaceAll("&", "§")));
     }
 
-    public static Component c(String text, Object... args){
-       return Component.text( f(text, args));
+    @Contract("_, _ -> new")
+    public static @NotNull Component getComponent(String text, Object... args){
+       return Component.text(
+               textFormat(text, args)
+       );
     }
-
 }

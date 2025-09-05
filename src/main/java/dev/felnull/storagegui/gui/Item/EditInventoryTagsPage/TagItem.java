@@ -12,13 +12,12 @@ import dev.felnull.storagegui.utils.GUIUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +35,10 @@ public class TagItem extends GUIItem {
         List<Component> lore = new ArrayList<>();
         if(tagName == null){
             tagName = "新しく追加する";
-            lore.add(GUIUtils.c("&f[左クリックで追加]"));
+            lore.add(GUIUtils.getComponent("§f[左クリックで追加]"));
             newFlag = true;
         }else {
-            lore.add(GUIUtils.c("&f[右クリックで削除]"));
+            lore.add(GUIUtils.getComponent("§f[右クリックで削除]"));
         }
         setDisplayName(tagName);
         this.tagName = tagName;
@@ -60,12 +59,12 @@ public class TagItem extends GUIItem {
         StorageGUI storageGUI = StorageGUI.getInstance();
         storageGUI.chatReader.registerNextChat(gui.player, ChatContentType.TAG, inventoryData, storageData, inventoryNumber);
 
-        gui.player.sendTitle(ChatColor.translateAlternateColorCodes('&',"&aチャットに追加したいTAGを入力してください"), "", 0, 100, 20);
-        Component message = Component.text("追加したいTAGを入力してください").color(TextColor.color(NamedTextColor.WHITE));
+        gui.player.showTitle(Title.title(Component.text("§aチャットに追加したいTAGを入力してください"), Component.empty(), Title.Times.times(Duration.ZERO, Duration.ofSeconds(5), Duration.ofSeconds(1))));
+        Component message = Component.text("§f追加したいTAGを入力してください");
         gui.player.sendMessage(message);
-            Component messageCommand = Component.text(ChatColor.translateAlternateColorCodes('&',"&7[&f現在登録しているTagを表示する&7]"))
+            Component messageCommand = Component.text("§7[§f現在登録しているTagを表示する§7]")
                     .hoverEvent(HoverEvent.showText(Component.text(tagName)))
-                    .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, tagName));
+                    .clickEvent(ClickEvent.suggestCommand(tagName));
             gui.player.sendMessage(messageCommand);
         }
     }

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
 
+@SuppressWarnings("CallToPrintStackTrace")
 public class SettingsConfig {
     static File configFolder = StorageGUI.getInstance().getDataFolder();
     static File settingsFolder = new File(configFolder, "SettingsData");
@@ -20,7 +21,7 @@ public class SettingsConfig {
 
     public static void saveSettings(Player player, StorageSoundENUM storageSoundENUM, SoundData soundData) {
         initSaveSettings();
-        File settingsFile = new File(settingsFolder, String.valueOf(player.getUniqueId()) + ".yml");
+        File settingsFile = new File(settingsFolder, player.getUniqueId() + ".yml");
         if(!settingsFile.exists()) {
             try {
                 settingsFile.createNewFile(); // 新規ファイルを生成
@@ -44,15 +45,12 @@ public class SettingsConfig {
     public static void initSaveSettings() {
         //指定されたフォルダがなかったら生成
         if(!settingsFolder.exists()) {
-            if(!settingsFolder.mkdirs()){
-                return;
-            }
+            settingsFolder.mkdirs();
         }
-        return;
     }
 
     public static StorageSoundData loadSettings(Player player) {
-        File settingsFile = new File(settingsFolder, String.valueOf(player.getUniqueId()) + ".yml");
+        File settingsFile = new File(settingsFolder, player.getUniqueId() + ".yml");
 
         FileConfiguration settings = YamlConfiguration.loadConfiguration(settingsFile);
         EnumMap<StorageSoundENUM, SoundData> soundENUMSoundMap = new EnumMap<>(StorageSoundENUM.class);

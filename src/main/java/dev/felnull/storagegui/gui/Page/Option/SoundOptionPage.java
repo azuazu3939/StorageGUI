@@ -50,7 +50,7 @@ public class SoundOptionPage extends StorageGUIPage {
                 continue;
             }
             if(slot < soundDataList.size()) {
-                setItem(slotPosition, new SoundItem(gui, soundDataList.get(slot), storageSoundData, storageSoundENUM, this));
+                setItem(slotPosition, new SoundItem(gui, soundDataList.get(slot), storageSoundENUM, this));
             }
         }
         setItem(51, new SubtractPosition(gui, this));

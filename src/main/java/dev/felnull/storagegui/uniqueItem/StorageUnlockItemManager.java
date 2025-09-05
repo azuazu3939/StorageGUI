@@ -3,8 +3,7 @@ package dev.felnull.storagegui.uniqueItem;
 import dev.felnull.storagegui.StorageGUI;
 import dev.felnull.storagegui.utils.GUIUtils;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -45,8 +44,7 @@ public class StorageUnlockItemManager {
         Component displayName = meta.displayName();
         if (displayName == null) return false;
 
-        String key = ChatColor.stripColor(LegacyComponentSerializer.legacySection().serialize(displayName));
-
+        String key = PlainTextComponentSerializer.plainText().serialize(displayName);
         return itemPowerMap.containsKey(key);
     }
 
@@ -60,9 +58,7 @@ public class StorageUnlockItemManager {
         if (displayName == null) return 0;
 
         // 表示名から色コードなどを除去したプレーンテキスト取得
-        String key = LegacyComponentSerializer.legacySection().serialize(displayName);
-        key = ChatColor.stripColor(key);
-
+        String key = PlainTextComponentSerializer.plainText().serialize(displayName);
         return itemPowerMap.getOrDefault(key, 0);
     }
 
@@ -78,8 +74,8 @@ public class StorageUnlockItemManager {
             lore = new ArrayList<>(lore); // 不変リスト対策でコピー
         }
 
-        lore.add(GUIUtils.c("&6解放ポイント"));
-        lore.add(GUIUtils.c("&e残り: {0} ポイント", remainingPower));
+        lore.add(GUIUtils.getComponent("&6解放ポイント"));
+        lore.add(GUIUtils.getComponent("&e残り: {0} ポイント", remainingPower));
 
         meta.lore(lore);
         item.setItemMeta(meta);

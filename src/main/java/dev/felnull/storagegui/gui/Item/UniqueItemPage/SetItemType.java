@@ -5,16 +5,17 @@ import dev.felnull.bettergui.core.InventoryGUI;
 import dev.felnull.storagegui.StorageGUI;
 import dev.felnull.storagegui.data.UniqueItemData;
 import dev.felnull.storagegui.utils.ChatContentType;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class SetItemType extends GUIItem {
-    private UniqueItemData uniqueItemData;
+
+    private final UniqueItemData uniqueItemData;
+
     public SetItemType(InventoryGUI gui, UniqueItemData uniqueItemData) {
         super(gui, new ItemStack(Material.REDSTONE));
-        setDisplayName(ChatColor.translateAlternateColorCodes('&',"&6Item_Typeを変更する"));
+        setDisplayName("§6Item_Typeを変更する");
         this.uniqueItemData = uniqueItemData;
     }
 

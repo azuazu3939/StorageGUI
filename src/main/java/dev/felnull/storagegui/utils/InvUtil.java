@@ -58,7 +58,7 @@ public class InvUtil {
         // 🔒 データの完全性確認
         if (!invData.isFullyLoaded()) {
             rollbackPlayerInventory(page.gui.player, rollbackInv, cursorItem);
-            page.gui.player.sendMessage(GUIUtils.c("&cこのページは完全にロードされていないため保存できません"));
+            page.gui.player.sendMessage(GUIUtils.getComponent("&cこのページは完全にロードされていないため保存できません"));
             return false;
         }
 
@@ -69,7 +69,7 @@ public class InvUtil {
         if (!DataIO.saveInventoryOnly(group, storageData, pageId, null)) {
             Bukkit.getLogger().warning("[StorageGUI][Conflict] " + page.gui.player.getName() + " の保存が競合によりロールバックされました");
             rollbackPlayerInventory(page.gui.player, rollbackInv, cursorItem);
-            page.gui.player.sendMessage(GUIUtils.c("&4アイテム更新が競合したため更新前にロールバックしました"));
+            page.gui.player.sendMessage(GUIUtils.getComponent("&4アイテム更新が競合したため更新前にロールバックしました"));
             return false;
         }
 

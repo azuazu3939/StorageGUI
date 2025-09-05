@@ -12,7 +12,6 @@ import dev.felnull.storagegui.gui.Page.MainStoragePage;
 import dev.felnull.storagegui.gui.Page.UniqueItemPage;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
@@ -114,7 +113,7 @@ public class ChatReader {
 
     //ComponentMessageをStringに変換するメソッド
     public String componentToString(Component msg) {
-        return ChatColor.translateAlternateColorCodes('&', LegacyComponentSerializer.legacyAmpersand().serialize(msg));
+        return LegacyComponentSerializer.legacySection().serialize(msg);
     }
 
     //InventoryDataのDisplayNameを更新するメソッド
@@ -125,7 +124,7 @@ public class ChatReader {
         inventoryData.displayName = displayName;
         boolean result = DataIO.saveInventoryOnly(storageData.groupData, storageData, String.valueOf(invNumberMap.get(p.getUniqueId())), p.getUniqueId());
         if (!result) {
-            p.sendMessage(ChatColor.RED + "インベントリの保存が競合したため失敗しました。もう一度入力してください");
+            p.sendMessage(Component.text("§cインベントリの保存が競合したため失敗しました。もう一度入力してください"));
         }else {
             UnifiedLogManager.diffRename(storageData.groupUUID, StorageGUI.pluginName, String.valueOf(invNumberMap.get(p.getUniqueId())), oldName, displayName);
         }
@@ -140,7 +139,7 @@ public class ChatReader {
         }
         boolean result = DataIO.saveTagsOnly(storageData.groupData, String.valueOf(invNumberMap.get(p.getUniqueId())), inventoryData);
         if (!result) {
-            p.sendMessage(ChatColor.RED + "インベントリの保存が競合したため失敗しました。もう一度入力してください");
+            p.sendMessage(Component.text("§cインベントリの保存が競合したため失敗しました。もう一度入力してください"));
         } else {
             if(inventoryData != null) {
                 UnifiedLogManager.diffCreateLogMeta(storageData.groupUUID, StorageGUI.pluginName, String.valueOf(invNumberMap.get(p.getUniqueId())), inventoryData.displayName, inventoryData.rows, inventoryData.requirePermission);

@@ -20,8 +20,13 @@ commands:
     aliases: [ createuni ]
   vault:
     permission: storagegui.command.user
+    aliases:
+      - storage
+      - str
+  guireload:
+    permission: storagegui.command.admin
 permissions:
   storagegui.command.admin:
     default: op
   storagegui.command.user:
-    default: op
+    default: true

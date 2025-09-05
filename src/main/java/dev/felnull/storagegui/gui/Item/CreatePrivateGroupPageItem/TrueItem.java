@@ -23,12 +23,12 @@ import java.util.Set;
 public class TrueItem extends GUIItem {
     public TrueItem(InventoryGUI gui) {
         super(gui, new ItemStack(Material.GREEN_STAINED_GLASS));
-        setDisplayName(GUIUtils.f("&6ストレージを作成!"));
+        setDisplayName(GUIUtils.textFormat("§6ストレージを作成!"));
         setLore(Arrays.asList(
-                GUIUtils.c("&6Storageを作成する場合はこちらを押してください"),
-                GUIUtils.c("&4注意!:"),
-                GUIUtils.c("&4もしストレージを作成済みでこの画面が出た場合は"),
-                GUIUtils.c("&4作成せず運営に相談してください")
+                GUIUtils.getComponent("§6Storageを作成する場合はこちらを押してください"),
+                GUIUtils.getComponent("§4注意!:"),
+                GUIUtils.getComponent("§4もしストレージを作成済みでこの画面が出た場合は"),
+                GUIUtils.getComponent("§4作成せず運営に相談してください")
         ));
     }
 

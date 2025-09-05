@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class CreatePrivateGroupPage extends StorageGUIPage {
 
     public CreatePrivateGroupPage(InventoryGUI gui) {
-        super(gui, GUIUtils.f("&6ストレージを作成しますか？"), 3 * 9);
+        super(gui, GUIUtils.textFormat("§6ストレージを作成しますか？"), 3 * 9);
         GUIUtils.playStorageSound(Sound.ENTITY_VILLAGER_YES.key(), gui.player);
     }
 

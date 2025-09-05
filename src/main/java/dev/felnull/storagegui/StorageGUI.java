@@ -4,7 +4,6 @@ import dev.felnull.storagegui.commands.*;
 import dev.felnull.storagegui.config.SoundList;
 import dev.felnull.storagegui.config.UniqueItem;
 import dev.felnull.storagegui.listener.ChatListener;
-import dev.felnull.storagegui.listener.CommonListener;
 import dev.felnull.storagegui.utils.ChatReader;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -42,6 +41,7 @@ public final class StorageGUI extends JavaPlugin {
     @Override
     public void onEnable() {
         INSTANCE = this;
+        saveDefaultConfig();
         initListener();//リスナー登録
         initCommands();//コマンド登録
         this.chatReader = new ChatReader(this);
@@ -60,7 +60,6 @@ public final class StorageGUI extends JavaPlugin {
     }
 
     public void initListener() {
-        Bukkit.getPluginManager().registerEvents(new CommonListener(),this);
         Bukkit.getPluginManager().registerEvents(new ChatListener(this), this);
     }
 
@@ -70,6 +69,7 @@ public final class StorageGUI extends JavaPlugin {
         Objects.requireNonNull(Bukkit.getPluginCommand("shownowstoragesound")).setExecutor(new ShowNowSetSound());
         Objects.requireNonNull(Bukkit.getPluginCommand("createuniqueitem")).setExecutor(new CreateUniqueItem());
         Objects.requireNonNull(Bukkit.getPluginCommand("vault")).setExecutor(new Vault());
+        Objects.requireNonNull(Bukkit.getPluginCommand("guireload")).setExecutor(new GUIReload(this));
     }
 
     private boolean setupEconomy() {

@@ -4,8 +4,6 @@ import dev.felnull.storagegui.StorageGUI;
 import dev.felnull.storagegui.data.UniqueItemData;
 import dev.felnull.storagegui.utils.GUIUtils;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+@SuppressWarnings({"CallToPrintStackTrace", "deprecation"})
 public class UniqueItem {
     static File configFolder = StorageGUI.getInstance().getDataFolder();
     static File uniqueItemFolder = new File(configFolder, "UniqueItem");
@@ -71,7 +70,7 @@ public class UniqueItem {
 
         Map<String, ItemStack> map = new HashMap<>();
         if (!uniqueItemFolder.exists()) {
-            Bukkit.getLogger().warning("[StorageGUI] UniqueItemフォルダが見つかりません！");
+            StorageGUI.getInstance().getLogger().warning("UniqueItemフォルダが見つかりません！");
             return map;
         }
 
@@ -88,7 +87,7 @@ public class UniqueItem {
             }
         }
 
-        Bukkit.getLogger().info("[StorageGUI] カスタムアイテムを読み込みました");
+        StorageGUI.getInstance().getLogger().info("カスタムアイテムを読み込みました");
         cachedItems = map;
         return map;
     }
@@ -115,15 +114,15 @@ public class UniqueItem {
                     }
                 }
 
-                Bukkit.getLogger().info("[StorageGUI] カスタムアイテムを読み込みました");
+                StorageGUI.getInstance().getLogger().info("カスタムアイテムを読み込みました");
             } else {
                 //ymlが存在しない
-                Bukkit.getLogger().info("[StorageGUI] カスタムアイテムが存在しません");
+                StorageGUI.getInstance().getLogger().info("カスタムアイテムが存在しません");
             }
 
         } else {
             //ディレクトリが存在しない
-            Bukkit.getLogger().info("[StorageGUI] カスタムアイテムが存在しません");
+            StorageGUI.getInstance().getLogger().info("カスタムアイテムが存在しません");
         }
         return uniqueItemHashMap;
     }
@@ -137,7 +136,7 @@ public class UniqueItem {
         boolean doEnchant = yaml.getBoolean(key + enchantSection);
 
         if(stringMaterial == null){
-            Bukkit.getLogger().warning("[StorageGUI] カスタムアイテムのItem_Typeが記載されていません");
+            StorageGUI.getInstance().getLogger().warning("カスタムアイテムのItem_Typeが記載されていません");
             return null;
         }
 
@@ -150,7 +149,7 @@ public class UniqueItem {
         ItemMeta meta = item.getItemMeta();
 
         if(displayname != null) {
-            meta.displayName(Component.text(ChatColor.translateAlternateColorCodes('&', displayname)));
+            meta.displayName(Component.text(displayname.replaceAll("&", "§")));
         }
         if(custommodeldata != null){
             meta.setCustomModelData(custommodeldata);
