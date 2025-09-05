@@ -12,12 +12,13 @@ import dev.felnull.storagegui.utils.InvUtil;
 import net.kyori.adventure.text.Component;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +43,7 @@ public class BuyModularStorageItem extends GUIItem {
     }
 
     @Override
-    public void onClick(InventoryClickEvent e) {
+    public void onClick(@NotNull InventoryClickEvent e) {
         Economy economy = StorageGUI.economy;
         Player player = (Player) e.getWhoClicked();
 
@@ -53,11 +54,13 @@ public class BuyModularStorageItem extends GUIItem {
         int finalPrice = isFree ? 0 : basePrice;
 
         if (!isFree && !economy.has(player, finalPrice)) {
+            NumberFormat num = NumberFormat.getInstance();
+            num.setMaximumFractionDigits(2);
             double lack = finalPrice - economy.getBalance(player);
             player.sendMessage(Component.text(
                     GUIReload.getBuyFail()
-                            .replaceAll("%lack%", String.valueOf(lack))
-                            .replaceAll("%value%", String.valueOf(economy.getBalance(player)))
+                            .replaceAll("%lack%", num.format(lack))
+                            .replaceAll("%value%", num.format(economy.getBalance(player)))
                     )
             );
             return;

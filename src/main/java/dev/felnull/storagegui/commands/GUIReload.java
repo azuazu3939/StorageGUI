@@ -16,11 +16,11 @@ public class GUIReload implements CommandExecutor {
     private static String SYMBOL = config.getString("symbol", "$");
     private static String ADD_VIEW_POS = config.getString("messages.add-view-pos", "§r§aスロットPosを上げる");
     private static String SUB_VIEW_POS = config.getString("messages.sub-view-pos", "§r§bスロットPosを下げる");
-    private static String RETURN_MAIN = config.getString("messages.return-main", "§r§c§lキャンセルする");
-    private static String PAGE_BACK = config.getString("messages.page-back", "§r§6§lストレージオプションに戻る");
-    private static String BUY_STORAGE = config.getString("messages.buy-storage", "§r§e§l%value%" + SYMBOL + "でストレージを購入する!");
-    private static String BUY_FAIL = config.getString("messages.buy-fail", "§r§c§lお金が %lack%" + SYMBOL + " 足りません! 現在: %value%" + SYMBOL);
-    private static String SCROLL_POS = config.getString("messages.scroll-pos", "§r§6§l下にスクロール");
+    private static String RETURN_MAIN = config.getString("messages.return-main", "§r§cキャンセルする");
+    private static String PAGE_BACK = config.getString("messages.page-back", "§r§6ストレージオプションに戻る");
+    private static String BUY_STORAGE = config.getString("messages.buy-storage", "§r§e%value%" + SYMBOL + "でストレージを購入する!");
+    private static String BUY_FAIL = config.getString("messages.buy-fail", "§r§cお金が %lack%" + SYMBOL + " 足りません! 現在: %value%" + SYMBOL);
+    private static String SCROLL_POS = config.getString("messages.scroll-pos", "§r§6下にスクロール");
 
     public GUIReload(StorageGUI storageGUI) {
         this.plugin = storageGUI;
@@ -31,13 +31,13 @@ public class GUIReload implements CommandExecutor {
         plugin.reloadConfig();
         SYMBOL = plugin.getConfig().getString("symbol", "$");
 
-        PAGE_BACK = plugin.getConfig().getString("messages.page-back", "§r§6§lストレージオプションに戻る");
-        RETURN_MAIN = plugin.getConfig().getString("messages.return-main", "§r§c§lキャンセルする");
-        BUY_STORAGE = plugin.getConfig().getString("messages.buy-storage", "§r§e§l%value%" + SYMBOL + "でストレージを購入する!");
-        BUY_FAIL = plugin.getConfig().getString("messages.buy-fail", "§r§c§lお金が %lack%" + SYMBOL + " 足りません! 現在: %value%" + SYMBOL);
+        PAGE_BACK = plugin.getConfig().getString("messages.page-back", "§r§6ストレージオプションに戻る");
+        RETURN_MAIN = plugin.getConfig().getString("messages.return-main", "§r§cキャンセルする");
+        BUY_STORAGE = plugin.getConfig().getString("messages.buy-storage", "§r§e%value%" + SYMBOL + "でストレージを購入する!");
+        BUY_FAIL = plugin.getConfig().getString("messages.buy-fail", "§r§cお金が %lack%" + SYMBOL + " 足りません! 現在: %value%" + SYMBOL);
         ADD_VIEW_POS = plugin.getConfig().getString("messages.add-view-pos", "§r§aスロットPosを上げる");
         SUB_VIEW_POS = plugin.getConfig().getString("messages.sub-view-pos", "§r§bスロットPosを下げる");
-        SCROLL_POS = plugin.getConfig().getString("messages.scroll-pos", "§r§6§l下にスクロール");
+        SCROLL_POS = plugin.getConfig().getString("messages.scroll-pos", "§r§6下にスクロール");
 
         commandSender.sendMessage(Component.text("§aリロードが完了しました。"));
         return true;
